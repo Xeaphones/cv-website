@@ -1,0 +1,324 @@
+@use '../../styles/style.scss' as *;
+
+.App {
+    height: fit-content;
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: $black;
+    font-family: 'Montserrat', sans-serif;
+    hr {
+        width: 90%;
+        border-color: dimgrey;
+        border-width: 1px;
+    }
+    .contacts {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        p {
+            color: $white;
+        }
+    }
+    .social-contacts {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        a {
+            display: flex;
+            align-items: center;
+            width: 4%;
+            @include media-max(425px) {
+                width: 10%;
+            }
+            i {
+                width: 100%;
+                svg {
+                    width: 100%;
+                }
+            }
+            p {
+                color: $white;
+            }
+        }
+    }
+    .email {
+        form {
+            z-index: 10;
+            h2 {
+                font-size: 200%;
+                width: 100%;
+                text-align: center;
+                margin-left: 0;
+                margin-right: 20%;
+                margin-top: 0;
+                margin-bottom: 1%;
+            }
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 20%;
+            padding-right: 5%;
+            padding-block: 2%;
+            @include media-max(425px) {
+                padding-left: 10%;
+            }
+            div.content-textarea {
+                width: 80%;
+                margin-right: 20%;
+                @include media-max(425px) {
+                    margin-bottom: 15%;
+                }
+            }
+            div.submit-button {
+                width: 10%;
+                margin-right: 5%;
+                @include media-max(425px) {
+                    width: 25vw;
+                }
+            }
+            div {
+                margin-bottom: 5%;
+                width: 50%;
+                position: relative;
+                .input {
+                    width: 60%;
+                    border: 2px solid $grey;
+                    box-sizing: border-box;
+                    border-radius: 0.5rem;
+                    color: $white;
+                    outline: none;
+                    background: none;
+                    padding: 0.5rem;
+                    @include media-max(425px) {
+                        width: 80%;
+                    }
+                    &:hover {
+                        border-color: $main-color;
+                    }
+
+                    &:focus {
+                        border-color: $secondary-color;
+                    }
+                }
+                textarea.input {
+                    min-width: 100%;
+                    max-width: 120%;
+                    min-height: 40px;
+                    max-height: 250px;
+                    height: 150%;
+                    @include media-max(425px) {
+                        min-width: 113%;
+                        max-width: 113%;
+                    }
+                }
+                label {
+                    position: absolute;
+                    left: 3%;
+                    color: $white;
+                    top: 7px;
+                    letter-spacing: 0.5px;
+                    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+                    cursor: text;
+                }
+                textarea ~ label {
+                    left: 2%;
+                }
+                button {
+                    all: unset;
+                    width: 100%;
+                    height: 100%;
+                    border: 2px solid $grey;
+                    box-sizing: border-box;
+                    border-radius: 0.5rem;
+                    color: $white;
+                    text-align: center;
+                    padding: 0.2rem;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: $main-color;
+                    }
+                }
+            }
+        }
+        p {
+            color: $white;
+            margin-top: 0.5%;
+        }
+    }
+    .discord {
+        cursor: pointer;
+    }
+    .input:focus ~ .label,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label {
+    top: -0.5rem;
+    font-size: 0.8rem;
+    left: 0.8rem;
+    background-color: $black;
+    font-weight: bold;
+    }
+    .snackbars {
+        position: absolute;
+        bottom: 2%;
+        width: 100%;
+        z-index: -1;
+        &.show {
+            z-index: 10;
+        }
+    }
+    #snackbar-valid {
+        margin-top: -5%;
+        z-index: -1;
+        visibility: hidden;
+        background-color: rgba(0, 128, 0,0.5);
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 2%;
+        position: sticky;
+        width: 50%;
+        padding: 0.5%;
+        display: flex;
+        align-items: center;
+        border-radius: 0.5rem;
+        &.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.8s;
+            animation: fadein 0.5s, fadeout 0.5s 2.8s;
+            z-index: 1;
+        }
+        p {
+            margin: 0;
+        }
+        i {
+            width: 10%;
+            path:first-child {
+                fill: $white;
+            }
+        }
+    }
+    #snackbar-invalid {
+        margin-top: -5%;
+        z-index: -1;
+        visibility: hidden;
+        background-color: rgba(255, 0, 0, 0.5);
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 2%;
+        position: sticky;
+        width: 50%;
+        padding: 0.5%;
+        display: flex;
+        align-items: center;
+        border-radius: 0.5rem;
+        p {
+            margin: 0;
+        }
+        &.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.8s;
+            animation: fadein 0.5s, fadeout 0.5s 2.8s;
+            z-index: 1;
+        }
+        i {
+            width: 10%;
+            path:first-child {
+                fill: $white;
+            }
+        }
+    }
+    #snackbar-discord {
+        margin-top: -5%;
+        z-index: -1;
+        visibility: hidden;
+        background-color: rgba(0, 128, 0,0.8);
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 2%;
+        position: sticky;
+        width: 50%;
+        padding: 0.5%;
+        display: flex;
+        align-items: center;
+        border-radius: 0.5rem;
+        &.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.8s;
+            animation: fadein 0.5s, fadeout 0.5s 2.8s;
+            z-index: 1;
+        }
+        p {
+            margin: 0;
+        }
+        i {
+            width: 10%;
+            path:first-child {
+                fill: $white;
+            }
+        }
+    }
+}
+
+.AppLight {
+    background-color: $white-2;
+    .contacts {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        p {
+            color: $black;
+            font-weight: bold;
+        }
+    }
+    hr {
+        border-color: $grey;
+    }
+    .email {
+        form {
+            div {
+                .input {
+                    border-color: gray;
+                    color: $black;
+                }
+                label {
+                    color: $black;
+                    font-weight: bold;
+                }
+                button {
+                    border-color: gray;
+                    color: $black;
+                    font-weight: bold;
+                    &:hover {
+                        color: $white;
+                    }
+                }
+            }
+        }
+        p {
+            color: $black;
+            font-weight: bold;
+        }
+    }
+    .input:focus ~ .label,
+    .input:not(:placeholder-shown).input:not(:focus) ~ .label {
+    background-color: $white;
+    }
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 2%;; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 2%; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 2%; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 2%; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }

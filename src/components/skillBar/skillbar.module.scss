@@ -1,0 +1,44 @@
+@use '../../styles/style.scss' as *;
+
+.SkillBar {
+    display: flex;
+    color: $white;
+    flex-direction: column;
+    position: relative;
+    width: 50%;
+    .title {
+        width: 90%;
+        left: 5%;
+        position: relative;
+        p {
+            font-size: 120%;
+            margin-bottom: 0.5%;
+        }
+    }
+    .container {
+        background-color: $grey;
+        border-radius: 10px 0.25rem 0.25rem 10px;
+        width: 90%;
+        left: 5%;
+        position: relative;
+        &.full {
+            border-radius: 10px;
+        }
+        .percent {
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: inset 0px 0px 2px rgb(26 25 25);
+            transition: width 1s ease-out;
+        }
+    }
+}
+
+.SkillLightBar {
+    color: $black;
+    font-weight: bold;
+    .container {
+        background-color: $black;
+        color: $white;
+    }
+}

@@ -1,0 +1,94 @@
+@use '../../styles/style.scss' as *;
+
+.App {
+    .experience-section {
+        padding: 2%;
+        h2 {
+            margin-bottom: 2%;
+            margin-left: 1%;
+            margin-top: 0;
+        }
+        .vertical-line {
+            content: " ";
+            position: relative;
+            width: 2px;
+            height: 950px;
+            background-color: $grey;
+            left: 50%;
+            top: 0%;
+            margin-bottom: -85%;
+        }
+        .container {
+            padding-top: 5%;
+            .box {
+                padding-bottom: 0.5%;
+                padding-left: 1%;
+                width: 40%;
+                color: $white;
+                box-shadow: 0 20px 50px rgb(0 0 0 / 80%);
+                transition: background-color 0.25s ease-in-out;
+                .left {
+                    width: 98%;
+                    text-align: end;
+                }
+                &::before {
+                    // rectangle pointing to the right
+                    content: " ";
+                    position: relative;
+                    width: 10px;
+                    height: 10px;
+                    border-bottom: 20px solid transparent;
+                    border-left: 20px solid $black;
+                    right: -100%;
+                    transition: border-left-color 0.25s ease-in-out;
+                }
+                &:hover {
+                    &::before {
+                        border-left-color: $purple;
+                    }
+                    background-color: $purple;
+                }
+                .header {
+                    display: flex;
+                    gap: 20px;
+                    .date {
+                        margin: unset;
+                    }
+                    .title {
+                        margin: unset;
+                    }
+                }
+                &.right {
+                    left: 60%;
+                    position: relative;
+                    &:hover {
+                        &::before {
+                            border-right-color: $purple;
+                        }
+                    }
+                    &::before {
+                        // rectangle pointing to the left
+                        content: " ";
+                        position: relative;
+                        width: 10px;
+                        height: 10px;
+                        border: unset;
+                        border-bottom: 20px solid transparent;
+                        border-right: 20px solid $black;
+                        left: -5%;
+                        transition: border-right-color 0.25s ease-in-out;
+                    }
+                    .header {
+                        left: 0;
+                        justify-content: flex-end;
+                        margin-right: 2%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.AppLight {
+
+}

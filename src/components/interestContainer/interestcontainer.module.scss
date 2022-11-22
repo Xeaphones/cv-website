@@ -1,0 +1,38 @@
+@use '../../styles/style.scss' as *;
+
+.interestContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1%;
+    box-shadow: 0 20px 50px rgb(0 0 0 / 80%);
+    width: 10%;
+    &:hover {
+        i svg {
+            fill: $purple-3;
+        }
+
+        p {
+            color: $purple-3;
+        }
+    }
+    i {
+        width: 60%;
+        svg {
+            width: 100%;
+            fill: $purple;
+            transition: fill 0.25s ease-in-out;
+        }
+    }
+    p {
+        margin: unset;
+        color: $purple;
+        font-weight: bold;
+        text-align: center;
+        transition: color 0.25s ease-in-out;
+    }
+}
+
+.interestLightContainer {
+    box-shadow: 0 20px 50px rgb(208 208 208 / 80%);
+}

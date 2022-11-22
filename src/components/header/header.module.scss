@@ -1,0 +1,119 @@
+@use '../../styles/style.scss' as *;
+
+.BurgerMenu {
+    width: 12%;
+    display: none;
+    @include media-max(425px) {
+        display: block;
+    }
+}
+
+.HeaderLight {
+    background-color: $white;
+    box-shadow: 5px 5px 30px #0003;
+    .Name {
+        color: $black;
+    }
+    .ThemeIcon {
+        fill: $black;
+    }
+    .LangIcon {
+        color: $black;
+    }
+    nav {
+        @include media-max(425px) {
+            background-color: $white;
+        }
+        ul li a {
+            color: $black;
+        }
+    }
+}
+
+
+header {
+    box-shadow: 5px 5px 30px #0003;
+    background-color: $black;
+    display: flex;
+    justify-content: space-evenly;
+    height: 10%;
+    align-items: center;
+    @include media-max(425px) {
+        gap: 3%;
+        nav.menuActive {
+            transform: translateX(0);
+        }
+    }
+    .ThemeIcon {
+        width: 2%;
+        cursor: pointer;
+        fill: $white;
+        @include media-max(425px) {
+            width: 5%;
+        }
+    }
+    .LangIcon {
+        color: $white;
+        font-weight: bold;
+        font-size: 120%;
+        cursor: pointer;
+        user-select: none;
+    }
+    .Name {
+        a {
+            all: unset;
+        }
+        cursor: pointer;
+        margin-right: 10%;
+        color: $white;
+    }
+    nav {
+        display: flex;
+        margin-right: 40%;
+        @include media-max(425px) {
+            display: block;
+            position: absolute;
+            height: 90%;
+            left: 0;
+            top: 14vh;
+            background-color: $black;
+            z-index: 50;
+            transform: translateX(-190%);
+            transition: transform 0.5s ease-in-out; 
+            padding-inline: 3%; 
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            gap: 20%;
+            @include media-max(425px) {
+                flex-direction: column;
+                padding-left: 0;
+                align-items: center;
+            }
+            li {
+                all: unset;
+                user-select: none;
+                @include media-max(425px) {
+                    margin-bottom: 20%;
+                    font-size: 150%;
+                }
+                a {
+                    all: unset;
+                    color: $grey;
+                    cursor:pointer;
+                    font-weight: bolder;
+                    padding: 5%;
+
+                    &:hover {
+                        color: $main-color;
+                    }
+                }
+                .currentNav {
+                    border-bottom: 2px solid $main-color;
+                }
+            }
+        }
+    }
+}
+
