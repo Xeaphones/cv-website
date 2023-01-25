@@ -29,19 +29,12 @@ const Projects = () => {
       <Header currentRoute="Projects" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
       <section className='experience-section'>
         <h2>Experience</h2>
-        <div className='vertical-line' style={{marginBottom: ""}}>
-            <div className='diamond' style={{top: "0.5%"}}></div>
-            <div className='diamond' style={{top: "28%"}}></div>
-            <div className='diamond' style={{top: "54%"}}></div>
-            <div className='diamond' style={{top: "87%"}}></div>
-          </div>
-          <div className='container'>
-            <div className='box'>
-              <div className='header'>
-                <p className='date'>{lang == "fr" ? "Depuis Mai" : "Since May"} 2022</p>
-                <h4 className='title'>{lang == "fr" ? "Developpeur Web Fullstack" : "Fullstack Web Dev"}</h4>
-              </div>
-              <div className='content'>
+        <div className="timeline">
+          <div className="container left">
+            <div className="content">
+              <h4>{lang == "fr" ? "Depuis Mai" : "Since May"} 2022</h4>
+              <h4 className='title'>{lang == "fr" ? "Developpeur Web Fullstack" : "Fullstack Web Dev"}</h4>
+              <div className='Text'>
                 <p>Veltech, Toulouse</p>
                 <p>{lang == "fr" ? 
                 "Veltech est une entreprise d'hebergement et de developpement web. Elle crée notamment des sites vitrines ou plus complexes pour des particuliers ou des entreprises."
@@ -56,12 +49,12 @@ const Projects = () => {
                 </ul>
               </div>
             </div>
-            <div className='box right'>
-              <div className='header'>
-                <h4 className='title'>{lang == "fr" ? "Projet D'étude: Développeur Jeux Vidéos" : "Study Project: Game Programmer"}</h4>
-                <p className='date'>2021-2022</p>
-              </div>
-              <div className='content'>
+          </div>
+          <div className="container right">
+            <div className="content">
+              <h4>2021-2022</h4>
+              <h4 className='title'>{lang == "fr" ? "Projet D'étude: Développeur Jeux Vidéos" : "Study Project: Game Programmer"}</h4>
+              <div className='Text'>
                 <p className='left'>Campus Ynov Toulouse</p>
                 <p>{lang == "fr" ? 
                 "Jeu Vidéo en VR crée sur le Moteur Unity3D. Le jeu est un escape game virtuel dans lequel le joueur se retrouve transporté dans plusieurs époques différentes."
@@ -74,12 +67,12 @@ const Projects = () => {
                 </ul>
               </div>
             </div>
-            <div className='box'>
-              <div className='header'>
-                <p className='date'>2018-2019</p>
-                <h4 className='title'>{lang == "fr" ? "Développeur d'Application" : "App Developper"}</h4>
-              </div>
-              <div className='content'>
+          </div>
+          <div className="container left">
+            <div className="content">
+              <h4>2018-2019</h4>
+              <h4 className='title'>{lang == "fr" ? "Développeur d'Application" : "App Developper"}</h4>
+              <div className='Text'>
                 <p>Veltech, Toulouse</p>
                 <p>{lang == "fr" ? 
                 "Application mobile pour permettre de lister les différents événements de type soirée,boite de nuit.. Le but était de fidéliser le client et de lui permettre de rencontrer des personnes proches de lui tel un radar afin ensuite, de pouvoir partager (photos,messages..)"
@@ -94,12 +87,12 @@ const Projects = () => {
                 </ul>
               </div>
             </div>
-            <div className='box right'>
-              <div className='header'>
-                <h4 className='title'>{lang == "fr" ? "Stage d'observation: Développeur d'application" : "Observation Internship: Application Dev"}</h4>
-                <p className='date'>{lang == "fr" ? "Juin" : "June"} 2016</p>
-              </div>
-              <div className='content'>
+          </div>
+          <div className="container right">
+            <div className="content">
+              <h4>{lang == "fr" ? "Juin" : "June"} 2016</h4>
+              <h4 className='title'>{lang == "fr" ? "Stage d'observation: Développeur d'application" : "Observation Internship: Application Dev"}</h4>
+              <div className='Text'>
                 <p className='left'>Veltech, Toulouse</p>
                 <ul>
                   <li>{lang == "fr" ? "Debogage de logiciel et rapport d'erreur" : "Application debug and error log"}</li>
@@ -108,6 +101,7 @@ const Projects = () => {
               </div>
             </div>
           </div>
+        </div>
       </section>
       <hr></hr>
       <section>

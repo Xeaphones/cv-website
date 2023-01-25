@@ -97,34 +97,28 @@ const More = () => {
       <hr></hr> */}
       <section className='formation-section'>
         <h2>{lang === "fr" ? "Mes Formations" : "Education"}</h2>
-        <div>
-          <div className='vertical-line' style={{marginBottom: ""}}>
-            <div className='diamond' style={{top: "6%"}}></div>
-            <div className='diamond' style={{top: "40%"}}></div>
-            <div className='diamond' style={{top: "74%"}}></div>
-          </div>
-          <div className='container'>
-            <div className='box'>
-              <div className='header'>
-                <p className='date'>2022-{lang == "fr" ? "Maintenant" : "Now"}</p>
-                <h4 className='title'>Bachelor 2 Informatique (Bac+2)</h4>
-              </div>
-              <div className='content'>
+        <div className="timeline">
+          <div className="container left">
+            <div className="content">
+              <h4>2022-{lang == "fr" ? "Maintenant" : "Now"}</h4>
+              <h4 className='title'>Bachelor 2 Informatique (Bac+2)</h4>
+              <div className='Text'>
                 <p>Campus Ynov Toulouse</p>
                 <ul>
                   <li>{lang == "fr" ? "Gestion & Utilisation de Windows Server" : "Usage & Management of Windows Server"}</li>
                   <li>{lang == "fr" ? "Création de plugin Wordpress (PHP)" : "Wordpress plugin creation (PHP)"}</li>
                   <li>{lang == "fr" ? "Création de site web en utilisant ReactTS" : "Website creation using ReactTS"}</li>
                   <li>{lang == "fr" ? "Utilisation & Masterisation de Linux" : "Linux Usage & Masterisation"}</li>
+                  <li>{lang == "fr" ? "Utilisation et création de base de données SQL" : "SQL based BDD Usage & Création"}</li>
                 </ul>
               </div>
             </div>
-            <div className='box right'>
-              <div className='header'>
-                <h4 className='title'>Bachelor 1 Informatique (Bac+1)</h4>
-                <p className='date'>2021-2022</p>
-              </div>
-              <div className='content'>
+          </div>
+          <div className="container right">
+            <div className="content">
+              <h4>2021-2022</h4>
+              <h4 className='title'>Bachelor 1 Informatique (Bac+1)</h4>
+              <div className='Text'>
                 <p className='left'>Campus Ynov Toulouse</p>
                 <ul>
                   <li>{lang == "fr" ? "Création de serveur web (Go et NodeJS/Express)" : "Web Server creation (Go and NodeJS/Express)"}</li>
@@ -134,12 +128,12 @@ const More = () => {
                 </ul>
               </div>
             </div>
-            <div className='box'>
-              <div className='header'>
-                <p className='date'>2020-2021</p>
-                <h4 className='title'>{lang == "fr" ? "Baccalauréat Général" : "General Baccalaureate"}</h4>
-              </div>
-              <div className='content'>
+          </div>
+          <div className="container left">
+            <div className="content">
+              <h4>2020-2021</h4>
+              <h4 className='title'>{lang == "fr" ? "Baccalauréat Général" : "General Baccalaureate"}</h4>
+              <div className='Text'>
                 <p>Emilie de rodat, Toulouse</p>
                 <ul>
                   <li>{lang == "fr" ? "Mention Bien" : "Good Honors"}</li>

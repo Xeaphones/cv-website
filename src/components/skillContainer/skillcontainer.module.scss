@@ -4,7 +4,7 @@
     width: 30vw;
     display: flex;
     margin-bottom: 2%;
-    @include media-max(425px) {
+    @include media-max(450px) {
         width: 100%;
     }
     &:not(:hover) {
@@ -46,7 +46,7 @@
 .SkillIconContainer {
     width: 3vw;
     margin-bottom: 0;
-    @include media-max(425px) {
+    @include media-max(450px) {
         width: 20%;
     }
     i {

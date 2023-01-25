@@ -10,6 +10,7 @@ import apiWhiteIMG from "../../assets/img/api_white_128.png";
 import codeBlackIMG from "../../assets/img/code_black_128.png";
 import gameDevBlackIMG from "../../assets/img/game-dev_black_128.png";
 import apiBlackIMG from "../../assets/img/api_black_128.png";
+import photoOfMoi from "../../assets/img/photoofmoi.jpg";
 
 import { 
   JavaScript,
@@ -57,21 +58,26 @@ const Home = () => {
       <section className='aboutme-section'>
         <div className='title'>
           <h2>{lang === "fr" ? "Mon Profil" : "About Me"}</h2>
-          <div className='informations'>
-            <p>19 {lang === "fr" ? "Ans" : "Years"}</p>
-            <span>/</span>
-            <p>Toulouse</p>
-            <span>/</span>
-            <p>{lang === "fr" ? "Etudiant" : "Student"}</p>
-          </div>
-          <div className='bio'>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, doloribus totam temporibus vitae in id necessitatibus soluta aliquam consequatur voluptate, perferendis accusamus ratione quod nemo voluptas facere tempora quia voluptatibus voluptatum! Aut consequuntur laborum ea molestias beatae quis, impedit assumenda cupiditate, alias earum ducimus ratione sapiente est accusantium quam aliquid.</p>
-          </div>
-        </div>
-        <div className='contacts'>
-          <a href='/#/contact'>Yohan2003@free.fr</a>
-          <span>/</span>
-          <p>07 81 07 21 78</p>
+          <div className='infogroup'>
+            <img src={photoOfMoi} alt='A photo of me'></img>
+            <div className='subgroup'>
+              <div className='informations'>
+                <p>19 {lang === "fr" ? "Ans" : "Years"}</p>
+                <span>/</span>
+                <p>Toulouse</p>
+                <span>/</span>
+                <p>{lang === "fr" ? "Etudiant" : "Student"}</p>
+              </div>
+              <div className='bio'>
+                <p>Venant d'une famille d'informaticiens, j'ai fais du code une de mes passions depuis mes 8 ans en commençant par du scratch puis du python. J'adore apprendre en continu sur le monde de l'informatique et son évolution. J'aime beaucoup travailler en équipe afin de s'entraider et améliorer mes compétences à l'aide des autres. Je suis aussi un grand passionné de musique, jouant un peu de la guitare durant mon temps libre.</p>
+              </div>
+              <div className='contacts'>
+                <a href='/#/contact'>Yohan2003@free.fr</a>
+                <span>/</span>
+                <p>07 81 07 21 78</p>
+              </div>
+            </div>
+          </div>  
         </div>
       </section>
       <hr/>
@@ -95,9 +101,9 @@ const Home = () => {
           <h2>{lang === "fr" ? "Mes Compétences" : "My Skills"}</h2>
         </div>
         <div className='container'>
-          <SkillContainer name='React' content='bla bla bla bla bla bla bla bla bla' icon={<ReactTSX />} theme={theme}/>
-          <SkillContainer name='Javascript' content='bla bla bla bla bla bla bla bla bla' icon={<JavaScript />} theme={theme}/>
-          <SkillContainer name='Python' content='bla bla bla bla bla bla bla bla bla' icon={<Python />} theme={theme}/>
+          <SkillContainer name='React' content={lang === "fr" ? "Blibliothèque utilisé lors de création de site web." : "Librarie used when creating a website."} icon={<ReactTSX />} theme={theme}/>
+          <SkillContainer name='Javascript' content={lang === "fr" ? "Language principal lors de la création de site web/API (NodeJS et React)" : "Main language when creating website/API (NodeJS and React)"} icon={<JavaScript />} theme={theme}/>
+          <SkillContainer name='Unity' content={lang === "fr" ? "Moteur de jeu principal lors de la création de jeux." : "Main game engine when creating games."} icon={<Unity />} theme={theme}/>
           <SkillContainer name='' content='' icon={<TypeScript />} theme={theme}/>
           <SkillContainer name='' content='' icon={<NodeJS />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Html5 />} theme={theme}/>
@@ -113,7 +119,7 @@ const Home = () => {
           <SkillContainer name='' content='' icon={<Cpp />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Linux />} theme={theme}/>
           <SkillContainer name='' content='' icon={<MongoDB />} theme={theme}/>
-          <SkillContainer name='' content='' icon={<Unity />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<Python />} theme={theme}/>
           <SkillContainer name='' content='' icon={<UnrealEngine />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Vite />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Go />} theme={theme}/>

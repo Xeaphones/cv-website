@@ -42,80 +42,120 @@
             margin-left: 1%;
             margin-top: 0;
         }
-        .vertical-line {
-            content: " ";
+        .timeline {
             position: relative;
-            width: 2px;
-            height: 500px;
-            background-color: $grey;
-            left: 50%;
-            top: 0%;
-            margin-bottom: -45%;
-        }
-        .container {
-            padding-top: 9vmin;
-            .box {
-                padding-bottom: 0.5%;
-                padding-left: 1%;
-                width: 40%;
-                color: $white;
-                box-shadow: 0 20px 50px rgb(0 0 0 / 80%);
-                transition: background-color 0.25s ease-in-out;
-                .left {
-                    width: 98%;
-                    text-align: end;
+            max-width: 1200px;
+            margin: 0 auto;
+            &::after {
+                content: '';
+                position: absolute;
+                width: 2px;
+                background-color: white;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                margin-left: -3px;
+                @include media-max(600px) {
+                    left: 31px;
                 }
-                &::before {
-                    // rectangle pointing to the right
-                    content: " ";
-                    position: relative;
-                    width: 10px;
-                    height: 10px;
-                    border-bottom: 20px solid transparent;
-                    border-left: 20px solid $black;
-                    right: -100%;
-                    transition: border-left-color 0.25s ease-in-out;
-                }
-                &:hover {
+            }
+            .container {
+                padding: 10px 40px;
+                position: relative;
+                background-color: inherit;
+                width: 50%;
+                @include media-max(600px) {
+                    width: 100%;
+                    padding-left: 70px;
+                    padding-right: 25px;
                     &::before {
-                        border-left-color: $purple;
+                        left: 60px;
+                        border: medium solid white;
+                        border-width: 10px 10px 10px 0;
+                        border-color: transparent white transparent transparent;
                     }
-                    background-color: $purple;
+                    &.left::after, &.right::after {
+                        left: 15px;
+                      }
                 }
-                .header {
-                    display: flex;
-                    gap: 20px;
-                    .date {
-                        margin: unset;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 25px;
+                    height: 25px;
+                    right: -17px;
+                    background-color: white;
+                    border: 4px solid $purple;
+                    top: 15px;
+                    border-radius: 50%;
+                    z-index: 1;
+                }
+                &.left {
+                    right: 83px;
+                    @include media-max(600px) {
+                        right: 0;
                     }
-                    .title {
-                        margin: unset;
+                    &::before {
+                        content: " ";
+                        height: 0;
+                        position: absolute;
+                        top: 22px;
+                        width: 0;
+                        z-index: 1;
+                        right: 30px;
+                        border: medium solid $black;
+                        border-width: 10px 0 10px 10px;
+                        border-color: transparent transparent transparent $black;
+                        @include media-max(600px) {
+                            content: " ";
+                            height: 0;
+                            position: absolute;
+                            top: 22px;
+                            width: 0;
+                            z-index: 1;
+                            border: medium solid $black;
+                            border-width: 10px 10px 10px 0;
+                            border-color: transparent $black transparent transparent;
+                        }
                     }
                 }
                 &.right {
-                    left: 60%;
-                    position: relative;
-                    &:hover {
-                        &::before {
-                            border-right-color: $purple;
-                        }
+                    left: 50%;
+                    @include media-max(600px) {
+                        left: 30px;
+                        padding-left: 40px;
                     }
                     &::before {
-                        // rectangle pointing to the left
                         content: " ";
-                        position: relative;
-                        width: 10px;
-                        height: 10px;
-                        border: unset;
-                        border-bottom: 20px solid transparent;
-                        border-right: 20px solid $black;
-                        left: -5%;
-                        transition: border-right-color 0.25s ease-in-out;
+                        height: 0;
+                        position: absolute;
+                        top: 22px;
+                        width: 0;
+                        z-index: 1;
+                        left: 30px;
+                        border: medium solid $black;
+                        border-width: 10px 10px 10px 0;
+                        border-color: transparent $black transparent transparent;
                     }
-                    .header {
-                        left: 0;
-                        justify-content: flex-end;
-                        margin-right: 2%;
+                    &::after {
+                        left: -16px;
+                      }
+                }
+                .content {
+                    padding: 20px 30px;
+                    background-color: $black;
+                    position: relative;
+                    border-radius: 6px;
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+                    h4,p,ul {
+                        color:  white;
+                    }
+                    h4 { 
+                        font-size: 140%;
+                        margin-top: 0;
+                    }
+                    p,ul {
+                        font-size: 110%;
                     }
                 }
             }

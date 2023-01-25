@@ -20,7 +20,7 @@ const SkillBar = ({name,percent,color,theme}: SkillBarContent) => {
         
         setTimeout(() => {
             clearInterval(interval);
-        }, 100 * parseInt(percent) / 2);
+        }, 100 * parseInt(percent) / 2 + 100);
     }
         
     function useIsInViewport(ref: React.RefObject<HTMLDivElement>) {
@@ -50,7 +50,7 @@ const SkillBar = ({name,percent,color,theme}: SkillBarContent) => {
             <div className={style.title}>
                 <p>{name}</p>
             </div>
-            <div className={[style.container, percent === "100%" ? style.full : ""].join(" ")}>
+            <div className={[style.container, percent === "100%" && width === "100%" ? style.full : ""].join(" ")}>
                 <div className={style.percent} style={{width: width,backgroundColor: color}}>{width}</div>
             </div>
         </div>

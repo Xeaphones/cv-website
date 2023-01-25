@@ -23,20 +23,43 @@
                 margin-bottom: 1%;
                 font-size: 100%;
             }
+            .infogroup {
+                display: flex;
+                img {
+                    width: 20%;
+                    @include media-min(800px) {
+                        max-width: 160px;
+                    }
+                    @include media-max(800px) {
+                        display: none;
+                    }
+                    height: 20%;
+                    margin-left: 3%;
+                    margin-block: 0;
+                    margin-bottom: 1%;
+                }
+                .subgroup {
+                    display: flex;
+                    flex-direction: column;
+                    width: 80%;
+                    @include media-max(800px) {
+                        margin-left: 1%;
+                        margin-right: 1%;
+                        width: 100%;
+                    }
+                }
+            }
         }
         .informations {
             display: flex;
             p, span {
-                font-size: 50%;
+                font-size: 80%;
                 font-weight: bold;
             }
             p {
                 color: $main-color;
                 margin-inline: 2%;
                 margin-block: 0;
-                &:first-child {
-                    margin-left: 5%;
-                }
             }
             span {
                 color: dimgray;
@@ -46,9 +69,10 @@
             color: $white;
             margin-block: 2%;
             line-height: 150%;
-            margin-inline: 5%;
+            margin-left: 2%;
+            margin-right: 5%;
             margin-bottom: 0;
-            font-size: 50%;
+            font-size: 60%;
         }
         .contacts {
             display: flex;
@@ -57,6 +81,7 @@
             gap: 5%;
             margin-inline: 5%;
             flex-direction: row;
+            font-size: 70%;
             a {
                 all: unset;
                 cursor: pointer;
@@ -79,7 +104,7 @@
             display: flex;  
             justify-content: space-evenly;
             padding: 2.5%;
-            @include media-max(425px) {
+            @include media-max(450px) {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
