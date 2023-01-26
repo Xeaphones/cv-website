@@ -16,6 +16,14 @@
             color: $purple-3;
         }
     }
+    @include media-max(810px) {
+        width: 20%;
+        margin-bottom: 5%;
+    }
+    @include media-max(600px) {
+        width: 30vw;
+        margin-bottom: 5%;
+    }
     i {
         width: 60%;
         svg {
@@ -31,6 +39,7 @@
         text-align: center;
         transition: color 0.25s ease-in-out;
     }
+
 }
 
 .interestLightContainer {

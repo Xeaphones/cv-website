@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { send } from 'emailjs-com';
+import config from '../../../config.json';
 import Header from '../../components/header';
 import { CrossMarkCricle, CheckMarkCircle, Discord, Linkedin } from '../../assets/svg';
 
@@ -41,10 +42,10 @@ const Contact = () => {
     e.preventDefault();
 
     send(
-      'service_7iqjwta',
-      'template_ai78tgd',
+      config.emailJS.serviceID,
+      config.emailJS.templateID,
       toSend,
-      'C32bYQUydXSP2q4xA'
+      config.emailJS.userID
     )
     .then(() => {
       setValid(true);

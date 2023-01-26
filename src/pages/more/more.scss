@@ -64,8 +64,14 @@
                 position: relative;
                 background-color: inherit;
                 width: 50%;
+                @include media-max(1300px) {
+                    width: 45%;
+                }
+                @include media-max(810px) {
+                    width: 43.3%;
+                }
                 @include media-max(600px) {
-                    width: 100%;
+                    width: 80%;
                     padding-left: 70px;
                     padding-right: 25px;
                     &::before {
@@ -92,6 +98,21 @@
                 }
                 &.left {
                     right: 83px;
+                    @include media-max(1300px) {
+                        right: 2vmin;
+                    }
+                    @include media-max(1100px) {
+                        right: 2.5vmin;
+                    }
+                    @include media-max(1000px) {
+                        right: 3vmin;
+                    }
+                    @include media-max(950px) {
+                        right: 3.5vmin;
+                    }
+                    @include media-max(810px) {
+                        right: 30px;
+                    }
                     @include media-max(600px) {
                         right: 0;
                     }
@@ -139,7 +160,7 @@
                     }
                     &::after {
                         left: -16px;
-                      }
+                    }
                 }
                 .content {
                     padding: 20px 30px;
@@ -168,6 +189,9 @@
             justify-content: space-evenly;
             align-content: center;
             align-items: center;
+            @include media-max(810px) {
+                flex-wrap: wrap;
+            }
         }
     }
     .download-section {
@@ -176,6 +200,15 @@
                 display: flex;
                 justify-content: space-around;
                 margin: 2%;
+                svg {
+                    width: 10%;
+                    @include media-max(810px) {
+                        width: 20%;
+                    }
+                    @include media-max(610px) {
+                        width: 30vw;
+                    }
+                }
             }
         }
     }
@@ -192,47 +225,28 @@
         }
     }
     .formation-section {
-        .vertical-line {
-            background-color: $black;
-        }
-        .container {
-            .box {
-                box-shadow: 0 20px 50px rgb(208 208 208 / 80%);
-                background-color: $white-2;
-                color: $black;
-                font-weight: bold;
-                &::before {
-                    border-left-color: $white-2;
-                }
-                &:hover {
+        .timeline {
+            .container {
+                &.left {
                     &::before {
-                        border-left-color: $purple;
-                    }
-                    background-color: $purple;
-                }
-                &.right {
-                    &:hover {
-                        &::before {
-                            border-right-color: $purple;
+                        border-color: transparent transparent transparent $white;
+                        @include media-max(600px) {
+                            border-color: transparent $white transparent transparent;
                         }
                     }
+                }
+                &.right {
                     &::before {
-                        border-right-color: $white-2;
+                        border-color: transparent $white transparent transparent;
+                    }
+                }
+                .content {
+                    background-color: $white;
+                    h4,p,ul {
+                        color: $black;
                     }
                 }
             }
         }
     }
-}
-
-.diamond {
-    // diamond shape (square rotated 45°)
-    content: " ";
-    background-color: $purple;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    transform: rotate(45deg);
-    left: 50%;
-    margin-left: -10px;
 }

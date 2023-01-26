@@ -6,6 +6,9 @@
     flex-direction: column;
     position: relative;
     width: 50%;
+    @include media-max(600px) {
+        width: 90%;
+    }
     .title {
         width: 90%;
         left: 5%;

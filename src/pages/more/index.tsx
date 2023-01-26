@@ -41,8 +41,8 @@ const More = () => {
   return (
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
       <Header currentRoute="More" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
-      <section className='skill-section'>
-        <div id='skills' className='title'>
+      <section id='skills' className='skill-section'>
+        <div className='title'>
           <h2>{lang === "fr" ? "Mes compétences" : "Technical skills"}</h2>
           <div className='titleSection'>
             <h3>Web</h3>
@@ -161,7 +161,7 @@ const More = () => {
         <h2>{lang === "fr" ? "Télécharger mon CV" : "Download my CV"}</h2>
         <div>
           <a href='/yohan-velay.pdf' download>
-            <PDF width="10%"></PDF>
+            <PDF></PDF>
           </a>
         </div>
       </section>

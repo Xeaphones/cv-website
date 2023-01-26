@@ -31,8 +31,14 @@
                 position: relative;
                 background-color: inherit;
                 width: 50%;
+                @include media-max(1300px) {
+                    width: 45%;
+                }
+                @include media-max(810px) {
+                    width: 43.3%;
+                }
                 @include media-max(600px) {
-                    width: 100%;
+                    width: 80%;
                     padding-left: 70px;
                     padding-right: 25px;
                     &::before {
@@ -59,6 +65,21 @@
                 }
                 &.left {
                     right: 83px;
+                    @include media-max(1300px) {
+                        right: 2vmin;
+                    }
+                    @include media-max(1100px) {
+                        right: 2.5vmin;
+                    }
+                    @include media-max(1000px) {
+                        right: 3vmin;
+                    }
+                    @include media-max(950px) {
+                        right: 3.5vmin;
+                    }
+                    @include media-max(810px) {
+                        right: 30px;
+                    }
                     @include media-max(600px) {
                         right: 0;
                     }

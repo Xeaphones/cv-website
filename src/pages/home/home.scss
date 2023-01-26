@@ -90,11 +90,21 @@
                     font-weight: bold;
                 }
             }
+            p {
+                font-size: 100%;
+            }
             span {
                 color: dimgray;
                 font-weight: bold;
             }
             color: $white;
+            @include media-max(450px) {
+                flex-wrap: wrap;
+                span {
+                    display: none;
+                }
+            }
+            
         }
     }
     .wicd-section {
@@ -104,6 +114,9 @@
             display: flex;  
             justify-content: space-evenly;
             padding: 2.5%;
+            @include media-max(800px) {
+                flex-wrap: wrap;
+            }
             @include media-max(450px) {
                 flex-direction: column;
                 justify-content: center;

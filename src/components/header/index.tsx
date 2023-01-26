@@ -38,11 +38,13 @@ const Header = ({currentRoute, theme,lang, changeTheme,changeLang}: HeaderConten
                     <li><a href="/#/contact"className={currentRoute === "Contact" ? style.currentNav : ""}>Contact</a></li>
                 </ul>
             </nav>
-            <div className={style.LangIcon}>
-                <p onClick={changeLang}>{lang === "fr" ? "FR" : "EN"}</p>
-            </div>
-            <div className={style.ThemeIcon} onClick={changeTheme}>
-                <ThemeIcon />
+            <div className={style.OptionIcon}>
+                <div className={style.LangIcon}>
+                    <p onClick={changeLang}>{lang === "fr" ? "FR" : "EN"}</p>
+                </div>
+                <div className={style.ThemeIcon} onClick={changeTheme}>
+                    <ThemeIcon />
+                </div>
             </div>
         </header>
     )
