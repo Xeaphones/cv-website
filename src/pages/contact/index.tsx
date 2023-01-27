@@ -1,14 +1,24 @@
 import { useState } from 'react';
+import { useForm, SubmitHandler } from "react-hook-form";
 import { send } from 'emailjs-com';
 import config from '../../../config.json';
 import Header from '../../components/header';
-import { CrossMarkCricle, CheckMarkCircle, Discord, Linkedin } from '../../assets/svg';
+import { CrossMarkCricle, CheckMarkCircle, Discord, Linkedin,Github } from '../../assets/svg';
 
 import "./contact.scss"
+
+type FormValues = {
+  from_firstname: string;
+  from_lastname: string;
+  object: string;
+  message: string;
+  reply_to: string;
+};
 
 const Contact = () => {
   const [theme, setTheme] = useState("dark");
   const [lang, setLang] = useState("fr");
+  const { register, handleSubmit,resetField } = useForm<FormValues>();
   const [discordPopup,setDiscordPopup] = useState(false);
   const [valid, setValid] = useState(false)
   const [invalid, setInvalid] = useState(false)
@@ -20,6 +30,10 @@ const Contact = () => {
     reply_to: '',
   });
   const changeTheme = () => theme === "light" ? setTheme("dark") : setTheme("light");
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    setToSend(data);
+    sendMail();
+  }
 
   const changeLang = () => {if (lang === "fr") {
       setLang("en");
@@ -38,9 +52,7 @@ const Contact = () => {
     },3000)
   }
 
-  const sendMail = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const sendMail = () => {
     send(
       config.emailJS.serviceID,
       config.emailJS.templateID,
@@ -49,6 +61,11 @@ const Contact = () => {
     )
     .then(() => {
       setValid(true);
+      resetField('from_firstname');
+      resetField('from_lastname');
+      resetField('object');
+      resetField('message');
+      resetField('reply_to');
       setTimeout(() => {
         setValid(false);
       },3000)
@@ -60,10 +77,6 @@ const Contact = () => {
       },3000)
     });
   }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    setToSend({ ...toSend, [e.target.name]: e.target.value });
-  };
 
   return (
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
@@ -80,29 +93,32 @@ const Contact = () => {
         <a href='https://fr.linkedin.com/in/yohan-velay' title='Yohan Velay'>
           <i><Linkedin/></i>
         </a>
+        <a href='https://github.com/Xeaphones' title='Xeaphones'>
+          <i><Github/></i>
+        </a>
       </section>
       <hr/>
       <section className='email'>
-        <form onSubmit={sendMail}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <h2>{lang === "fr" ? "Contactez-moi" : "Contact me"}</h2>
-          <div className='firstname-input'>
-            <input className='input' id="firstname" name='from_firstname' type="text" placeholder=' ' value={toSend.from_firstname} onChange={handleChange} required/>
+          <div className='firstname-input inputform'>
+            <input className='input' id="firstname" type="text" placeholder=' ' {...register("from_firstname")} required/>
             <label className='label' htmlFor='firstname'>{lang === "fr" ? "Prenom" : "Firstname"} *</label>
           </div>
-          <div className='lastname-input'>
-            <input className='input' id="lastname" name='from_lastname' type="text" placeholder=' ' value={toSend.from_lastname} onChange={handleChange} required/>
+          <div className='lastname-input inputform'>
+            <input className='input' id="lastname" type="text" placeholder=' ' {...register("from_lastname")} required/>
             <label className='label' htmlFor='lastname'>{lang === "fr" ? "Nom" : "Lastname"} *</label>
           </div>
-          <div className='email-input'>
-            <input className='input' id="email" name='reply_to' type="email" placeholder=' ' value={toSend.reply_to} onChange={handleChange} required/>
+          <div className='email-input inputform'>
+            <input className='input' id="email" type="email" placeholder=' ' {...register("reply_to")} required/>
             <label className='label' htmlFor='email'>Email *</label>
           </div>
-          <div className='object-input'>
-            <input className='input' id="object" name='object' type="text" placeholder=' ' value={toSend.object} onChange={handleChange} required/>
+          <div className='object-input inputform'>
+            <input className='input' id="object" type="text" placeholder=' ' {...register("object")} required/>
             <label className='label' htmlFor='object'>{lang === "fr" ? "Objet" : "Object"} *</label>
           </div>
-          <div className='content-textarea'>
-            <textarea className='input' id="content" name='message' placeholder=' ' value={toSend.message} onChange={handleChange} required></textarea>
+          <div className='content-textarea inputform'>
+            <textarea className='input textareainput' id="content" placeholder=' ' {...register("message")} required></textarea>
             <label className='label' htmlFor='content'>{lang === "fr" ? "Contenu" : "Content"} *</label>
           </div>
           <div className='submit-button'>

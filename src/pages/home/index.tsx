@@ -34,7 +34,9 @@ import {
   Trello,
   Unity,
   VsStudio,
-  UnrealEngine} from '../../assets/svg';
+  UnrealEngine,
+  PHP,
+  BDD} from '../../assets/svg';
 
 import './home.scss';
 
@@ -118,6 +120,8 @@ const Home = () => {
           <SkillContainer name='' content='' icon={<Trello />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Cpp />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Linux />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<PHP />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<BDD />} theme={theme}/>
           <SkillContainer name='' content='' icon={<MongoDB />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Python />} theme={theme}/>
           <SkillContainer name='' content='' icon={<UnrealEngine />} theme={theme}/>

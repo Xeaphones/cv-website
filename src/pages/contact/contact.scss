@@ -51,21 +51,25 @@
                 width: 100%;
                 text-align: center;
                 margin-left: 0;
-                margin-right: 20%;
                 margin-top: 0;
                 margin-bottom: 1%;
             }
+            .inputform {
+                display: flex;
+                justify-content: center;
+            }
             display: flex;
             flex-wrap: wrap;
-            padding-left: 20%;
+            padding-left:5%;
             padding-right: 5%;
             padding-block: 2%;
             @include media-max(425px) {
                 padding-left: 10%;
             }
             div.content-textarea {
-                width: 80%;
-                margin-right: 20%;
+                width: 100%;
+                margin-right: 10%;
+                margin-left: 10%;
                 @include media-max(425px) {
                     margin-bottom: 15%;
                 }
@@ -73,6 +77,7 @@
             div.submit-button {
                 width: 10%;
                 margin-right: 5%;
+                margin-left: 10%;
                 @include media-max(425px) {
                     width: 25vw;
                 }
@@ -89,7 +94,7 @@
                     color: $white;
                     outline: none;
                     background: none;
-                    padding: 0.5rem;
+                    padding: 0.8rem;
                     @include media-max(425px) {
                         width: 80%;
                     }
@@ -103,10 +108,8 @@
                 }
                 textarea.input {
                     min-width: 100%;
-                    max-width: 120%;
-                    min-height: 40px;
-                    max-height: 250px;
-                    height: 150%;
+                    max-width: 950px;
+                    min-height: 200px;
                     @include media-max(425px) {
                         min-width: 113%;
                         max-width: 113%;
@@ -114,9 +117,10 @@
                 }
                 label {
                     position: absolute;
-                    left: 3%;
+                    left: 22%;
                     color: $white;
-                    top: 7px;
+                    font-size: 120%;
+                    top: 10px;
                     letter-spacing: 0.5px;
                     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
                     cursor: text;
@@ -133,7 +137,8 @@
                     border-radius: 0.5rem;
                     color: $white;
                     text-align: center;
-                    padding: 0.2rem;
+                    padding: 0.5rem;
+                    font-size: 120%;
                     cursor: pointer;
                     &:hover {
                         background-color: $main-color;
@@ -144,6 +149,7 @@
         p {
             color: $white;
             margin-top: 0.5%;
+            font-size: 120%;
         }
     }
     .discord {
@@ -152,10 +158,14 @@
     .input:focus ~ .label,
     .input:not(:placeholder-shown).input:not(:focus) ~ .label {
     top: -0.5rem;
-    font-size: 0.8rem;
-    left: 0.8rem;
+    font-size: 1rem;
+    left: 22%;
     background-color: $black;
     font-weight: bold;
+    }
+    .textareainput:focus ~ .label,
+    .textareainput:not(:placeholder-shown).textareainput:not(:focus) ~ .label {
+        left: 2%;
     }
     .snackbars {
         position: absolute;
@@ -172,7 +182,7 @@
         visibility: hidden;
         background-color: rgba(0, 128, 0,0.5);
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(50%);
         bottom: 2%;
         position: sticky;
         width: 50%;
@@ -202,7 +212,7 @@
         visibility: hidden;
         background-color: rgba(255, 0, 0, 0.5);
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(50%);
         bottom: 2%;
         position: sticky;
         width: 50%;
@@ -232,7 +242,7 @@
         visibility: hidden;
         background-color: rgba(0, 128, 0,0.8);
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(50%);
         bottom: 2%;
         position: sticky;
         width: 50%;
