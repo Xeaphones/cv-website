@@ -11,6 +11,7 @@ type FormValues = {
   from_firstname: string;
   from_lastname: string;
   object: string;
+  phone: string;
   message: string;
   reply_to: string;
 };
@@ -26,6 +27,7 @@ const Contact = () => {
     from_firstname: '',
     from_lastname: '',
     object: '',
+    phone: '',
     message: '',
     reply_to: '',
   });
@@ -66,6 +68,7 @@ const Contact = () => {
       resetField('object');
       resetField('message');
       resetField('reply_to');
+      resetField('phone')
       setTimeout(() => {
         setValid(false);
       },3000)
@@ -82,7 +85,7 @@ const Contact = () => {
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
       <Header currentRoute="Contact" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
       <section className='contacts'>
-        <p>E-Mail: Yohan2003@free.fr</p>
+        <p>E-Mail: yohan.velay@free.fr</p>
         <p>{lang === "fr" ? "Téléphone" : "Phone"}: 07 81 07 21 78</p>
       </section>
       <hr/>
@@ -113,8 +116,12 @@ const Contact = () => {
             <input className='input' id="email" type="email" placeholder=' ' {...register("reply_to")} required/>
             <label className='label' htmlFor='email'>Email *</label>
           </div>
+          <div className='phone-input inputform'>
+            <input className='input' id="phone" type="text" placeholder=' ' {...register("phone")}/>
+            <label className='label' htmlFor='phone'>{lang === "fr" ? "Téléphone" : "Phone"}</label>
+          </div>
           <div className='object-input inputform'>
-            <input className='input' id="object" type="text" placeholder=' ' {...register("object")} required/>
+            <input className='input objectinput' id="object" type="text" placeholder=' ' {...register("object")} required/>
             <label className='label' htmlFor='object'>{lang === "fr" ? "Objet" : "Object"} *</label>
           </div>
           <div className='content-textarea inputform'>

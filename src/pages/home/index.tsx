@@ -74,7 +74,7 @@ const Home = () => {
                 <p>Venant d'une famille d'informaticiens, j'ai fais du code une de mes passions depuis mes 8 ans en commençant par du scratch puis du python. J'adore apprendre en continu sur le monde de l'informatique et son évolution. J'aime beaucoup travailler en équipe afin de s'entraider et améliorer mes compétences à l'aide des autres. Je suis aussi un grand passionné de musique, jouant un peu de la guitare durant mon temps libre.</p>
               </div>
               <div className='contacts'>
-                <a href='/#/contact'>Yohan2003@free.fr</a>
+                <a href='/#/contact'>yohan.velay@free.fr</a>
                 <span>/</span>
                 <p>07 81 07 21 78</p>
               </div>

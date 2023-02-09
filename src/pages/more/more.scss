@@ -226,6 +226,9 @@
     }
     .formation-section {
         .timeline {
+            &::after {
+                background-color: $black;
+            }
             .container {
                 &.left {
                     &::before {
@@ -241,6 +244,7 @@
                     }
                 }
                 .content {
+                    box-shadow: 0 20px 50px rgba(208, 208, 208, 0.8);
                     background-color: $white;
                     h4,p,ul {
                         color: $black;

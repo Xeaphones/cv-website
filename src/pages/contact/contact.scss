@@ -57,6 +57,24 @@
             .inputform {
                 display: flex;
                 justify-content: center;
+                @include media-max(425px) {
+                    width: 100%;
+                    label {
+                        left: 11%;
+                    }
+                }
+            }
+            .object-input {
+                width: 100%;
+                .input {
+                    width: 80%;
+                    @include media-max(425px) {
+                        width: 90%;
+                    }
+                }
+                label {
+                    left: 11%;
+                }
             }
             display: flex;
             flex-wrap: wrap;
@@ -96,7 +114,7 @@
                     background: none;
                     padding: 0.8rem;
                     @include media-max(425px) {
-                        width: 80%;
+                        width: 90%;
                     }
                     &:hover {
                         border-color: $main-color;
@@ -144,6 +162,9 @@
                         background-color: $main-color;
                     }
                 }
+                .object-input {
+                    width: 80%;
+                }
             }
         }
         p {
@@ -157,15 +178,22 @@
     }
     .input:focus ~ .label,
     .input:not(:placeholder-shown).input:not(:focus) ~ .label {
-    top: -0.5rem;
-    font-size: 1rem;
-    left: 22%;
-    background-color: $black;
-    font-weight: bold;
+        top: -0.5rem;
+        font-size: 1rem;
+        left: 22%;
+        background-color: $black;
+        font-weight: bold;
+        @include media-max(425px) {
+            left: 11%;
+        }
     }
     .textareainput:focus ~ .label,
     .textareainput:not(:placeholder-shown).textareainput:not(:focus) ~ .label {
         left: 2%;
+    }
+    .objectinput:focus ~ .label,
+    .objectinput:not(:placeholder-shown).objectinput:not(:focus) ~ .label {
+        left: 11%;
     }
     .snackbars {
         position: absolute;
