@@ -36,7 +36,8 @@ import {
   VsStudio,
   UnrealEngine,
   PHP,
-  BDD} from '../../assets/svg';
+  BDD,
+  Wordpress} from '../../assets/svg';
 
 import './home.scss';
 
@@ -105,7 +106,7 @@ const Home = () => {
         <div className='container'>
           <SkillContainer name='React' content={lang === "fr" ? "Blibliothèque utilisé lors de création de site web." : "Librarie used when creating a website."} icon={<ReactTSX />} theme={theme}/>
           <SkillContainer name='Javascript' content={lang === "fr" ? "Language principal lors de la création de site web/API (NodeJS et React)" : "Main language when creating website/API (NodeJS and React)"} icon={<JavaScript />} theme={theme}/>
-          <SkillContainer name='Unity' content={lang === "fr" ? "Moteur de jeu principal lors de la création de jeux." : "Main game engine when creating games."} icon={<Unity />} theme={theme}/>
+          <SkillContainer name='Unity' content={lang === "fr" ? "Moteur de jeu principal lors de la création de jeux." : "Main game engine when creating games."} icon={<Unity fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
           <SkillContainer name='' content='' icon={<TypeScript />} theme={theme}/>
           <SkillContainer name='' content='' icon={<NodeJS />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Html5 />} theme={theme}/>
@@ -117,14 +118,15 @@ const Home = () => {
           <SkillContainer name='' content='' icon={<NPM />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Docker />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Heroku />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<Wordpress />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Trello />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Cpp />} theme={theme}/>
-          <SkillContainer name='' content='' icon={<Linux />} theme={theme}/>
-          <SkillContainer name='' content='' icon={<PHP />} theme={theme}/>
-          <SkillContainer name='' content='' icon={<BDD />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<Linux fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
+          <SkillContainer name='' content='' icon={<PHP fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
+          <SkillContainer name='' content='' icon={<BDD fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
           <SkillContainer name='' content='' icon={<MongoDB />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Python />} theme={theme}/>
-          <SkillContainer name='' content='' icon={<UnrealEngine />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<UnrealEngine fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
           <SkillContainer name='' content='' icon={<Vite />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Go />} theme={theme}/>
         </div>

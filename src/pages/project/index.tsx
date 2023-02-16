@@ -104,9 +104,9 @@ const Projects = () => {
         </div>
       </section>
       <hr></hr>
-      <section>
+      {/* <section>
         <h2>{lang === "fr" ? "Projet" : "Project"}</h2>
-      </section>
+      </section> */}
     </div>
   )
 }

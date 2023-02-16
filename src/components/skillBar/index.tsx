@@ -6,9 +6,10 @@ type SkillBarContent = {
     percent: string,
     color: string,
     theme: string
+    icon?: JSX.Element
 }
 
-const SkillBar = ({name,percent,color,theme}: SkillBarContent) => {
+const SkillBar = ({name,percent,color,theme,icon}: SkillBarContent) => {
     const [width,setWidth] = useState("0%");
     const SkillBar = useRef<HTMLDivElement>(null);
 
@@ -47,16 +48,19 @@ const SkillBar = ({name,percent,color,theme}: SkillBarContent) => {
 
     return (
         <div ref={SkillBar} className={[theme === "light" ? style.SkillLightBar : "",style.SkillBar].join(" ")}>
-            <div className={style.title}>
-                <p>{name}</p>
-            </div>
-            <div className={[style.container, percent === "100%" && width === "100%" ? style.full : ""].join(" ")}>
-                {
-                  color === "orange" ?
-                  <div className={style.percent} style={{width: width,backgroundColor: color,color: 'black'}}>{width}</div>
-                  :
-                  <div className={style.percent} style={{width: width,backgroundColor: color,color: "black"}}>{width}</div>
-                }
+            {icon && <div className={style.icon}>{icon}</div>}
+            <div className='container'>
+              <div className={style.title}>
+                  <p>{name}</p>
+              </div>
+              <div className={[style.container, percent === "100%" && width === "100%" ? style.full : ""].join(" ")}>
+                  {
+                    color === "orange" ?
+                    <div className={style.percent} style={{width: width,backgroundColor: color,color: 'black'}}>{width}</div>
+                    :
+                    <div className={style.percent} style={{width: width,backgroundColor: color,color: "black"}}>{width}</div>
+                  }
+              </div>
             </div>
         </div>
     )

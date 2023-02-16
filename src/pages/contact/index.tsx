@@ -97,7 +97,7 @@ const Contact = () => {
           <i><Linkedin/></i>
         </a>
         <a href='https://github.com/Xeaphones' title='Xeaphones'>
-          <i><Github/></i>
+          <i><Github fill={theme === "light" ? "#222C37" : "whitesmoke"}/></i>
         </a>
       </section>
       <hr/>

@@ -1,9 +1,11 @@
-import { useState,useRef } from 'react';
+import { useState,useRef,useEffect } from 'react';
 
 import Header from '../../components/header';
 import SkillBar from '../../components/skillBar';
 import InterestContainer from '../../components/interestContainer';
 import { ArrowUp,ArrowDown,PDF,Controller,Note, Data, Clapperboard, CherryFlower } from '../../assets/svg';
+import {TypeScript,ReactTSX,NodeJS,PHP,Linux,Docker,Git,Python,Unity,UnrealEngine,Wordpress,Web} from '../../assets/svg';
+
 
 import './more.scss';
 
@@ -13,10 +15,17 @@ const More = () => {
   const environnement = useRef<HTMLDivElement>(null);
   const [environnementState,setEnvironnementState] = useState(false);
   const application = useRef<HTMLDivElement>(null);
+  const skills = useRef<null | HTMLDivElement>(null);
   const [applicationState,setApplicationState] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [lang, setLang] = useState("fr")
   const changeTheme = () => theme === "light" ? setTheme("dark") : setTheme("light");
+
+  useEffect(() => { 
+    if (skills && location.hash.includes('#skills')) { 
+      skills?.current?.scrollIntoView({});
+    }
+  }, [skills, location.hash]);
 
   const switchState = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -41,7 +50,7 @@ const More = () => {
   return (
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
       <Header currentRoute="More" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
-      <section id='skills' className='skill-section'>
+      <section ref={skills} className='skill-section'>
         <div className='title'>
           <h2>{lang === "fr" ? "Mes compétences" : "Technical skills"}</h2>
           <div className='titleSection'>
@@ -52,12 +61,12 @@ const More = () => {
             <ArrowUp fill={theme === "light" ? "" : "white"} cursor="pointer" onClick={() => {switchState(web); setWebState(!webState)}}/>}
           </div>
           <div ref={web} className='container'>
-            <SkillBar name="HTML/CSS/JS" percent="100%" color="green" theme={theme}/>
-            <SkillBar name="Typescript" percent="80%" color="#188c9f" theme={theme}/>
-            <SkillBar name="React" percent="90%" color="#188c9f" theme={theme}/>
-            <SkillBar name="NodeJS" percent="96%" color="#188c9f" theme={theme}/>
-            <SkillBar name="PHP" percent="60%" color="orange" theme={theme}/>
-            <SkillBar name="Wordpress" percent="50%" color="orange" theme={theme}/>
+            <SkillBar name="HTML/CSS/JS" percent="100%" color="green" icon={<Web fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
+            <SkillBar name="Typescript" percent="80%" color="#188c9f" icon={<TypeScript />} theme={theme}/>
+            <SkillBar name="React" percent="90%" color="#188c9f" icon={<ReactTSX/>} theme={theme}/>
+            <SkillBar name="NodeJS" percent="96%" color="#188c9f" icon={<NodeJS/>} theme={theme}/>
+            <SkillBar name="PHP" percent="60%" color="orange" icon={<PHP fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
+            <SkillBar name="Wordpress" percent="50%" color="orange" icon={<Wordpress/>} theme={theme}/>
           </div>
           <div className='titleSection'>
             <h3>Environnement</h3>
@@ -71,8 +80,8 @@ const More = () => {
             <SkillBar name="Windows Server" percent="70%" color="#188c9f" theme={theme}/>
             <SkillBar name="Linux" percent="90%" color="#188c9f" theme={theme}/>
             <SkillBar name="VMWare" percent="86%" color="#188c9f" theme={theme}/>
-            <SkillBar name="Docker" percent="40%" color="orange" theme={theme}/>
-            <SkillBar name="Git" percent="100%" color="green" theme={theme}/>
+            <SkillBar name="Docker" percent="40%" color="orange" icon={<Docker/>} theme={theme}/>
+            <SkillBar name="Git" percent="100%" color="green" icon={<Git/>} theme={theme}/>
           </div>
           <div className='titleSection'>
             <h3>Applications</h3>
@@ -82,9 +91,9 @@ const More = () => {
             <ArrowUp fill={theme === "light" ? "" : "white"} cursor="pointer" onClick={() => {switchState(application); setApplicationState(!applicationState)}}/>}
           </div>
           <div ref={application} className='container'>
-            <SkillBar name="Python" percent="100%" color="green" theme={theme}/>
-            <SkillBar name="Unity & C#" percent="88%" color="#188c9f" theme={theme}/>
-            <SkillBar name="Unreal Engine & C++" percent="60%" color="orange" theme={theme}/>
+            <SkillBar name="Python" percent="100%" color="green" icon={<Python/>} theme={theme}/>
+            <SkillBar name="Unity & C#" percent="88%" color="#188c9f" icon={<Unity fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
+            <SkillBar name="Unreal Engine & C++" percent="40%" color="orange" icon={<UnrealEngine fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
           </div>
         </div>
       </section>

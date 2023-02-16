@@ -90,6 +90,9 @@
                 margin-left: 10%;
                 @include media-max(425px) {
                     margin-bottom: 15%;
+                    label {
+                        left: 2%;
+                    }
                 }
             }
             div.submit-button {
@@ -98,6 +101,7 @@
                 margin-left: 10%;
                 @include media-max(425px) {
                     width: 25vw;
+                    margin-left: 5%;
                 }
             }
             div {
@@ -196,7 +200,7 @@
         left: 11%;
     }
     .snackbars {
-        position: absolute;
+        position: sticky;
         bottom: 2%;
         width: 100%;
         z-index: -1;
