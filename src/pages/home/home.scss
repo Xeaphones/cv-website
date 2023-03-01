@@ -7,9 +7,10 @@
     position: absolute;
     background-color: $black;
     font-family: 'Montserrat', sans-serif;
-    h2 {
+    h2,h3 {
         color: $white;
         margin-left: 3%;
+        font-size: 200%;
     }
     hr {
         width: 90%;
@@ -19,7 +20,7 @@
     .aboutme-section {
         .title {
             font-size: 200%;
-            h2 {
+            h2,h3 {
                 margin-bottom: 1%;
                 font-size: 100%;
             }
@@ -138,7 +139,7 @@
 
 .AppLight {
     background-color: $white-2;
-    h2 {
+    h2,h3 {
         color: $black;
     }
     hr {

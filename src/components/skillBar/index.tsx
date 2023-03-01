@@ -17,11 +17,11 @@ const SkillBar = ({name,percent,color,theme,icon}: SkillBarContent) => {
     if (isInViewport && width === "0%") {
         let interval = setInterval(() => {
             setWidth(width => (parseInt(width) + 1).toString() + "%");
-        }, 100);
+        }, 80);
         
         setTimeout(() => {
             clearInterval(interval);
-        }, parseInt(percent) * 101);
+        }, parseInt(percent) * (41.5 * 2));
     }
         
     function useIsInViewport(ref: React.RefObject<HTMLDivElement>) {

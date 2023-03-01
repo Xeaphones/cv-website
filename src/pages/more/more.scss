@@ -7,20 +7,22 @@
     position: absolute;
     background-color: $black;
     font-family: 'Montserrat', sans-serif;
-    h2 {
+    h2,h3 {
         color: $white;
         margin-bottom: 0%;
+        font-size: 200%;
     }
     .titleSection {
         display: flex;
         align-items: center;
         margin-top: 2%;
-        h3 {
+        h4 {
+            font-size: 150%;
             margin-top: 0;
         }
     }
     .skill-section {
-        h3 {
+        h4 {
             color: #FFFDFA;
             margin-bottom: 0%;
             margin-left: 5%;
@@ -36,7 +38,7 @@
     }
     .formation-section {
         padding: 2%;
-        h2 {
+        h2,h3 {
             margin-bottom: 2%;
             margin-left: 1%;
             margin-top: 0;
@@ -215,11 +217,11 @@
 
 .AppLight {
     background-color: $white-2;
-    h2 {
+    h2,h3 {
         color: $black;
     }
     .skill-section {
-        h3 {
+        h4 {
             color: $black;
         }
     }

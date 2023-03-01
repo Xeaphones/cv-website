@@ -1,4 +1,5 @@
 import { useState,useRef,useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
 import Header from '../../components/header';
 import SkillBar from '../../components/skillBar';
@@ -17,9 +18,29 @@ const More = () => {
   const application = useRef<HTMLDivElement>(null);
   const skills = useRef<null | HTMLDivElement>(null);
   const [applicationState,setApplicationState] = useState(false);
-  const [theme, setTheme] = useState("dark");
-  const [lang, setLang] = useState("fr")
-  const changeTheme = () => theme === "light" ? setTheme("dark") : setTheme("light");
+  const [cookies,setCookie] = useCookies(['theme','lang'])
+  const [theme, setTheme] = useState(cookies.theme ? cookies.theme : "dark");
+  const [lang, setLang] = useState(cookies.lang ? cookies.lang : "fr")
+  const changeTheme = () => {
+    if (theme === "light") {
+      setCookie("theme","dark")
+      setTheme("dark")
+    } else {
+      setCookie("theme","light")
+      setTheme("light")
+    }
+  };
+
+  const changeLang = () => {if (lang === "fr") {
+      setCookie("lang","en")
+      setLang("en");
+      document.documentElement.lang = "en";
+    } else { 
+      setCookie("lang","fr")
+      setLang("fr");
+      document.documentElement.lang = "fr";
+    }
+  }
 
   useEffect(() => { 
     if (skills && location.hash.includes('#skills')) { 
@@ -37,16 +58,6 @@ const More = () => {
     }
   }
 
-  const changeLang = () => {
-    if (lang === "fr") {
-      setLang("en");
-      document.documentElement.lang = "en";
-    } else { 
-      setLang("fr");
-      document.documentElement.lang = "fr";
-    }
-  }
-
   return (
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
       <Header currentRoute="More" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
@@ -54,7 +65,7 @@ const More = () => {
         <div className='title'>
           <h2>{lang === "fr" ? "Mes compétences" : "Technical skills"}</h2>
           <div className='titleSection'>
-            <h3>Web</h3>
+            <h4>Web</h4>
             {webState !== false ? 
             <ArrowDown fill={theme === "light" ? "" : "white"} cursor="pointer" onClick={() => {switchState(web); setWebState(!webState)}}/> 
             : 
@@ -69,7 +80,7 @@ const More = () => {
             <SkillBar name="Wordpress" percent="50%" color="orange" icon={<Wordpress/>} theme={theme}/>
           </div>
           <div className='titleSection'>
-            <h3>Environnement</h3>
+            <h4>Environnement</h4>
             {environnementState !== false ? 
             <ArrowDown fill={theme === "light" ? "" : "white"} cursor="pointer" onClick={() => {switchState(environnement); setEnvironnementState(!environnementState)}}/> 
             : 
@@ -84,7 +95,7 @@ const More = () => {
             <SkillBar name="Git" percent="100%" color="green" icon={<Git/>} theme={theme}/>
           </div>
           <div className='titleSection'>
-            <h3>Applications</h3>
+            <h4>Applications</h4>
             {applicationState !== false ? 
             <ArrowDown fill={theme === "light" ? "" : "white"} cursor="pointer" onClick={() => {switchState(application); setApplicationState(!applicationState)}}/> 
             : 
@@ -100,7 +111,7 @@ const More = () => {
       <br></br>
       <hr></hr>
       {/* <section className='soft-section'>
-        <h2>Soft Skills</h2>
+        <h3>Soft Skills</h3>
       </section>
       <br></br>
       <hr></hr> */}
@@ -156,7 +167,7 @@ const More = () => {
       </section>
       <hr></hr>
       <section className='interest-section'>
-        <h2>{lang === "fr" ? "Mes Interêts" : "Interests"}</h2>
+        <h3>{lang === "fr" ? "Mes Interêts" : "Interests"}</h3>
         <div className='interests'>
           <InterestContainer title={lang === "fr" ? "Jeux Vidéos" : "Gaming"} icon={<Controller/>} theme={theme}/>
           <InterestContainer title={lang === "fr" ? "Musique" : "Music"} icon={<Note/>} theme={theme}/>
@@ -167,7 +178,7 @@ const More = () => {
       </section>
       <hr></hr>
       <section className='download-section'>
-        <h2>{lang === "fr" ? "Télécharger mon CV" : "Download my CV"}</h2>
+        <h3>{lang === "fr" ? "Télécharger mon CV" : "Download my CV"}</h3>
         <div>
           <a href='/yohan-velay.pdf' download>
             <PDF></PDF>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { send } from 'emailjs-com';
 import config from '../../../config.json';
@@ -17,8 +18,6 @@ type FormValues = {
 };
 
 const Contact = () => {
-  const [theme, setTheme] = useState("dark");
-  const [lang, setLang] = useState("fr");
   const { register, handleSubmit,resetField } = useForm<FormValues>();
   const [discordPopup,setDiscordPopup] = useState(false);
   const [valid, setValid] = useState(false)
@@ -31,19 +30,32 @@ const Contact = () => {
     message: '',
     reply_to: '',
   });
-  const changeTheme = () => theme === "light" ? setTheme("dark") : setTheme("light");
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    setToSend(data);
-    sendMail();
-  }
+  const [cookies,setCookie] = useCookies(['theme','lang'])
+  const [theme, setTheme] = useState(cookies.theme ? cookies.theme : "dark");
+  const [lang, setLang] = useState(cookies.lang ? cookies.lang : "fr")
+  const changeTheme = () => {
+    if (theme === "light") {
+      setCookie("theme","dark")
+      setTheme("dark")
+    } else {
+      setCookie("theme","light")
+      setTheme("light")
+    }
+  };
 
   const changeLang = () => {if (lang === "fr") {
+      setCookie("lang","en")
       setLang("en");
       document.documentElement.lang = "en";
     } else { 
+      setCookie("lang","fr")
       setLang("fr");
       document.documentElement.lang = "fr";
     }
+  }
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    setToSend(data);
+    sendMail();
   }
 
   const copy = (Link: string) => {

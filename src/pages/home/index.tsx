@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 import Header from '../../components/header';
 import Card from '../../components/card';
@@ -42,14 +43,25 @@ import {
 import './home.scss';
 
 const Home = () => {
-  const [theme, setTheme] = useState("dark");
-  const [lang, setLang] = useState("fr")
-  const changeTheme = () => theme === "light" ? setTheme("dark") : setTheme("light");
+  const [cookies,setCookie] = useCookies(['theme','lang'])
+  const [theme, setTheme] = useState(cookies.theme ? cookies.theme : "dark");
+  const [lang, setLang] = useState(cookies.lang ? cookies.lang : "fr")
+  const changeTheme = () => {
+    if (theme === "light") {
+      setCookie("theme","dark")
+      setTheme("dark")
+    } else {
+      setCookie("theme","light")
+      setTheme("light")
+    }
+  };
 
   const changeLang = () => {if (lang === "fr") {
+      setCookie("lang","en")
       setLang("en");
       document.documentElement.lang = "en";
     } else { 
+      setCookie("lang","fr")
       setLang("fr");
       document.documentElement.lang = "fr";
     }
@@ -101,7 +113,7 @@ const Home = () => {
       <hr/>
       <section className='skills-section'>
         <div className='title'>
-          <h2>{lang === "fr" ? "Mes Compétences" : "My Skills"}</h2>
+          <h3>{lang === "fr" ? "Mes Compétences" : "My Skills"}</h3>
         </div>
         <div className='container'>
           <SkillContainer name='React' content={lang === "fr" ? "Blibliothèque utilisé lors de création de site web." : "Librarie used when creating a website."} icon={<ReactTSX />} theme={theme}/>
