@@ -3,6 +3,7 @@ import Home from '../pages/home';
 import Projects from '../pages/project';
 import Contact from '../pages/contact';
 import More from '../pages/more';
+import Error404 from '../pages/404';
 
 export const routes: RouteObject[] = [
   {
@@ -21,4 +22,8 @@ export const routes: RouteObject[] = [
     path: 'more',
     element: <More />,
   },
+  {
+    path: '*',
+    element: <Error404 />
+  }
 ];

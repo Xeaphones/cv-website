@@ -21,7 +21,7 @@ const SkillBar = ({name,percent,color,theme,icon}: SkillBarContent) => {
         
         setTimeout(() => {
             clearInterval(interval);
-        }, parseInt(percent) * (41.5 * 2));
+        }, parseInt(percent) * (41.5 * 1));
     }
         
     function useIsInViewport(ref: React.RefObject<HTMLDivElement>) {

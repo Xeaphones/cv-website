@@ -103,7 +103,7 @@ const More = () => {
           </div>
           <div ref={application} className='container'>
             <SkillBar name="Python" percent="100%" color="green" icon={<Python/>} theme={theme}/>
-            <SkillBar name="Unity & C#" percent="88%" color="#188c9f" icon={<Unity fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
+            <SkillBar name="Unity & C#" percent="75%" color="#188c9f" icon={<Unity fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
             <SkillBar name="Unreal Engine & C++" percent="40%" color="orange" icon={<UnrealEngine fill={theme === "light" ? "#222C37" : "whitesmoke"}/>} theme={theme}/>
           </div>
         </div>

@@ -1,0 +1,62 @@
+@use '../../styles/style.scss' as *;
+
+.App {
+    .error404 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            h1 {
+                color: $purple;
+                font-size: 1000%;
+                margin-bottom: 0%;
+                text-shadow: 0 0px 20px $purple;
+            }
+            h2 {
+                margin-top: 0%;
+                margin-bottom: 10%;
+                margin-left: 0;
+                font-size: 250%;
+            }
+            button {
+                all: unset;
+                width: fit-content;
+                height: 100%;
+                border: 2px solid $grey;
+                box-sizing: border-box;
+                border-radius: 0.5rem;
+                color: $white;
+                text-align: center;
+                padding: 0.5rem;
+                font-weight: bold;
+                font-size: 120%;
+                cursor: pointer;
+                &:hover {
+                    background-color: $main-color;
+                    border-color: $purple;
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+
+.AppLight {
+    .error404 {
+        div {
+            h1 {
+                text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+            }
+            button {
+                border-color: $black;
+                color: $black
+            }
+        }
+    }
+}
