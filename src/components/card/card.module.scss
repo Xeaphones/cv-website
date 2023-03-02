@@ -1,7 +1,8 @@
 @use '../../styles/style.scss' as *;
 
 .card{  
-    position: relative;  
+    position: relative;
+    font-weight: bold;
     .face{  
         width: 25vw;  
         height: 36vh;  

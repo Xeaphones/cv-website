@@ -34,8 +34,8 @@ const Error404 = () => {
       <section className='error404'>
         <div>
           <h1>404</h1>
-          <h2>Page not found</h2>
-          <button onClick={() => window.location.href = "/"}>Go back to home</button>
+          <h2>{lang == "fr" ? "Page introuvable" : "Page not found"}</h2>
+          <button onClick={() => window.location.href = "/"}>{lang == "fr" ? "Retournez à l'accueil" : "Go back to home"}</button>
         </div>
       </section>
     </div>

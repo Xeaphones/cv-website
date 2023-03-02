@@ -105,10 +105,10 @@ const Contact = () => {
         <a onClick={() => {copy("Føxy#6578")}} className="discord">
           <i title='Føxy#6578'><Discord/></i>
         </a>
-        <a href='https://fr.linkedin.com/in/yohan-velay' title='Yohan Velay'>
+        <a href='https://fr.linkedin.com/in/yohan-velay' target={'_blank'} title='Yohan Velay'>
           <i><Linkedin/></i>
         </a>
-        <a href='https://github.com/Xeaphones' title='Xeaphones'>
+        <a href='https://github.com/Xeaphones' target={'_blank'} title='Xeaphones'>
           <i><Github fill={theme === "light" ? "#222C37" : "whitesmoke"}/></i>
         </a>
       </section>
