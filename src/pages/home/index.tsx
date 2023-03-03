@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useCookies } from 'react-cookie';
+import { useSwitch } from '../../assets/script/switch';
 
 import Header from '../../components/header';
 import Card from '../../components/card';
@@ -43,33 +42,11 @@ import {
 import './home.scss';
 
 const Home = () => {
-  const [cookies,setCookie] = useCookies(['theme','lang'])
-  const [theme, setTheme] = useState(cookies.theme ? cookies.theme : "dark");
-  const [lang, setLang] = useState(cookies.lang ? cookies.lang : "fr")
-  const changeTheme = () => {
-    if (theme === "light") {
-      setCookie("theme","dark")
-      setTheme("dark")
-    } else {
-      setCookie("theme","light")
-      setTheme("light")
-    }
-  };
-
-  const changeLang = () => {if (lang === "fr") {
-      setCookie("lang","en")
-      setLang("en");
-      document.documentElement.lang = "en";
-    } else { 
-      setCookie("lang","fr")
-      setLang("fr");
-      document.documentElement.lang = "fr";
-    }
-  }
+  const [theme, setTheme, lang, setLang] = useSwitch();
 
   return (
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
-      <Header currentRoute="Home" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
+      <Header currentRoute="Home" theme={theme} lang={lang} changeTheme={setTheme} changeLang={setLang}/>
       <section className='aboutme-section'>
         <div className='title'>
           <h2>{lang === "fr" ? "Mon Profil" : "About Me"}</h2>

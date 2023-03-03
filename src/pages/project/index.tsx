@@ -1,37 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { useTheme, useLang,useSwitch } from '../../assets/script/switch'
 import Header from '../../components/header';
 
 import './project.scss';
 
 const Projects = () => {
-  const [cookies,setCookie] = useCookies(['theme','lang'])
-  const [theme, setTheme] = useState(cookies.theme ? cookies.theme : "dark");
-  const [lang, setLang] = useState(cookies.lang ? cookies.lang : "fr")
-  const changeTheme = () => {
-    if (theme === "light") {
-      setCookie("theme","dark")
-      setTheme("dark")
-    } else {
-      setCookie("theme","light")
-      setTheme("light")
-    }
-  };
-
-  const changeLang = () => {if (lang === "fr") {
-      setCookie("lang","en")
-      setLang("en");
-      document.documentElement.lang = "en";
-    } else { 
-      setCookie("lang","fr")
-      setLang("fr");
-      document.documentElement.lang = "fr";
-    }
-  }
+  const [theme, setTheme, lang, setLang] = useSwitch();
 
   return (
     <div className={[(theme === "light" ? "AppLight" : ""),"App"].join(" ")}>
-      <Header currentRoute="Projects" theme={theme} lang={lang} changeTheme={changeTheme} changeLang={changeLang}/>
+      <Header currentRoute="Projects" theme={theme} lang={lang} changeTheme={setTheme} changeLang={setLang}/>
       <section className='experience-section'>
         <h2>Experience</h2>
         <div className="timeline">
