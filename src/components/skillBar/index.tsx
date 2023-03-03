@@ -26,7 +26,7 @@ const SkillBar = ({name,percent,color,theme,icon}: SkillBarContent) => {
             clearInterval(interval);
           }
         }
-    });
+    }),[isInViewport];
 
     useEffect(() => {
         if (width === percent) {
