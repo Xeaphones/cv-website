@@ -10,19 +10,29 @@ type SkillBarContent = {
 }
 
 const SkillBar = ({name,percent,color,theme,icon}: SkillBarContent) => {
-    const [width,setWidth] = useState("0%");
+    let [width,setWidth] = useState("0%");
     const SkillBar = useRef<HTMLDivElement>(null);
 
     const isInViewport = useIsInViewport(SkillBar);
-    if (isInViewport && width === "0%") {
-        let interval = setInterval(() => {
+    let interval: any;
+
+    useEffect(() => {
+        if (isInViewport && width !== percent) {
+          interval = setInterval(() => {
             setWidth(width => (parseInt(width) + 1).toString() + "%");
-        }, 80);
-        
-        setTimeout(() => {
+          }, 50);
+
+          return () => {
             clearInterval(interval);
-        }, parseInt(percent) * (41.5 * 1));
-    }
+          }
+        }
+    });
+
+    useEffect(() => {
+        if (width === percent) {
+          clearInterval(interval);
+        }
+    },[width]);
         
     function useIsInViewport(ref: React.RefObject<HTMLDivElement>) {
         const [isIntersecting, setIsIntersecting] = useState(false);
