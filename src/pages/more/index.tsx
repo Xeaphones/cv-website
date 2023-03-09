@@ -4,6 +4,7 @@ import { useSwitch } from '../../assets/script/switch';
 import Header from '../../components/header';
 import SkillBar from '../../components/skillBar';
 import InterestContainer from '../../components/interestContainer';
+import ScrollUpButton from '../../components/scrollupButton';
 import { ArrowUp,ArrowDown,PDF,Controller,Note, Data, Clapperboard, CherryFlower } from '../../assets/svg';
 import {TypeScript,ReactTSX,NodeJS,PHP,Linux,Docker,Git,Python,Unity,UnrealEngine,Wordpress,Web} from '../../assets/svg';
 
@@ -158,11 +159,12 @@ const More = () => {
       <section className='download-section'>
         <h3>{lang === "fr" ? "Télécharger mon CV" : "Download my CV"}</h3>
         <div>
-          <a href='/yohan-velay.pdf' download>
+          <a href={lang === "fr" ? '/yohan-velay-fr.pdf' : '/yohan-velay-en.pdf'} download>
             <PDF></PDF>
           </a>
         </div>
       </section>
+      <ScrollUpButton min={250}/>
     </div>
   )
 }

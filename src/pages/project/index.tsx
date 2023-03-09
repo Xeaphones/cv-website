@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useTheme, useLang,useSwitch } from '../../assets/script/switch'
 import Header from '../../components/header';
+import ScrollUpButton from '../../components/scrollupButton';
 
 import './project.scss';
 
@@ -91,6 +92,7 @@ const Projects = () => {
       {/* <section>
         <h2>{lang === "fr" ? "Projet" : "Project"}</h2>
       </section> */}
+      <ScrollUpButton min={0}/>
     </div>
   )
 }

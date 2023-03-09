@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { send } from 'emailjs-com';
 import config from '../../../config.json';
 import Header from '../../components/header';
+import ScrollUpButton from '../../components/scrollupButton';
 import { CrossMarkCricle, CheckMarkCircle, Discord, Linkedin,Github } from '../../assets/svg';
 
 import "./contact.scss"
@@ -138,6 +139,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      <ScrollUpButton min={0}/>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { useSwitch } from '../../assets/script/switch';
 import Header from '../../components/header';
 import Card from '../../components/card';
 import SkillContainer from '../../components/skillContainer';
+import ScrollUpButton from '../../components/scrollupButton';
 
 import codeWhiteIMG from "../../assets/img/code_white_128.png";
 import gameDevWhiteIMG from "../../assets/img/game-dev_white_128.png";
@@ -61,7 +62,7 @@ const Home = () => {
                 <p>{lang === "fr" ? "Etudiant" : "Student"}</p>
               </div>
               <div className='bio'>
-                <p>Venant d'une famille d'informaticiens, j'ai fais du code une de mes passions depuis mes 8 ans en commençant par du scratch puis du python. J'adore apprendre en continu sur le monde de l'informatique et son évolution. J'aime beaucoup travailler en équipe afin de s'entraider et améliorer mes compétences à l'aide des autres. Je suis aussi un grand passionné de musique, jouant un peu de la guitare durant mon temps libre.</p>
+                <p>Venant d'une famille d'informaticiens, j'ai fait du code une de mes passions depuis mes 8 ans en commençant par du scratch puis du python. Féru d'informatique, j’apprends en continu sur le monde du numérique. J'aime beaucoup travailler en équipe pour profiter de la dynamique du groupe et améliorer mes compétences. Je suis passionné de musique, jouant un peu de la guitare durant mon temps libre.</p>
               </div>
               <div className='contacts'>
                 <a href='/#/contact'>yohan.velay@free.fr</a>
@@ -120,6 +121,7 @@ const Home = () => {
           <SkillContainer name='' content='' icon={<Go />} theme={theme}/>
         </div>
       </section>
+      <ScrollUpButton min={100}/>
     </div>
   )
 }

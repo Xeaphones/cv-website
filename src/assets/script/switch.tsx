@@ -36,11 +36,9 @@ export const useSwitch = ():[string, () => void,string, () => void] => {
     const [lang, setLang] = useLang(cookies.lang? cookies.lang : "fr");
 
     useEffect(() => {
-        console.log(cookies.theme, theme)
         if (cookies.theme !== theme) {
         setCookie('theme', theme, { path: '/' });
         }
-        console.log(cookies.lang, lang)
         if (cookies.lang !== lang) {
         setCookie('lang', lang, { path: '/' });
         }
