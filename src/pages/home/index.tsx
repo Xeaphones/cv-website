@@ -38,7 +38,8 @@ import {
   UnrealEngine,
   PHP,
   BDD,
-  Wordpress} from '../../assets/svg';
+  Wordpress,
+  Figma} from '../../assets/svg';
 
 import './home.scss';
 
@@ -110,6 +111,7 @@ const Home = () => {
           <SkillContainer name='' content='' icon={<Heroku />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Wordpress />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Trello />} theme={theme}/>
+          <SkillContainer name='' content='' icon={<Figma />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Cpp />} theme={theme}/>
           <SkillContainer name='' content='' icon={<Linux fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
           <SkillContainer name='' content='' icon={<PHP fill={theme === "light" ? "black" : "whitesmoke"}/>} theme={theme}/>
