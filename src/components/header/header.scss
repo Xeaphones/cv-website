@@ -1,0 +1,13 @@
+header {
+    box-shadow: 5px 5px 30px #0003;
+    background-color: var(--background);
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+    align-items: center;
+    padding-inline: 2rem;
+}
+
+header nav ul li a a[data-current="current"] {
+    border-bottom: 2px solid #6772eb;
+}
