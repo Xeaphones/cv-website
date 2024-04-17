@@ -1,0 +1,91 @@
+.card {
+    width: fit-content;
+    height: fit-content;
+    .icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #2c73df;
+        .fa {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: #fff;
+        }
+    }
+    img {
+        width: 130px;
+    }
+    .face {
+        width: 350px;
+        height: 250px;
+        transition: 0.5s;
+        background: hsl(var(--background));
+        &.face1 {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transition: .7s;
+            transform: translateY(150px);
+            .content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                font-size: 1.5rem;
+                text-align: center;
+            }
+        }
+        &.face2 {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: .8s;
+            transform: translateY(-100px);
+            box-shadow: var(--box-shadow);
+            &::after{
+                content: "";
+                position: absolute;
+                width: 30px;
+                height: 4px;
+                bottom: 15px;
+                left: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: hsl(var(--primary));
+            }
+            .content {
+                p {
+                    margin: 0;
+                    padding: 0;
+                    text-align: center;
+                }
+                h3 {
+                    margin: 0 0 10px 0;
+                    padding: 0;
+                    font-size: 24px;
+                    text-align: center;
+                } 
+            }
+        }
+    }
+    &:hover {
+        .face.face1 {
+            transform: translateY(0px);
+            background: hsl(var(--primary));
+        }
+        .face.face2{
+            transform: translateY(0);
+        }
+    }
+}

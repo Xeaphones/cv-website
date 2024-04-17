@@ -1,0 +1,17 @@
+.success {
+    @extend .border-success;
+    @extend .bg-success;
+    @extend .text-success-foreground;
+  }
+  
+.border-success {
+    border-color: hsl(var(--success));
+  }
+  
+.bg-success {
+    background-color: hsl(var(--success));
+  }
+  
+.text-success-foreground {
+    color: hsl(var(--success-foreground));
+  }

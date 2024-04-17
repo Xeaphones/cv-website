@@ -1,0 +1,16 @@
+#home {
+    #aboutme {
+        .info, 
+        .contact {
+            p, 
+            a {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+
+        .info p {
+            color: hsl(var(--primary));
+        }
+    }
+}
