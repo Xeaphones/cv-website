@@ -2,60 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Catppuccin Latte (light) / Mocha (dark) — https://catppuccin.com/palette/ */
 @layer base {
   :root {
-    --background: 0,0%,96%;
-    --background2: 205, 38%, 94%;
-    --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 235 77% 66%;
-    --primary2: 235, 100%, 80%;
+    /* Latte surfaces */
+    --background: 220 23% 95%; /* Base #eff1f5 */
+    --background2: 220 22% 92%; /* Mantle #e6e9ef */
+    --foreground: 234 16% 35%; /* Text #4c4f69 */
+    --card: 223 16% 83%; /* Surface0 #ccd0da */
+    --card-foreground: 234 16% 35%;
+    --popover: 220 23% 95%;
+    --popover-foreground: 234 16% 35%;
+    --primary: 235 77% 66%; /* Original site purple */
+    --primary2: 235 100% 80%;
     --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 104.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 262.1 83.3% 57.8%;
+    --secondary: 225 14% 77%; /* Surface1 #bcc0cc */
+    --secondary-foreground: 234 16% 35%;
+    --muted: 223 16% 83%;
+    --muted-foreground: 233 13% 41%; /* Subtext1 #5c5f77 */
+    --accent: 225 14% 77%;
+    --accent-foreground: 234 16% 35%;
+    --destructive: 347 87% 44%; /* Red #d20f39 */
+    --destructive-foreground: 220 23% 95%;
+    --border: 225 14% 77%;
+    --input: 223 16% 83%;
+    --ring: 235 77% 66%;
     --radius: 0.5rem;
-    --box-shadow: 0 20px 50px #d0d0d0cc;
-    --success: 152 69% 31%;
-    --sucess-foreground: 210 20% 98%;
+    --box-shadow: 0 20px 50px hsl(234 16% 35% / 0.12);
+    --success: 109 58% 40%; /* Green #40a02b */
+    --success-foreground: 220 23% 95%;
+    /* Catppuccin accents for callouts & semantics */
+    --ctp-yellow: 35 77% 49%;
+    --ctp-peach: 22 99% 52%;
+    --ctp-green: 109 58% 40%;
+    --ctp-teal: 183 74% 35%;
+    --ctp-blue: 220 91% 54%;
+    --ctp-lavender: 231 97% 72%;
+    --ctp-pink: 316 73% 69%;
   }
 
   .dark {
-    --background: 0, 0%, 11%;
-    --background2: 0, 0%, 11%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 235 77% 66%;
-    --primary2: 235, 100%, 80%;
+    /* Mocha surfaces */
+    --background: 240 21% 15%; /* Base #1e1e2e */
+    --background2: 240 21% 12%; /* Mantle #181825 */
+    --foreground: 226 64% 88%; /* Text #cdd6f4 */
+    --card: 237 16% 23%; /* Surface0 #313244 */
+    --card-foreground: 226 64% 88%;
+    --popover: 240 21% 15%;
+    --popover-foreground: 226 64% 88%;
+    --primary: 235 77% 66%; /* Original site purple */
+    --primary2: 235 100% 80%;
     --primary-foreground: 210 20% 98%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
+    --secondary: 234 13% 31%; /* Surface1 #45475a */
+    --secondary-foreground: 226 64% 88%;
+    --muted: 237 16% 23%;
+    --muted-foreground: 227 35% 80%; /* Subtext1 #bac2de */
+    --accent: 234 13% 31%;
+    --accent-foreground: 226 64% 88%;
+    --destructive: 343 81% 75%; /* Red #f38ba8 */
+    --destructive-foreground: 240 21% 15%;
+    --border: 234 13% 31%;
+    --input: 234 13% 31%;
     --ring: 263.4 70% 50.4%;
-    --box-shadow: 0 20px 50px #000c;
-    --success: 152 69% 31%;
-    --sucess-foreground: 210 20% 98%;
+    --box-shadow: 0 20px 50px hsl(0 0% 0% / 0.45);
+    --success: 115 54% 76%; /* Green #a6e3a1 */
+    --success-foreground: 240 21% 15%;
+    --ctp-yellow: 41 86% 83%;
+    --ctp-peach: 23 92% 75%;
+    --ctp-green: 115 54% 76%;
+    --ctp-teal: 170 57% 73%;
+    --ctp-blue: 217 92% 76%;
+    --ctp-lavender: 232 97% 85%;
+    --ctp-pink: 316 72% 86%;
   }
 }
 
@@ -76,7 +94,7 @@ body {
   overflow-x: hidden;
 }
 
-#root, 
+#root,
 .page {
   min-width: 100vw;
   min-height: 100vh;

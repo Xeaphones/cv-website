@@ -1,37 +1,34 @@
-import { useEffect, useState } from 'react'
-import { Progress } from "@/components/ui/progress"
-import style from './skillbar.module.scss'
+import { Progress } from "@/components/ui/progress";
+import { useIsMobile } from "@/lib/hooks";
+import { cn } from "@/lib/utils";
 
 type SkillBarContent = {
-    name: string,
-    percent: number,
-    color?: string,
-    icon?: JSX.Element
-}
+  name: string;
+  percent: number;
+  color?: string;
+  icon?: JSX.Element;
+  animationDelay?: number;
+};
 
-const SkillBar = ({name,percent,color,icon}: SkillBarContent) => {
-    const [width, setWidth] = useState(window.innerWidth);
+const SkillBar = ({ name, percent, color, icon, animationDelay }: SkillBarContent) => {
+  const isMobile = useIsMobile();
 
-    useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const isMobile = width <= 800;
-
-    return (
-        <div className={[style.SkillBar, isMobile ? style.mobile : undefined].join(" ")}>
-            {icon && <div className={style.icon}>{icon}</div>}
-            <div className='flex flex-col w-[100%] gap-2'>
-              <div className={style.title}>
-                  <p>{name}</p>
-              </div>
-              <Progress value={percent} color={color}/>
-            </div>
+  return (
+    <div className={cn("flex gap-3", isMobile ? "w-full" : "w-[48%]")}>
+      {icon ? (
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center self-start pt-0.5 [&_svg]:h-5 [&_svg]:w-5">
+          {icon}
         </div>
-    )
-}
+      ) : null}
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="text-sm font-medium leading-snug">{name}</p>
+          <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{percent}%</span>
+        </div>
+        <Progress value={percent} color={color} animationDelay={animationDelay} />
+      </div>
+    </div>
+  );
+};
 
-export default SkillBar
+export default SkillBar;

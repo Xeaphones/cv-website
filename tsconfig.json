@@ -12,6 +12,9 @@
       ],
       "@pages/*": [
         "./src/pages/*"
+      ],
+      "content-collections": [
+        "./.content-collections/generated"
       ]
     },
 
