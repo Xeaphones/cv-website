@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
 
+import { useIsMobile } from "@/lib/hooks";
 import style from './skillcontainer.module.scss'
 
 type SkillContainerContent = {
@@ -14,16 +15,9 @@ type SkillContainerContent = {
 }
 
 const SkillContainer = ({icon,name,content}: SkillContainerContent) => {
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const isMobile = width <= 800;
+    const navigate = useNavigate()
+    const location = useLocation()
+    const isMobile = useIsMobile();
 
     let infoDiv = null;
     if (typeof content === 'string' && content !== '') {
@@ -35,8 +29,13 @@ const SkillContainer = ({icon,name,content}: SkillContainerContent) => {
         )
     }
 
-    let goToSkill = () => {
-        location.href="/#/more#skills"
+    const goToSkill = () => {
+        if (location.pathname === "/more") {
+            document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" })
+            window.history.replaceState(null, "", "/more#skills")
+        } else {
+            navigate("/more#skills")
+        }
     }
 
     return (

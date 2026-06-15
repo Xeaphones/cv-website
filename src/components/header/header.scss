@@ -1,3 +1,10 @@
+header.site-header {
+    background: hsl(var(--background) / 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid hsl(var(--border) / 0.4);
+}
+
 header nav ul li a a[data-current="current"] {
     border-bottom: 2px solid hsl(var(--primary));
 }
@@ -15,7 +22,9 @@ header nav ul li a a[data-current="current"] {
     height: 100%;
     width: fit-content;
     z-index: 100;
-    background-color: hsl(var(--background));
+    background-color: hsl(var(--background) / 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .header-mobile div a {

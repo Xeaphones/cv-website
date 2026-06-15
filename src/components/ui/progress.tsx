@@ -1,27 +1,44 @@
-import * as React from "react"
-import * as ProgressPrimitive from "@radix-ui/react-progress"
+import * as React from "react";
+import * as ProgressPrimitive from "@radix-ui/react-progress";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const Progress = ({ className, value, startValue=value/8, color, ...props } : any) => {
-  const [progress, setProgress] = React.useState(startValue);
+type ProgressProps = React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & {
+  value?: number;
+  color?: string;
+  animationDelay?: number;
+};
+
+const Progress = ({
+  className,
+  value = 0,
+  color,
+  animationDelay = 120,
+  ...props
+}: ProgressProps) => {
+  const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setProgress(value), 500);
-    return () => clearTimeout(timer);
-  }, []);
+    setProgress(0);
+    const timer = window.setTimeout(() => setProgress(value), animationDelay);
+    return () => window.clearTimeout(timer);
+  }, [value, animationDelay]);
 
   return (
-    <ProgressPrimitive.Root 
-    className={cn("relative h-4 w-full overflow-hidden rounded-full bg-primary/20",className)} 
-    value={progress} {...props}>
+    <ProgressPrimitive.Root
+      className={cn("relative h-1.5 w-full overflow-hidden rounded-full bg-muted/80", className)}
+      value={progress}
+      {...props}
+    >
       <ProgressPrimitive.Indicator
-        className="h-full w-full flex-1 bg-primary transition-all"
-        style={{ transform: `translateX(-${100 - (progress || 0)}%)`, backgroundColor: color }}
+        className="h-full w-full flex-1 rounded-full transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        style={{
+          transform: `translateX(-${100 - progress}%)`,
+          backgroundColor: color ?? "hsl(var(--primary))",
+        }}
       />
-      <p className="text-center relative bottom-[105%] text-white">{progress}%</p>
     </ProgressPrimitive.Root>
   );
 };
 
-export { Progress }
+export { Progress };

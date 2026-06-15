@@ -1,5 +1,5 @@
 import style from "./card.module.scss"
-import { useTheme } from "@/components/themeProvider"
+import { useResolvedTheme } from "@/lib/hooks";
 
 type CardContent = {
     title: string,
@@ -11,15 +11,8 @@ type CardContent = {
 const Card = ({title,content,imgSRC,imgALT}: CardContent) => {
     let newText = content.split ('\\n').map ((item, i) => <p key={i}>{item}</p>);
 
-    let theme = useTheme().theme;
-    if (theme === "system") {
-        theme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
-    }
-
-    const src = theme == "light" ? imgSRC.light : imgSRC.dark
+    const theme = useResolvedTheme();
+    const src = theme === "light" ? imgSRC.light : imgSRC.dark
     
     return (
         <div className={style.card}>
