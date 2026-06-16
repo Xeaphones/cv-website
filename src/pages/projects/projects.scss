@@ -1,0 +1,27 @@
+#project {
+    #projects {
+        .thumbnail {
+            position: relative;
+            box-shadow: var(--box-shadow);
+            border-radius: 8px;
+
+            img {
+                border-radius: 8px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                box-shadow: 0 10px 60px hsl(var(--primary));
+            }
+
+            .content {
+                position: absolute;
+                bottom: 0;
+                background: hsl(240 21% 15% / 0.55);
+                color: hsl(var(--foreground));
+                font-size: 1.8rem;
+                width: 100%;
+            }
+        }
+    }
+}

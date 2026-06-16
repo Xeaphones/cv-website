@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Catppuccin Latte (light) / Mocha (dark) — https://catppuccin.com/palette/ */
+@layer base {
+  :root {
+    /* Latte surfaces */
+    --background: 220 23% 95%; /* Base #eff1f5 */
+    --background2: 220 22% 92%; /* Mantle #e6e9ef */
+    --foreground: 234 16% 35%; /* Text #4c4f69 */
+    --card: 223 16% 83%; /* Surface0 #ccd0da */
+    --card-foreground: 234 16% 35%;
+    --popover: 220 23% 95%;
+    --popover-foreground: 234 16% 35%;
+    --primary: 235 77% 66%; /* Original site purple */
+    --primary2: 235 100% 80%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 225 14% 77%; /* Surface1 #bcc0cc */
+    --secondary-foreground: 234 16% 35%;
+    --muted: 223 16% 83%;
+    --muted-foreground: 233 13% 41%; /* Subtext1 #5c5f77 */
+    --accent: 225 14% 77%;
+    --accent-foreground: 234 16% 35%;
+    --destructive: 347 87% 44%; /* Red #d20f39 */
+    --destructive-foreground: 220 23% 95%;
+    --border: 225 14% 77%;
+    --input: 223 16% 83%;
+    --ring: 235 77% 66%;
+    --radius: 0.5rem;
+    --box-shadow: 0 20px 50px hsl(234 16% 35% / 0.12);
+    --success: 109 58% 40%; /* Green #40a02b */
+    --success-foreground: 220 23% 95%;
+    /* Catppuccin accents for callouts & semantics */
+    --ctp-yellow: 35 77% 49%;
+    --ctp-peach: 22 99% 52%;
+    --ctp-green: 109 58% 40%;
+    --ctp-teal: 183 74% 35%;
+    --ctp-blue: 220 91% 54%;
+    --ctp-lavender: 231 97% 72%;
+    --ctp-pink: 316 73% 69%;
+  }
+
+  .dark {
+    /* Mocha surfaces */
+    --background: 240 21% 15%; /* Base #1e1e2e */
+    --background2: 240 21% 12%; /* Mantle #181825 */
+    --foreground: 226 64% 88%; /* Text #cdd6f4 */
+    --card: 237 16% 23%; /* Surface0 #313244 */
+    --card-foreground: 226 64% 88%;
+    --popover: 240 21% 15%;
+    --popover-foreground: 226 64% 88%;
+    --primary: 235 77% 66%; /* Original site purple */
+    --primary2: 235 100% 80%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 234 13% 31%; /* Surface1 #45475a */
+    --secondary-foreground: 226 64% 88%;
+    --muted: 237 16% 23%;
+    --muted-foreground: 227 35% 80%; /* Subtext1 #bac2de */
+    --accent: 234 13% 31%;
+    --accent-foreground: 226 64% 88%;
+    --destructive: 343 81% 75%; /* Red #f38ba8 */
+    --destructive-foreground: 240 21% 15%;
+    --border: 234 13% 31%;
+    --input: 234 13% 31%;
+    --ring: 263.4 70% 50.4%;
+    --box-shadow: 0 20px 50px hsl(0 0% 0% / 0.45);
+    --success: 115 54% 76%; /* Green #a6e3a1 */
+    --success-foreground: 240 21% 15%;
+    --ctp-yellow: 41 86% 83%;
+    --ctp-peach: 23 92% 75%;
+    --ctp-green: 115 54% 76%;
+    --ctp-teal: 170 57% 73%;
+    --ctp-blue: 217 92% 76%;
+    --ctp-lavender: 232 97% 85%;
+    --ctp-pink: 316 72% 86%;
+  }
+}
+
+.bg-background2 {
+  background-color: hsl(var(--background2));
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background2 text-foreground;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#root,
+.page {
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow-x: none;
+}

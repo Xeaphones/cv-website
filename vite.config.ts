@@ -1,7 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import path from "path"
+import react from "@vitejs/plugin-react"
+import contentCollections from "@content-collections/vite"
+import { defineConfig } from "vite"
 
-// https://vitejs.dev/config/
+const generatedContentPath = path.resolve(__dirname, "./.content-collections/generated")
+
 export default defineConfig({
-  plugins: [react()]
+  plugins: [contentCollections(), react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "content-collections": generatedContentPath,
+    },
+  },
 })
+

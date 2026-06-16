@@ -1,0 +1,33 @@
+header.site-header {
+    background: hsl(var(--background) / 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid hsl(var(--border) / 0.4);
+}
+
+header nav ul li a a[data-current="current"] {
+    border-bottom: 2px solid hsl(var(--primary));
+}
+
+.header-mobile {
+    top: 5rem;
+    left: 0%;
+    position: absolute!important;
+    // size: 150%;
+    height: 100vh;
+    width: fit-content;
+}
+
+.header-mobile div {
+    height: 100%;
+    width: fit-content;
+    z-index: 100;
+    background-color: hsl(var(--background) / 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.header-mobile div a {
+    font-size: 1.5rem!important;
+    line-height: 3rem!important;
+}

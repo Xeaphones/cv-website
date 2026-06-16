@@ -1,53 +1,39 @@
-import { useState } from 'react';
-import style from "./header.module.scss";
-import { ThemeIcon,BurgerMenu,CrossMark } from "../../assets/svg";
+import { useState } from "react";
 
-type HeaderContent = {
-    currentRoute: string,
-    theme: string,
-    lang: string,
-    changeTheme: () => void,
-    changeLang: () => void
-}
+import { ThemeToggle } from "@/components/themeToggle";
+import { useIsMobile } from "@/lib/hooks";
 
-const Header = ({currentRoute, theme,lang, changeTheme,changeLang}: HeaderContent) => {
-    const [menuState, setMenuState] = useState(false)
-    const OpenMenu = () => {
-        setMenuState(!menuState)
-    }
-    let menuIcon;
-    if (menuState === true) {
-        menuIcon = <CrossMark />
-    } else {
-        menuIcon = <BurgerMenu />
-    }
+import { LanguageSelect } from "./LanguageSelect";
+import { MobileMenu } from "./MobileMenu";
+import { NavLinks } from "./NavLinks";
+import { SiteLogo } from "./SiteLogo";
+import "./header.scss";
 
-    return (
-        <header className={theme === "light" ? style.HeaderLight : ""}>
-            <div className={style.BurgerMenu} onClick={OpenMenu}>
-                {menuIcon}
-            </div>
-            <div className={style.Name}>
-                <h1><a href='/'>Yohan Velay</a></h1>
-            </div>
-            <nav className={menuState === true ? style.menuActive : ""}>
-                <ul>
-                    <li><a href="/" className={currentRoute === "Home" ? style.currentNav : ""}>{lang === "fr" ? "Accueil" : "Home"}</a></li>
-                    <li><a href="/#/more"className={currentRoute === "More" ? style.currentNav : ""}>{lang === "fr" ? "Plus" : "More"}</a></li>
-                    <li><a href="/#/projects"className={currentRoute === "Projects" ? style.currentNav : ""}>{lang === "fr" ? "Projets" : "Projects"}</a></li>
-                    <li><a href="/#/contact"className={currentRoute === "Contact" ? style.currentNav : ""}>Contact</a></li>
-                </ul>
-            </nav>
-            <div className={style.OptionIcon}>
-                <div className={style.LangIcon}>
-                    <p onClick={changeLang}>{lang === "fr" ? "FR" : "EN"}</p>
-                </div>
-                <div className={style.ThemeIcon} onClick={changeTheme}>
-                    <ThemeIcon />
-                </div>
-            </div>
-        </header>
-    )
-}
+const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
-export default Header
+  return (
+    <header className="site-header sticky top-0 z-50 flex h-20 w-full items-center justify-between px-10 font-mono">
+      {!isMobile && (
+        <>
+          <SiteLogo />
+          <NavLinks />
+        </>
+      )}
+      {isMobile && (
+        <MobileMenu
+          open={menuOpen}
+          onToggle={() => setMenuOpen((open) => !open)}
+          onClose={() => setMenuOpen(false)}
+        />
+      )}
+      <div className="inline-flex gap-2">
+        <LanguageSelect compact={isMobile} />
+        <ThemeToggle />
+      </div>
+    </header>
+  );
+};
+
+export default Header;
