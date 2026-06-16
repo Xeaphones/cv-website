@@ -4,7 +4,6 @@ import { PageShell } from "@/components/PageShell";
 
 import { ExperienceTimelineSection } from "./sections/ExperienceTimelineSection";
 import { ProjectsGallerySection } from "./sections/ProjectsGallerySection";
-import "./projects.scss";
 
 export const Projects = () => (
   <PageShell id="project">

@@ -2,16 +2,19 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import { BlogFooterLinks } from "@/components/blog/BlogFooterLinks";
 import { BlogArticleMeta } from "@/components/blog/BlogArticleMeta";
 import { BlogArticleTags } from "@/components/blog/BlogArticleTags";
 import { BlogBackLink } from "@/components/blog/BlogBackLink";
 import { BlogTableOfContents } from "@/components/blog/BlogTableOfContents";
 import { BlogMarkdownContent } from "@/components/blog/BlogMarkdownContent";
+import { BlogPostingJsonLd } from "@/components/BlogPostingJsonLd";
 import { PageMeta } from "@/components/PageMeta";
 import { PageShell } from "@/components/PageShell";
 import { getBlogArticle, useContentLocale, type BlogSection } from "@/lib/content";
 import { useActiveHeading } from "@/lib/hooks";
 import { extractMarkdownHeadings } from "@/lib/markdown";
+import { cn } from "@/lib/utils";
 
 function parseBlogSection(section: string | undefined): BlogSection | undefined {
   if (section === "posts" || section === "writeups") return section;
@@ -30,8 +33,8 @@ export const BlogPost = () => {
   if (!article || !blogSection) {
     return (
       <PageShell id="blog-post">
-        <PageMeta page="blog" />
-        <div className="mx-auto m-8 max-w-4xl px-4 font-mono">
+        <PageMeta page="blog" noindex />
+        <div className="mx-auto m-8 max-w-4xl px-4 font-sans">
           <h1 className="mb-6 text-3xl">{t("blogNotFound")}</h1>
           <BlogBackLink />
         </div>
@@ -41,8 +44,25 @@ export const BlogPost = () => {
 
   return (
     <PageShell id="blog-post">
-      <PageMeta title={article.title} description={article.summary} />
-      <article className="mx-auto m-8 w-full max-w-6xl px-4 font-mono">
+      <PageMeta
+        title={article.title}
+        description={article.summary}
+        type="article"
+        article={{
+          publishedTime: article.date,
+          section: blogSection,
+          tags: article.tags,
+        }}
+      />
+      <BlogPostingJsonLd
+        title={article.title}
+        description={article.summary}
+        url={`/blog/${blogSection}/${slug}`}
+        datePublished={article.date}
+        language={i18n.language}
+        tags={article.tags}
+      />
+      <article className="mx-auto m-8 w-full max-w-6xl px-4 font-sans">
         <div className="mb-6">
           <BlogBackLink />
         </div>
@@ -74,14 +94,22 @@ export const BlogPost = () => {
               content={article.content}
               className="prose max-w-none blog-prose dark:prose-invert"
             />
-            {article.tags.length > 0 && (
-              <footer className="mt-10 border-t border-border/60 pt-6 not-prose">
-                <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  {t("blogTags")}
-                </p>
-                <BlogArticleTags tags={article.tags} />
-              </footer>
-            )}
+            <footer
+              className={cn(
+                "mt-10 flex flex-col gap-4 border-t border-border/60 pt-6 not-prose sm:flex-row sm:items-center",
+                article.tags.length > 0 ? "sm:justify-between" : "sm:justify-end",
+              )}
+            >
+              {article.tags.length > 0 ? (
+                <div className="min-w-0">
+                  <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    {t("blogTags")}
+                  </p>
+                  <BlogArticleTags tags={article.tags} />
+                </div>
+              ) : null}
+              <BlogFooterLinks align="end" className="shrink-0 self-end sm:self-auto" />
+            </footer>
           </div>
 
           {headings.length > 0 && (
@@ -98,6 +126,7 @@ export const BlogPost = () => {
             />
           </div>
         )}
+
       </article>
     </PageShell>
   );

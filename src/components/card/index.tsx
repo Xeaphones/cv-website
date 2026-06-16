@@ -9,7 +9,7 @@ type CardContent = {
 }
 
 const Card = ({title,content,imgSRC,imgALT}: CardContent) => {
-    let newText = content.split ('\\n').map ((item, i) => <p key={i}>{item}</p>);
+    let newText = content.split ('\n').map ((item, i) => <p key={i}>{item}</p>);
 
     const theme = useResolvedTheme();
     const src = theme === "light" ? imgSRC.light : imgSRC.dark

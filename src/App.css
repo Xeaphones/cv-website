@@ -94,9 +94,14 @@ body {
   overflow-x: hidden;
 }
 
-#root,
-.page {
-  min-width: 100vw;
+#root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  overflow-x: none;
+  min-width: 0;
+}
+
+.page {
+  flex: 1 0 auto;
+  min-width: 0;
 }

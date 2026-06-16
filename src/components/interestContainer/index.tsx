@@ -6,9 +6,10 @@ type InterestCardProps = {
   icon: ReactNode;
   title: string;
   className?: string;
+  iconClassName?: string;
 };
 
-export function InterestCard({ icon, title, className }: InterestCardProps) {
+export function InterestCard({ icon, title, className, iconClassName }: InterestCardProps) {
   return (
     <div
       className={cn(
@@ -21,7 +22,8 @@ export function InterestCard({ icon, title, className }: InterestCardProps) {
         className={cn(
           "flex h-10 w-10 shrink-0 items-center justify-center text-primary transition-colors",
           "group-hover:text-primary/80 sm:h-12 sm:w-12",
-          "[&_svg]:h-full [&_svg]:w-full [&_svg]:fill-current",
+          "[&_svg]:h-full [&_svg]:w-full [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:stroke-[1.5]",
+          iconClassName,
         )}
       >
         {icon}

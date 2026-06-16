@@ -23,6 +23,11 @@ export function InterestsSection() {
             key={titleKey}
             title={t(titleKey)}
             icon={<Icon />}
+            iconClassName={
+              titleKey === "jCulture" || titleKey === "computer"
+                ? "[&_svg]:fill-current [&_svg]:stroke-none"
+                : undefined
+            }
             className="h-full min-w-[8.5rem] max-w-[12rem] flex-[1_1_8.5rem]"
           />
         ))}

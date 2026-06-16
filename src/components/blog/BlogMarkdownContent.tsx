@@ -16,6 +16,8 @@ type BlogMarkdownContentProps = {
   className?: string;
 };
 
+type HeadingLevel = 1 | 2 | 3;
+
 function childrenToText(children: ReactNode): string {
   if (typeof children === "string") return children;
   if (typeof children === "number") return String(children);
@@ -58,31 +60,44 @@ function Pre({ children }: ComponentPropsWithoutRef<"pre">) {
   return <pre>{children}</pre>;
 }
 
+async function copyHeadingUrl(id: string) {
+  if (typeof window === "undefined") return;
+  const url = `${window.location.origin}${window.location.pathname}#${id}`;
+  try {
+    await navigator.clipboard.writeText(url);
+    window.history.replaceState(null, "", `#${id}`);
+  } catch {
+    window.location.hash = id;
+  }
+}
+
+function renderHeading(level: HeadingLevel, children: ReactNode) {
+  const id = slugifyHeading(childrenToText(children));
+  const HeadingTag = `h${level}` as const;
+
+  return (
+    <HeadingTag id={id} className="group scroll-mt-24">
+      <span>{children}</span>
+      <a
+        href={`#${id}`}
+        aria-label={`Copy link to ${childrenToText(children)}`}
+        title="Copy section link"
+        onClick={(event) => {
+          event.preventDefault();
+          void copyHeadingUrl(id);
+        }}
+        className="ml-2 align-middle text-muted-foreground no-underline opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+      >
+        #
+      </a>
+    </HeadingTag>
+  );
+}
+
 const blogMarkdownComponents: Components = {
-  h1: ({ children }) => {
-    const id = slugifyHeading(childrenToText(children));
-    return (
-      <h1 id={id} className="scroll-mt-24">
-        {children}
-      </h1>
-    );
-  },
-  h2: ({ children }) => {
-    const id = slugifyHeading(childrenToText(children));
-    return (
-      <h2 id={id} className="scroll-mt-24">
-        {children}
-      </h2>
-    );
-  },
-  h3: ({ children }) => {
-    const id = slugifyHeading(childrenToText(children));
-    return (
-      <h3 id={id} className="scroll-mt-24">
-        {children}
-      </h3>
-    );
-  },
+  h1: ({ children }) => renderHeading(1, children),
+  h2: ({ children }) => renderHeading(2, children),
+  h3: ({ children }) => renderHeading(3, children),
   pre: Pre,
   code: ({ className, children, ...props }) => {
     const isInline = !className;

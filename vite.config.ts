@@ -7,6 +7,9 @@ const generatedContentPath = path.resolve(__dirname, "./.content-collections/gen
 
 export default defineConfig({
   plugins: [contentCollections(), react()],
+  build: {
+    chunkSizeWarningLimit: 900,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

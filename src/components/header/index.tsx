@@ -14,7 +14,7 @@ const Header = () => {
   const isMobile = useIsMobile();
 
   return (
-    <header className="site-header sticky top-0 z-50 flex h-20 w-full items-center justify-between px-10 font-mono">
+    <header className="site-header sticky top-0 z-50 flex h-20 w-full items-center justify-between px-10 font-sans">
       {!isMobile && (
         <>
           <SiteLogo />

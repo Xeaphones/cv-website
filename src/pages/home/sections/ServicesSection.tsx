@@ -5,6 +5,8 @@ import { PageSection } from "@/components/PageSection";
 
 import apiBlackIMG from "@/assets/img/api_black_128.png";
 import apiWhiteIMG from "@/assets/img/api_white_128.png";
+import appBlackIMG from "@/assets/img/app_black_128.png";
+import appWhiteIMG from "@/assets/img/app_white_128.png";
 import codeBlackIMG from "@/assets/img/code_black_128.png";
 import codeWhiteIMG from "@/assets/img/code_white_128.png";
 import gameDevBlackIMG from "@/assets/img/game-dev_black_128.png";
@@ -33,6 +35,12 @@ export function ServicesSection() {
           content={t("gameDevContent")}
           imgSRC={{ light: gameDevBlackIMG, dark: gameDevWhiteIMG }}
           imgALT="Game Development icon"
+        />
+        <Card
+          title={t("appDevTitle")}
+          content={t("appDevContent")}
+          imgSRC={{ light: appBlackIMG, dark: appWhiteIMG }}
+          imgALT="Application Development icon"
         />
       </div>
     </PageSection>

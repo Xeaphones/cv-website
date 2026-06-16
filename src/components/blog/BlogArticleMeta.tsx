@@ -27,7 +27,7 @@ export function BlogArticleMeta({ date, locale, content, section, theme, project
   });
 
   return (
-    <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
+    <p className="flex flex-wrap items-center gap-x-2 font-mono text-sm text-muted-foreground">
       <span>{formattedDate}</span>
       <MetaSeparator />
       <span>{t("minRead", { count: readingTime })}</span>

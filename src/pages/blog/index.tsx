@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import { BlogFooterLinks } from "@/components/blog/BlogFooterLinks";
 import { BlogBackLink } from "@/components/blog/BlogBackLink";
 import { BlogEntry } from "@/components/blog/BlogEntry";
 import { BlogPanel } from "@/components/blog/BlogPanel";
@@ -64,7 +65,7 @@ export const BlogList = () => {
   return (
     <PageShell id="blog">
       <PageMeta page="blog" />
-      <div className="mx-auto m-8 flex w-full max-w-4xl flex-col gap-6 px-4 font-mono">
+      <div className="mx-auto m-8 flex w-full max-w-4xl flex-col gap-6 px-4 font-sans">
         {isFiltered && <BlogBackLink />}
 
         <BlogSearchBar value={activeQuery} onChange={onSearchChange} />
@@ -103,6 +104,8 @@ export const BlogList = () => {
             </div>
           </section>
         )}
+
+        <BlogFooterLinks className="border-t border-border/60 pt-8" />
       </div>
     </PageShell>
   );

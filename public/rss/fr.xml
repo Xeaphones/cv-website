@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog — Yohan Velay</title>
+    <link>https://yohanvelay.nybtech.fr/blog</link>
+    <description>Articles et writeups techniques de Yohan Velay.</description>
+    <language>fr-FR</language>
+    <lastBuildDate>Tue, 16 Jun 2026 11:57:12 GMT</lastBuildDate>
+    <atom:link href="https://yohanvelay.nybtech.fr/rss/fr.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Un blog façon Astro sur mon site CV</title>
+      <link>https://yohanvelay.nybtech.fr/blog/posts/building-this-blog</link>
+      <guid isPermaLink="true">https://yohanvelay.nybtech.fr/blog/posts/building-this-blog</guid>
+      <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
+      <description>Pourquoi j&apos;ai ajouté un blog markdown à mon portfolio, comment Content Collections et React le font tourner, et pourquoi ça reste le même site CV en dessous.</description>
+    </item>
+  </channel>
+</rss>

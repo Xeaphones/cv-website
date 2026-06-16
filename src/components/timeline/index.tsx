@@ -64,13 +64,13 @@ function TimelineCard({ date, title, location, children, className }: TimelineCa
     >
       <div className="min-w-0">
         <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-          <time className="min-w-0 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <time className="min-w-0 font-mono text-xs font-medium uppercase tracking-wide text-muted-foreground">
             {date}
           </time>
           {location ? (
             <div
               className={cn(
-                "min-w-0 max-w-full text-xs leading-snug text-muted-foreground",
+                "min-w-0 max-w-full font-mono text-xs leading-snug text-muted-foreground",
                 "break-words text-right sm:max-w-[58%]",
                 "[&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:opacity-85",
               )}
@@ -79,7 +79,7 @@ function TimelineCard({ date, title, location, children, className }: TimelineCa
             </div>
           ) : null}
         </div>
-        <h3 className="mt-1 break-words text-base font-semibold leading-snug text-primary sm:text-lg">
+        <h3 className="mt-1 break-words font-mono text-base font-semibold leading-snug text-primary sm:text-lg">
           {title}
         </h3>
       </div>

@@ -34,9 +34,9 @@ const projectSchema = markdownDoc.extend({
   order: z.number().default(0),
   thumbnail: z.string(),
   technologies: z.array(z.string()).default([]),
-  objectives: z.string(),
+  objectives: z.string().optional().default(""),
   keyElements: z.array(z.string()).default([]),
-  conclusion: z.string(),
+  conclusion: z.string().optional().default(""),
 });
 
 const formationSchema = markdownDoc.extend({

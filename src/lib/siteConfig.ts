@@ -9,6 +9,12 @@ export const SITE_LINKS = {
 
 export const OG_IMAGE_PATH = "/og-image.jpg";
 
+export const DEFAULT_SITE_ORIGIN = "https://yohanvelay.nybtech.fr";
+
+export function getRssFeedPath(language: string): string {
+  return language.startsWith("fr") ? "/rss/fr.xml" : "/rss/en.xml";
+}
+
 export function getSiteOrigin(): string {
   const configured = import.meta.env.VITE_SITE_URL;
   if (configured) {
@@ -17,7 +23,7 @@ export function getSiteOrigin(): string {
   if (typeof window !== "undefined") {
     return window.location.origin;
   }
-  return "";
+  return DEFAULT_SITE_ORIGIN;
 }
 
 export function getAbsoluteUrl(path: string): string {

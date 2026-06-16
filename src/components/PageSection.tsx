@@ -11,11 +11,11 @@ type PageSectionProps = {
 export function PageSection({
   id,
   title,
-  headingClassName = "text-3xl my-3",
+  headingClassName = "mb-4 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl",
   className,
   children,
 }: PageSectionProps) {
-  const sectionClassName = ["font-mono", "m-8", className]
+  const sectionClassName = ["font-sans", "mx-4 my-8 sm:m-8", className]
     .filter(Boolean)
     .join(" ");
 
