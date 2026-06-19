@@ -5,11 +5,13 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Header from "@/components/header";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { RouteErrorFallback } from "@/components/RouteErrorFallback";
+import { RybbitScript } from "@/components/RybbitScript";
 import { Toaster } from "@/components/ui/toaster";
 
 export function MainLayout() {
   return (
     <>
+      <RybbitScript />
       <PersonJsonLd />
       <Header />
       <ErrorBoundary
