@@ -1,7 +1,7 @@
 ---
 title: "Bachelor 1 Computer Science (Bac+1)"
 dateLabel: "2021 - 2022"
-order: 3
+order: 5
 location: "Ynov Campus Toulouse"
 bullets:
   - "Web Server creation (Go and NodeJS/Express)"

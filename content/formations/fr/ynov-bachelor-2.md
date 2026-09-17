@@ -1,7 +1,7 @@
 ---
 title: "Bachelor 2 Informatique (Bac+2)"
 dateLabel: "2022 - 2023"
-order: 2
+order: 4
 location: "Campus Ynov Toulouse"
 bullets:
   - "Gestion & Utilisation de Windows Server"

@@ -12,9 +12,10 @@ type SkillContainerContent = {
     icon: JSX.Element,
     name: string,
     content: JSX.Element | string,
+    firstFillNone?: boolean,
 }
 
-const SkillContainer = ({icon,name,content}: SkillContainerContent) => {
+const SkillContainer = ({icon,name,content,firstFillNone}: SkillContainerContent) => {
     const navigate = useNavigate()
     const location = useLocation()
     const isMobile = useIsMobile();
@@ -40,7 +41,7 @@ const SkillContainer = ({icon,name,content}: SkillContainerContent) => {
 
     return (
         <HoverCard closeDelay={0} openDelay={200}>
-            <HoverCardTrigger onClick={goToSkill} className={[infoDiv === null ? style.SkillIconContainer : undefined, style.SkillContainer, isMobile ? style.mobile : undefined].join(" ")}>
+            <HoverCardTrigger onClick={goToSkill} className={[infoDiv === null ? style.SkillIconContainer : undefined, style.SkillContainer, firstFillNone ? style.firstFillNone : undefined, isMobile ? style.mobile : undefined].join(" ")}>
                 <i>{icon}</i>
                 {infoDiv}
             </HoverCardTrigger>

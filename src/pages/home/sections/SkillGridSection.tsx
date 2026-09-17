@@ -24,12 +24,13 @@ export function SkillGridSection() {
             />
           ))}
         </div>
-        <div className="flex justify-center gap-2 flex-wrap">
-          {SKILL_GRID.map(({ name, icon: Icon, fillVariant }) => (
+        <div className="flex justify-center gap-1.5 min-[801px]:gap-2 flex-wrap">
+          {SKILL_GRID.map(({ name, icon: Icon, fillVariant, firstFillNone }) => (
             <SkillContainer
               key={name}
               name={name}
               content=""
+              firstFillNone={firstFillNone}
               icon={fillVariant ? <ThemedIcon icon={Icon} variant={fillVariant} /> : <Icon />}
             />
           ))}

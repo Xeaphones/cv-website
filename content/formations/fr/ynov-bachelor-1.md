@@ -1,7 +1,7 @@
 ---
 title: "Bachelor 1 Informatique (Bac+1)"
 dateLabel: "2021 - 2022"
-order: 3
+order: 5
 location: "Campus Ynov Toulouse"
 bullets:
   - "Création de serveur web (Go et NodeJS/Express)"

@@ -89,3 +89,56 @@
         }
     }
 }
+
+@media (max-width: 800px) {
+    .card {
+        width: 100%;
+        overflow: hidden;
+        border: 1px solid hsl(var(--border) / 0.6);
+        border-radius: 0.5rem;
+        background: hsl(var(--card) / 0.3);
+
+        img {
+            width: 4.5rem;
+        }
+
+        .face {
+            width: 100%;
+            height: auto;
+            transform: none;
+            background: transparent;
+            transition: none;
+
+            &.face1 {
+                transform: none;
+                padding: 1.25rem 1.25rem 0.35rem;
+
+                .content {
+                    font-size: 1.15rem;
+                    gap: 0.5rem;
+                }
+            }
+
+            &.face2 {
+                transform: none;
+                box-shadow: none;
+                padding: 0.35rem 1.25rem 1.5rem;
+
+                &::after {
+                    bottom: 0.75rem;
+                }
+            }
+        }
+
+        &:hover {
+            .face.face1 {
+                transform: none;
+                background: transparent;
+            }
+
+            .face.face2 {
+                transform: none;
+            }
+        }
+    }
+}
