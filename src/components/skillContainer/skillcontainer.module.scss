@@ -15,6 +15,14 @@
             mask: none;
         }
     }
+    &.firstFillNone {
+        i svg path:first-of-type {
+            fill: none;
+        }
+        &:not(:hover) i svg path:first-of-type {
+            fill: none;
+        }
+    }
     i {
         width: 20%;
         svg {
@@ -33,11 +41,11 @@
             margin-top: -2%;
             margin-bottom: 0;
             color: hsl(var(--foreground));
-            font-size: 200%;
+            font-size: 1.5rem;
         }
         .Content {
             color: hsl(var(--foreground));
-            font-size: 120%;
+            font-size: 1rem;
         }
     }
 }
@@ -49,6 +57,16 @@
         width: 100%;
     }
     &.mobile {
-        width: 15vw;
+        width: 10vw;
+    }
+}
+
+@media (max-width: 800px) {
+    .SkillContainer {
+        .Info {
+            .Name {
+                font-size: 1.15rem;
+            }
+        }
     }
 }

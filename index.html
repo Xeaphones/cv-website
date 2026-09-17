@@ -7,6 +7,17 @@
     <title>Yohan Velay</title>
     <meta name="author" content="Yohan Velay" />
     <meta name="robots" content="index, follow" />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("ui-theme") || "dark";
+          var dark =
+            theme === "dark" ||
+            (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.add(dark ? "dark" : "light");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

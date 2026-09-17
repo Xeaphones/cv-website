@@ -104,4 +104,6 @@ body {
 .page {
   flex: 1 0 auto;
   min-width: 0;
+  position: relative;
+  z-index: 10;
 }
