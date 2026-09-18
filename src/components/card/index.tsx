@@ -69,7 +69,7 @@ const Card = ({ title, content, imgSRC, imgALT, index = 0, turned = false }: Car
     const src = theme === "light" ? imgSRC.light : imgSRC.dark;
     const fan = FAN[index] ?? FAN[0];
     const paragraphs = content.split("\n").map((item, i) => <p key={i}>{item}</p>);
-    const [cardSettled, setCardSettled] = useState(false);
+    const [cardSettled, setCardSettled] = useState(turned);
 
     useEffect(() => {
         if (!turned || cardSettled) return;
