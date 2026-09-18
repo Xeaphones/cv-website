@@ -1,7 +1,7 @@
 ---
 title: "General Baccalaureate"
 dateLabel: "2020 - 2021"
-order: 4
+order: 6
 location: "Emilie de Rodat, Toulouse"
 bullets:
   - "Good Honors"

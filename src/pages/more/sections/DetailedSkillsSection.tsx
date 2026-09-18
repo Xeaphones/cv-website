@@ -52,7 +52,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       { name: "Typescript", percent: 80, color: "hsl(var(--primary))", icon: TypeScript },
       { name: "React", percent: 96, color: "hsl(var(--primary))", icon: ReactTSX },
       { name: "NodeJS", percent: 100, color: "green", icon: NodeJS },
-      { name: "PHP", percent: 80, color: "hsl(var(--primary))", icon: PHP, fillVariant: "dark" },
+      { name: "PHP", percent: 100, color: "green", icon: PHP, fillVariant: "dark" },
       { name: "Wordpress", percent: 50, color: "orange", icon: Wordpress },
     ],
   },
@@ -74,8 +74,8 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: "Python", percent: 100, color: "green", icon: Python },
       { name: "Unity & C#", percent: 75, color: "hsl(var(--primary))", icon: Unity, fillVariant: "muted" },
-      { name: "Unreal Engine & C++", percent: 40, color: "orange", icon: UnrealEngine, fillVariant: "muted" },
-      { name: "Rust", percent: 45, color: "orange", icon: Rust, fillVariant: "muted" },
+      { name: "Unreal Engine & C++", percent: 60, color: "hsl(var(--primary))", icon: UnrealEngine, fillVariant: "muted" },
+      { name: "Rust", percent: 60, color: "hsl(var(--primary))", icon: Rust, fillVariant: "muted" },
     ],
   },
 ];

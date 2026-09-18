@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { BackToTop } from "@/components/BackToTop";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Header from "@/components/header";
+import { ParticleCanvas } from "@/components/ParticleCanvas";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { RouteErrorFallback } from "@/components/RouteErrorFallback";
 import { RybbitScript } from "@/components/RybbitScript";
@@ -13,6 +14,7 @@ export function MainLayout() {
     <>
       <RybbitScript />
       <PersonJsonLd />
+      <ParticleCanvas className="fixed inset-0 z-0" />
       <Header />
       <ErrorBoundary
         fallback={({ error, reset }) => (

@@ -1,7 +1,7 @@
 ---
 title: "Bachelor 3 Informatique (Bac+3)"
-dateLabel: 2023 - Maintenant
-order: 1
+dateLabel: 2023 - 2024
+order: 3
 location: "Campus Ynov Toulouse"
 bullets:
   - "Gestion et masterisation de BDD SQL et NoSQL (MongoDB)"
