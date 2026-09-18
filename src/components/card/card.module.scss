@@ -1,144 +1,582 @@
+@mixin moz-perspective($value) {
+    -webkit-perspective: $value;
+    -moz-perspective: $value;
+    perspective: $value;
+}
+
+@mixin moz-transform($value) {
+    -webkit-transform: $value;
+    -moz-transform: $value;
+    transform: $value;
+}
+
+@mixin moz-transform-origin($value) {
+    -webkit-transform-origin: $value;
+    -moz-transform-origin: $value;
+    transform-origin: $value;
+}
+
+@mixin moz-transform-style($value) {
+    -webkit-transform-style: $value;
+    -moz-transform-style: $value;
+    transform-style: $value;
+}
+
+@mixin moz-backface-hidden {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@mixin moz-animation($value) {
+    -webkit-animation: $value;
+    -moz-animation: $value;
+    animation: $value;
+}
+
+@mixin moz-transition($value) {
+    -webkit-transition: $value;
+    -moz-transition: $value;
+    transition: $value;
+}
+
+.spread {
+    --card-w: 13.75rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 3rem;
+    height: auto;
+    overflow: visible;
+    padding: 2.25rem 0 3rem;
+    @include moz-perspective(1400px);
+}
+
+.scene {
+    flex: 0 0 var(--card-w);
+    width: var(--card-w);
+    @include moz-perspective(1100px);
+    @include moz-transform-style(preserve-3d);
+}
+
+.spread .scene {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    margin: 0;
+}
+
 .card {
-    width: fit-content;
-    height: fit-content;
-    .icon {
+    --fan: 0deg;
+    --i: 0;
+    --z: 2;
+    width: var(--card-w, 13.75rem);
+    height: 22rem;
+    position: relative;
+    cursor: pointer;
+    z-index: var(--z);
+    opacity: 0;
+    @include moz-transform-origin(50% 100%);
+    @include moz-transform-style(preserve-3d);
+    @include moz-transform(translateY(5.5rem) rotateZ(0deg) scale(0.86));
+}
+
+.dealt .card {
+    opacity: 1;
+    @include moz-transform(rotateZ(var(--fan)));
+    @include moz-animation(tarot-deal 0.75s calc(var(--i) * 0.11s) cubic-bezier(0.22, 1, 0.36, 1) backwards);
+    @include moz-transition(transform 0.45s cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @include moz-transform-style(preserve-3d);
+    @include moz-transform(rotateY(0deg));
+    @include moz-transition(transform 0.7s cubic-bezier(0.45, 0.05, 0.2, 1));
+}
+
+.face {
+    position: absolute;
+    inset: 0;
+    border-radius: 0.85rem;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border) / 0.7);
+    @include moz-backface-hidden;
+    @include moz-transform-style(preserve-3d);
+}
+
+.back {
+    background-color: hsl(var(--background2));
+    background-image:
+        radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.18), transparent 58%),
+        linear-gradient(hsl(var(--primary) / 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, hsl(var(--primary) / 0.14) 1px, transparent 1px);
+    background-size: auto, 1.05rem 1.05rem, 1.05rem 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--box-shadow);
+    @include moz-transform(rotateY(0deg) translateZ(0.5px));
+    @include moz-backface-hidden;
+
+    &::before,
+    &::after {
+        @include moz-backface-hidden;
+    }
+
+    &::before {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: hsl(var(--primary));
-        .fa {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 80px;
-            color: hsl(var(--primary-foreground));
-        }
+        inset: 0.7rem;
+        border: 2px solid hsl(var(--primary) / 0.55);
+        border-radius: 0.45rem;
+        pointer-events: none;
     }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 1.05rem;
+        border: 1px solid hsl(var(--primary) / 0.3);
+        border-radius: 0.3rem;
+        pointer-events: none;
+    }
+}
+
+.identity {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.2rem 1rem;
+    @include moz-backface-hidden;
+
     img {
-        width: 130px;
+        width: 5.75rem;
+        height: 5.75rem;
+        object-fit: contain;
     }
-    .face {
-        width: 350px;
-        height: 250px;
-        transition: 0.5s;
+
+    h3 {
+        margin: 0;
+        padding: 0 0.35rem;
+        font-size: 1.2rem;
+        line-height: 1.25;
+        text-align: center;
+        color: hsl(var(--primary));
+    }
+}
+
+.monogram {
+    display: none;
+    position: relative;
+    z-index: 1;
+    width: 4.6rem;
+    height: 4.6rem;
+    place-items: center;
+    color: hsl(var(--primary));
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.12em;
+    @include moz-backface-hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
         background: hsl(var(--background));
-        &.face1 {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-            transition: .7s;
-            transform: translateY(150px);
-            .content {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 10px;
-                font-size: 1.5rem;
-                text-align: center;
-            }
-        }
-        &.face2 {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: .8s;
-            transform: translateY(-100px);
-            box-shadow: var(--box-shadow);
-            &::after{
-                content: "";
-                position: absolute;
-                width: 30px;
-                height: 4px;
-                bottom: 15px;
-                left: 50%;
-                left: 50%;
-                transform: translateX(-50%);
-                background: hsl(var(--primary));
-            }
-            .content {
-                p {
-                    margin: 0;
-                    padding: 0;
-                    text-align: center;
-                }
-                h3 {
-                    margin: 0 0 10px 0;
-                    padding: 0;
-                    font-size: 24px;
-                    text-align: center;
-                } 
-            }
-        }
+        border: 2px solid hsl(var(--primary) / 0.8);
+        clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+        box-shadow: 0 0 0 6px hsl(var(--background2));
+        @include moz-backface-hidden;
     }
-    &:hover {
-        .face.face1 {
-            transform: translateY(0px);
-            background: hsl(var(--primary));
-        }
-        .face.face2{
-            transform: translateY(0);
-        }
+
+    span {
+        position: relative;
+        z-index: 1;
+        display: block;
+        font-weight: 600;
+        @include moz-backface-hidden;
+    }
+}
+
+.front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.85rem;
+    padding: 1.35rem 1.15rem 1.35rem;
+    background: hsl(var(--background));
+    box-shadow: var(--box-shadow);
+    color: hsl(var(--foreground));
+    @include moz-transform(rotateY(180deg) translateZ(0.5px));
+    @include moz-backface-hidden;
+
+    &::before,
+    &::after {
+        @include moz-backface-hidden;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0.55rem;
+        border: 1px solid hsl(var(--primary) / 0.35);
+        border-radius: 0.5rem;
+        pointer-events: none;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            115deg,
+            transparent 36%,
+            hsl(var(--primary-foreground) / 0.16) 50%,
+            transparent 64%
+        );
+        background-size: 220% 100%;
+        background-position: 120% 0;
+        opacity: 0;
+        pointer-events: none;
+        @include moz-transition(opacity 0.3s ease);
+    }
+
+    img,
+    h3 {
+        display: none;
+    }
+
+    p {
+        margin: 0;
+        padding: 0 0.35rem;
+        font-size: 0.92rem;
+        line-height: 1.5;
+        text-align: center;
+        color: hsl(var(--muted-foreground));
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.numeral {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    color: hsl(var(--primary));
+    position: relative;
+    z-index: 1;
+}
+
+.ornament {
+    margin-top: auto;
+    width: 2.5rem;
+    height: 3px;
+    background: hsl(var(--primary));
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.spread.settled .inner {
+    @include moz-animation(none);
+    @include moz-transform(rotateY(0deg));
+    @include moz-transform-style(preserve-3d);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .dealt .card:hover,
+    .dealt .card:focus-visible {
+        z-index: 8;
+        @include moz-transform(rotateZ(0deg) translateY(-1.15rem) scale(1.045));
+    }
+
+    .dealt .card:hover .inner,
+    .dealt .card:focus-visible .inner {
+        @include moz-transform(rotateY(180deg));
+    }
+
+    .dealt .card:hover .front::after,
+    .dealt .card:focus-visible .front::after {
+        opacity: 1;
+        @include moz-animation(tarot-shine 0.85s ease-out);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .dealt .card,
+    .inner,
+    .dealt .inner {
+        @include moz-animation(none);
+    }
+
+    .card,
+    .dealt .card {
+        opacity: 1;
+        @include moz-transform(rotateZ(var(--fan)));
+    }
+
+    .inner,
+    .dealt .inner,
+    .spread.settled .inner {
+        @include moz-transform(none);
+        @include moz-transform-style(flat);
+        @include moz-transition(none);
+    }
+
+    .front,
+    .spread.settled .front {
+        @include moz-transform(none);
+    }
+
+    .front img,
+    .front h3 {
+        display: flex;
+    }
+
+    .front img {
+        display: block;
+        width: 4.5rem;
+        height: 4.5rem;
+        object-fit: contain;
+        margin-top: 0.15rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .front h3 {
+        display: block;
+        margin: 0;
+        padding: 0 0.4rem;
+        font-size: 1.05rem;
+        line-height: 1.25;
+        text-align: center;
+        color: hsl(var(--primary));
+        position: relative;
+        z-index: 1;
+    }
+
+    .back {
+        display: none;
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 801px) {
+    .spread {
+        --card-w: 11.5rem;
+        gap: 1.75rem;
+        height: auto;
+        padding: 2rem 0 2.75rem;
+    }
+
+    .card {
+        width: var(--card-w);
+        height: 19.5rem;
+    }
+
+    .front p {
+        font-size: 0.84rem;
+        line-height: 1.45;
     }
 }
 
 @media (max-width: 800px) {
-    .card {
+    .spread {
+        display: block;
+        padding: 0;
+        perspective: none;
+        -moz-perspective: none;
+    }
+
+    .scene {
         width: 100%;
-        overflow: hidden;
-        border: 1px solid hsl(var(--border) / 0.6);
-        border-radius: 0.5rem;
-        background: hsl(var(--card) / 0.3);
+        @include moz-perspective(1100px);
+    }
+
+    .card {
+        width: min(17.5rem, 100%);
+        height: 26rem;
+        margin-inline: auto;
+        cursor: default;
+        opacity: 1;
+        @include moz-animation(none);
+        @include moz-transform(none);
+    }
+
+    .inner {
+        @include moz-animation(none);
+        @include moz-transform(rotateY(0deg));
+        @include moz-transform-style(preserve-3d);
+        @include moz-transition(none);
+    }
+
+    .identity {
+        display: none;
+    }
+
+    .monogram {
+        display: grid;
+    }
+
+    .front {
+        @include moz-transform(rotateY(180deg) translateZ(0.5px));
 
         img {
-            width: 4.5rem;
+            display: block;
+            width: 5.25rem;
+            height: 5.25rem;
+            object-fit: contain;
+            margin-top: 0.15rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .face {
-            width: 100%;
-            height: auto;
-            transform: none;
-            background: transparent;
-            transition: none;
-
-            &.face1 {
-                transform: none;
-                padding: 1.25rem 1.25rem 0.35rem;
-
-                .content {
-                    font-size: 1.15rem;
-                    gap: 0.5rem;
-                }
-            }
-
-            &.face2 {
-                transform: none;
-                box-shadow: none;
-                padding: 0.35rem 1.25rem 1.5rem;
-
-                &::after {
-                    bottom: 0.75rem;
-                }
-            }
+        h3 {
+            display: block;
+            margin: 0;
+            padding: 0 0.4rem;
+            font-size: 1.15rem;
+            line-height: 1.25;
+            text-align: center;
+            color: hsl(var(--primary));
+            position: relative;
+            z-index: 1;
         }
 
-        &:hover {
-            .face.face1 {
-                transform: none;
-                background: transparent;
-            }
-
-            .face.face2 {
-                transform: none;
-            }
+        p {
+            font-size: 0.82rem;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 8;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     }
+
+    .back {
+        display: flex;
+    }
+
+    .turned .inner {
+        @include moz-transform(rotateY(180deg));
+        @include moz-animation(tarot-reveal 0.85s 0.28s cubic-bezier(0.45, 0.05, 0.2, 1) backwards);
+    }
+
+    .settled .inner,
+    .turned.settled .inner {
+        @include moz-animation(none);
+        @include moz-transform(none);
+        @include moz-transform-style(flat);
+    }
+
+    .settled .front {
+        @include moz-transform(none);
+    }
+
+    .settled .back {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
+    .inner,
+    .turned .inner,
+    .settled .inner {
+        @include moz-animation(none);
+        @include moz-transform(none);
+        @include moz-transform-style(flat);
+    }
+
+    .front,
+    .settled .front {
+        @include moz-transform(none);
+    }
+
+    .back {
+        display: none;
+    }
+}
+
+:fullscreen .face,
+:fullscreen .back,
+:fullscreen .front,
+:fullscreen .identity,
+:fullscreen .monogram,
+:-moz-full-screen .face,
+:-moz-full-screen .back,
+:-moz-full-screen .front,
+:-moz-full-screen .identity,
+:-moz-full-screen .monogram {
+    @include moz-backface-hidden;
+}
+
+@-webkit-keyframes tarot-deal {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+        transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+    }
+}
+
+@-moz-keyframes tarot-deal {
+    from {
+        opacity: 0;
+        -moz-transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+        transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+    }
+}
+
+@keyframes tarot-deal {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+        -moz-transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+        transform: translateY(5.5rem) rotateZ(0deg) scale(0.86);
+    }
+}
+
+@-webkit-keyframes tarot-reveal {
+    from {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+}
+
+@-moz-keyframes tarot-reveal {
+    from {
+        -moz-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes tarot-reveal {
+    from {
+        -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+}
+
+@-webkit-keyframes tarot-shine {
+    from { background-position: 120% 0; }
+    to { background-position: -20% 0; }
+}
+
+@-moz-keyframes tarot-shine {
+    from { background-position: 120% 0; }
+    to { background-position: -20% 0; }
+}
+
+@keyframes tarot-shine {
+    from { background-position: 120% 0; }
+    to { background-position: -20% 0; }
 }

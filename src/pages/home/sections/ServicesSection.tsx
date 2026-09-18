@@ -2,7 +2,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import Card from "@/components/card";
+import Card, { CardSpread } from "@/components/card";
 import { PageSection } from "@/components/PageSection";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/lib/hooks";
@@ -51,7 +51,7 @@ const SERVICES: ServiceItem[] = [
   },
 ];
 
-function ServiceCard({ item }: { item: ServiceItem }) {
+function ServiceCard({ item, index = 0, turned = false }: { item: ServiceItem; index?: number; turned?: boolean }) {
   const { t } = useTranslation();
 
   return (
@@ -60,6 +60,8 @@ function ServiceCard({ item }: { item: ServiceItem }) {
       content={t(item.contentKey)}
       imgSRC={item.imgSRC}
       imgALT={item.imgALT}
+      index={index}
+      turned={turned}
     />
   );
 }
@@ -68,6 +70,8 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
   const { t } = useTranslation();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [seen, setSeen] = useState<boolean[]>(() => items.map(() => false));
   const labelId = useId();
 
   const goTo = useCallback((nextIndex: number) => {
@@ -90,6 +94,63 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setInView(true);
+      setSeen(items.map(() => true));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setInView(true);
+        observer.disconnect();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [items]);
+
+  useEffect(() => {
+    if (!inView) return;
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const revealSnapped = () => {
+      const width = el.clientWidth;
+      if (width === 0) return;
+      const nextIndex = Math.max(0, Math.min(items.length - 1, Math.round(el.scrollLeft / width)));
+      setSeen((prev) => {
+        if (prev[nextIndex]) return prev;
+        const next = [...prev];
+        next[nextIndex] = true;
+        return next;
+      });
+    };
+
+    revealSnapped();
+
+    let idle = 0;
+    const onScrollIdle = () => {
+      window.clearTimeout(idle);
+      idle = window.setTimeout(revealSnapped, 60);
+    };
+
+    el.addEventListener("scrollend", revealSnapped);
+    el.addEventListener("scroll", onScrollIdle, { passive: true });
+    return () => {
+      window.clearTimeout(idle);
+      el.removeEventListener("scrollend", revealSnapped);
+      el.removeEventListener("scroll", onScrollIdle);
+    };
+  }, [inView, items.length]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -123,9 +184,9 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
             }
           }}
         >
-          {items.map((item) => (
+          {items.map((item, itemIndex) => (
             <div key={item.titleKey} className="w-full shrink-0 snap-center px-1" role="group" aria-label={t(item.titleKey)}>
-              <ServiceCard item={item} />
+              <ServiceCard item={item} index={itemIndex} turned={seen[itemIndex]} />
             </div>
           ))}
         </div>
@@ -169,15 +230,15 @@ export function ServicesSection() {
   const isMobile = useIsMobile();
 
   return (
-    <PageSection id="wicd" title={t("services")}>
+    <PageSection id="wicd" title={t("services")} className="overflow-visible">
       {isMobile ? (
         <ServiceSlider items={SERVICES} />
       ) : (
-        <div className="flex flex-wrap justify-center gap-20">
-          {SERVICES.map((item) => (
-            <ServiceCard key={item.titleKey} item={item} />
+        <CardSpread>
+          {SERVICES.map((item, index) => (
+            <ServiceCard key={item.titleKey} item={item} index={index} />
           ))}
-        </div>
+        </CardSpread>
       )}
     </PageSection>
   );
