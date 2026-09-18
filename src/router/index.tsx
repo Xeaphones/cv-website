@@ -38,9 +38,13 @@ function RouteLoadingFallback() {
   );
 }
 
-function withSuspense(element: JSX.Element) {
+function HomeFallback() {
+  return <div className="h-[100dvh] w-full bg-background2" aria-hidden />;
+}
+
+function withSuspense(element: JSX.Element, fallback = <RouteLoadingFallback />) {
   return (
-    <Suspense fallback={<RouteLoadingFallback />}>
+    <Suspense fallback={fallback}>
       {element}
     </Suspense>
   );
@@ -52,7 +56,7 @@ export const router = createBrowserRouter([
       children: [
         {
           path: "/",
-          element: withSuspense(<Home />),
+          element: withSuspense(<Home />, <HomeFallback />),
         },
         {
           path: "more",

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 import { HeroTypewriter } from "./HeroTypewriter";
 
-export function HeroSection() {
+export function HeroSection({ ctaReady = false }: { ctaReady?: boolean }) {
   const { t } = useTranslation();
   const { isHome, scrolled } = useHomeHeaderVisible();
   const showCornerControls = isHome && !scrolled;
@@ -54,7 +54,12 @@ export function HeroSection() {
         <a
           href="#aboutme"
           onClick={scrollToAbout}
-          className="hero-cta group mt-8 inline-flex items-center gap-3 rounded-sm border-2 border-primary bg-background2/60 px-8 py-3 text-lg font-medium text-primary no-underline sm:text-xl"
+          className={cn(
+            "hero-cta group mt-8 inline-flex items-center gap-3 rounded-sm border-2 border-primary bg-background2/60 px-8 py-3 text-lg font-medium text-primary no-underline sm:text-xl",
+            ctaReady && "is-ready",
+          )}
+          aria-hidden={ctaReady ? undefined : true}
+          tabIndex={ctaReady ? undefined : -1}
         >
           {t("heroCta")}
           <ArrowDown className="h-5 w-5 transition-transform duration-300 group-hover:translate-y-0.5" />

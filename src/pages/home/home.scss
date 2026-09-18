@@ -46,9 +46,16 @@
     }
 
     .hero-cta {
-        animation: hero-move-in-bottom 0.7s 1.2s cubic-bezier(0.21, 1.11, 0.81, 0.99) both;
+        visibility: hidden;
+        pointer-events: none;
         position: relative;
         isolation: isolate;
+
+        &.is-ready {
+            visibility: visible;
+            pointer-events: auto;
+            animation: hero-move-in-bottom 0.7s cubic-bezier(0.21, 1.11, 0.81, 0.99) both;
+        }
 
         &::before,
         &::after {
@@ -84,7 +91,8 @@
     @media (prefers-reduced-motion: reduce) {
         .hero-heading__line--left,
         .hero-heading__line--right,
-        .hero-cta {
+        .hero-cta,
+        .hero-cta.is-ready {
             animation: none;
         }
     }
