@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/themeToggle";
-import { useIsMobile } from "@/lib/hooks";
+import { useHomeHeaderVisible, useIsMobile } from "@/lib/hooks";
+import { cn } from "@/lib/utils";
 
 import { LanguageSelect } from "./LanguageSelect";
 import { MobileMenu } from "./MobileMenu";
@@ -10,11 +11,25 @@ import { SiteLogo } from "./SiteLogo";
 import "./header.scss";
 
 const Header = () => {
+  const { isHome, scrolled } = useHomeHeaderVisible();
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const visible = !isHome || scrolled || menuOpen;
+
+  useEffect(() => {
+    if (!isHome) setMenuOpen(false);
+  }, [isHome]);
 
   return (
-    <header className="site-header sticky top-0 z-50 flex h-20 w-full items-center justify-between px-10 font-sans">
+    <header
+      className={cn(
+        "site-header z-50 flex h-20 w-full items-center justify-between px-10 font-sans",
+        isHome ? "fixed top-0" : "sticky top-0",
+        visible ? "translate-y-0" : "-translate-y-full pointer-events-none",
+        isHome && "transition-transform duration-300 ease-out motion-reduce:transition-none",
+      )}
+      aria-hidden={!visible}
+    >
       {!isMobile && (
         <>
           <SiteLogo />
