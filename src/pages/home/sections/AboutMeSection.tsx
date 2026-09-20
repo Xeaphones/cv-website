@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { PageSection } from "@/components/PageSection";
 import { calculateAge } from "@/lib/age";
 
+import { scrollToHomeSection } from "./HeroSection";
 import { HeroTypewriter } from "./HeroTypewriter";
 
 export function AboutMeSection() {
@@ -61,6 +62,17 @@ export function AboutMeSection() {
           </Link>
         </div>
       </div>
+
+      <button
+        type="button"
+        className="profile-scroll"
+        onClick={() => scrollToHomeSection("wicd")}
+      >
+        <span className="profile-scroll__mouse" aria-hidden>
+          <span className="profile-scroll__wheel" />
+        </span>
+        <span className="profile-scroll__label">{t("profileScroll")}</span>
+      </button>
 
       <div className="profile-marquee" aria-hidden>
         <div className="profile-marquee__track">

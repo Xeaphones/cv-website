@@ -34,6 +34,7 @@ i18n.use(initReactI18next).init({
                 profileHello: "( hello, i'm )",
                 profileBadge: "Open to work · Toulouse",
                 profileViewWork: "View projects",
+                profileScroll: "Scroll",
                 profileTicker: [
                   "Fullstack",
                   "IoT",
@@ -189,6 +190,7 @@ i18n.use(initReactI18next).init({
                 profileHello: "( bonjour, je suis )",
                 profileBadge: "Ouvert aux opportunités · Toulouse",
                 profileViewWork: "Voir les projets",
+                profileScroll: "Défiler",
                 profileTicker: [
                   "Fullstack",
                   "IoT",
