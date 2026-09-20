@@ -13,8 +13,8 @@ export function SkillGridSection() {
 
   return (
     <PageSection id="skills" title={t("skills")}>
-      <div className="flex flex-col">
-        <div className={isMobile ? "flex justify-center flex-col" : "flex justify-center"}>
+      <div className="flex min-h-0 flex-1 flex-col justify-center">
+        <div className={isMobile ? "flex flex-col gap-4" : "flex justify-center"}>
           {FEATURED_SKILLS.map(({ name, contentKey, icon: Icon, fillVariant }) => (
             <SkillContainer
               key={name}

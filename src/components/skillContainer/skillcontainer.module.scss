@@ -62,10 +62,25 @@
 }
 
 @media (max-width: 800px) {
-    .SkillContainer {
+    .SkillContainer:not(.SkillIconContainer) {
+        align-items: flex-start;
+        margin-bottom: 0;
+
+        i {
+            width: 2.75rem;
+            flex-shrink: 0;
+        }
+
         .Info {
+            margin-left: 0.75rem;
+
             .Name {
                 font-size: 1.15rem;
+            }
+
+            .Content {
+                font-size: 0.92rem;
+                line-height: 1.45;
             }
         }
     }

@@ -223,38 +223,26 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
   };
 
   return (
-    <div className="flex flex-col gap-3 overflow-x-clip">
-      <div className="flex items-center gap-1">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="shrink-0"
-          aria-label={t("servicesPrevious")}
-          disabled={index === 0}
-          onClick={() => goTo(index - 1)}
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-        <div
-          ref={deckRef}
-          role="region"
-          aria-roledescription="carousel"
-          aria-labelledby={labelId}
-          tabIndex={0}
-          className="relative mx-auto h-[calc(26rem+1rem)] min-w-0 flex-1 max-w-[17.5rem] touch-pan-y select-none [perspective:1100px]"
-          style={{ ["--pull" as string]: 0 }}
-          onKeyDown={(event) => {
-            if (event.key === "ArrowRight") {
-              event.preventDefault();
-              goTo(index + 1);
-            }
-            if (event.key === "ArrowLeft") {
-              event.preventDefault();
-              goTo(index - 1);
-            }
-          }}
-        >
+    <div className="flex flex-col items-center gap-3 overflow-x-clip">
+      <div
+        ref={deckRef}
+        role="region"
+        aria-roledescription="carousel"
+        aria-labelledby={labelId}
+        tabIndex={0}
+        className="relative h-[calc(26rem+1rem)] w-full max-w-[17.5rem] touch-pan-y select-none [perspective:1100px]"
+        style={{ ["--pull" as string]: 0 }}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            goTo(index + 1);
+          }
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            goTo(index - 1);
+          }
+        }}
+      >
           {items.map((item, itemIndex) => {
             const offset = itemIndex - index;
             if (offset < 0 || offset > 2) return null;
@@ -289,6 +277,34 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
               </div>
             );
           })}
+      </div>
+      <div className="flex items-center justify-center gap-2">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="shrink-0"
+          aria-label={t("servicesPrevious")}
+          disabled={index === 0}
+          onClick={() => goTo(index - 1)}
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </Button>
+        <div className="flex justify-center gap-2" role="tablist" aria-label={t("services")}>
+          {items.map((item, itemIndex) => (
+            <button
+              key={item.titleKey}
+              type="button"
+              role="tab"
+              aria-selected={itemIndex === index}
+              aria-label={t(item.titleKey)}
+              className={cn(
+                "h-2 rounded-full transition-all",
+                itemIndex === index ? "w-6 bg-primary" : "w-2 bg-muted-foreground/40",
+              )}
+              onClick={() => goTo(itemIndex)}
+            />
+          ))}
         </div>
         <Button
           type="button"
@@ -301,22 +317,6 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
         >
           <ChevronRight className="h-5 w-5" />
         </Button>
-      </div>
-      <div className="flex justify-center gap-2" role="tablist" aria-label={t("services")}>
-        {items.map((item, itemIndex) => (
-          <button
-            key={item.titleKey}
-            type="button"
-            role="tab"
-            aria-selected={itemIndex === index}
-            aria-label={t(item.titleKey)}
-            className={cn(
-              "h-2 rounded-full transition-all",
-              itemIndex === index ? "w-6 bg-primary" : "w-2 bg-muted-foreground/40",
-            )}
-            onClick={() => goTo(itemIndex)}
-          />
-        ))}
       </div>
       <p id={labelId} className="sr-only">
         {t("services")}
@@ -331,15 +331,17 @@ export function ServicesSection() {
 
   return (
     <PageSection id="wicd" title={t("services")} className="overflow-visible">
-      {isMobile ? (
-        <ServiceSlider items={SERVICES} />
-      ) : (
-        <CardSpread>
-          {SERVICES.map((item, index) => (
-            <ServiceCard key={item.titleKey} item={item} index={index} />
-          ))}
-        </CardSpread>
-      )}
+      <div className="flex min-h-0 flex-1 flex-col justify-center">
+        {isMobile ? (
+          <ServiceSlider items={SERVICES} />
+        ) : (
+          <CardSpread>
+            {SERVICES.map((item, index) => (
+              <ServiceCard key={item.titleKey} item={item} index={index} />
+            ))}
+          </CardSpread>
+        )}
+      </div>
     </PageSection>
   );
 }

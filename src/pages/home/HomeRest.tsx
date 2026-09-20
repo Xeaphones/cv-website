@@ -57,10 +57,11 @@ export default function HomeRest({ onReady }: HomeRestProps) {
   return (
     <div ref={ref}>
       <AboutMeSection />
-      <PageDivider />
-      <ServicesSection />
-      <PageDivider />
-      <SkillGridSection />
+      <div className="home-work">
+        <ServicesSection />
+        <PageDivider />
+        <SkillGridSection />
+      </div>
     </div>
   );
 }

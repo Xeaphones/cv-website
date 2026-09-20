@@ -10,6 +10,26 @@ import { cn } from "@/lib/utils";
 
 import { HeroTypewriter } from "./HeroTypewriter";
 
+const HEADER_OFFSET_PX = 80;
+
+export function scrollToHomeSection(id: string, behavior: ScrollBehavior = "smooth") {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const fullPane = window.matchMedia("(min-width: 801px)").matches;
+  const target = fullPane ? (el.closest(".home-work") ?? el) : el;
+  const header = document.querySelector("header");
+  const headerHeight =
+    header instanceof HTMLElement ? header.getBoundingClientRect().height : HEADER_OFFSET_PX;
+  const usesTopPadding =
+    target.classList.contains("profile") ||
+    (fullPane && target.classList.contains("home-work"));
+  const offset = usesTopPadding ? 0 : headerHeight;
+  const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset);
+
+  window.scrollTo({ top, behavior });
+}
+
 export function HeroSection({ ctaReady = false }: { ctaReady?: boolean }) {
   const { t } = useTranslation();
   const { isHome, scrolled } = useHomeHeaderVisible();
@@ -17,7 +37,7 @@ export function HeroSection({ ctaReady = false }: { ctaReady?: boolean }) {
 
   const scrollToAbout = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    document.getElementById("aboutme")?.scrollIntoView({ behavior: "smooth" });
+    scrollToHomeSection("aboutme");
   };
 
   return (

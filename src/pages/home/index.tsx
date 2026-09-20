@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { PageMeta } from "@/components/PageMeta";
 import { PageShell } from "@/components/PageShell";
 
-import { HeroSection } from "./sections/HeroSection";
+import { HeroSection, scrollToHomeSection } from "./sections/HeroSection";
 import "./home.scss";
 
 const HomeRest = lazy(() => import("./HomeRest"));
@@ -30,7 +30,7 @@ export const Home = () => {
     if (!ctaReady || !deepLink) return;
     const id = hash.slice(1);
     if (!id) return;
-    document.getElementById(id)?.scrollIntoView();
+    scrollToHomeSection(id, "auto");
   }, [ctaReady, deepLink, hash]);
 
   return (

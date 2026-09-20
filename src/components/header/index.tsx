@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        "site-header z-50 flex h-20 w-full items-center justify-between px-10 font-sans",
+        "site-header z-50 flex h-20 w-full items-center justify-between px-4 font-sans min-[801px]:px-10",
         isHome ? "fixed top-0" : "sticky top-0",
         visible ? "translate-y-0" : "-translate-y-full pointer-events-none",
         isHome && "transition-transform duration-300 ease-out motion-reduce:transition-none",
