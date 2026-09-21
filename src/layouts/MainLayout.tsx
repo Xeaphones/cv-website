@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import { BackToTop } from "@/components/BackToTop";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { SiteFooter } from "@/components/footer";
 import Header from "@/components/header";
 import { ParticleCanvas } from "@/components/ParticleCanvas";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
@@ -23,6 +24,7 @@ export function MainLayout() {
       >
         <Outlet />
       </ErrorBoundary>
+      <SiteFooter />
       <BackToTop />
       <Toaster />
     </>

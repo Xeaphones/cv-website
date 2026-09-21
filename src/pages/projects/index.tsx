@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 import { PageMeta } from "@/components/PageMeta";
 import { PageDivider } from "@/components/PageDivider";
 import { PageShell } from "@/components/PageShell";
@@ -5,11 +8,20 @@ import { PageShell } from "@/components/PageShell";
 import { ExperienceTimelineSection } from "./sections/ExperienceTimelineSection";
 import { ProjectsGallerySection } from "./sections/ProjectsGallerySection";
 
-export const Projects = () => (
-  <PageShell id="project">
-    <PageMeta page="projects" />
-    <ExperienceTimelineSection />
-    <PageDivider />
-    <ProjectsGallerySection />
-  </PageShell>
-);
+export const Projects = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
+  }, [hash]);
+
+  return (
+    <PageShell id="project">
+      <PageMeta page="projects" />
+      <ExperienceTimelineSection />
+      <PageDivider />
+      <ProjectsGallerySection />
+    </PageShell>
+  );
+};
