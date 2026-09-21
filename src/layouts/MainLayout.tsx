@@ -4,6 +4,7 @@ import { BackToTop } from "@/components/BackToTop";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SiteFooter } from "@/components/footer";
 import Header from "@/components/header";
+import { PageDivider } from "@/components/PageDivider";
 import { ParticleCanvas } from "@/components/ParticleCanvas";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { RouteErrorFallback } from "@/components/RouteErrorFallback";
@@ -24,6 +25,7 @@ export function MainLayout() {
       >
         <Outlet />
       </ErrorBoundary>
+      <PageDivider />
       <SiteFooter />
       <BackToTop />
       <Toaster />

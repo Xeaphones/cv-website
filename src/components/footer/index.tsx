@@ -21,8 +21,6 @@ export function SiteFooter() {
 
   return (
     <footer className="site-footer">
-      <span className="site-footer__glow" aria-hidden />
-
       <div className="site-footer__main">
         <div className="site-footer__brand">
           <p className="site-footer__name">
@@ -32,7 +30,10 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label={t("footerNavigate")}>
-          <p className="site-footer__label">{t("footerNavigate")}</p>
+          <p className="site-footer__label">
+            <span className="site-footer__paren">(</span> {t("footerNavigate")}{" "}
+            <span className="site-footer__paren">)</span>
+          </p>
           <ul className="site-footer__links">
             {FOOTER_ROUTES.map(({ to, labelKey }) => (
               <li key={to}>
@@ -43,7 +44,10 @@ export function SiteFooter() {
         </nav>
 
         <nav aria-label={t("footerConnect")}>
-          <p className="site-footer__label">{t("footerConnect")}</p>
+          <p className="site-footer__label">
+            <span className="site-footer__paren">(</span> {t("footerConnect")}{" "}
+            <span className="site-footer__paren">)</span>
+          </p>
           <ul className="site-footer__socials">
             <li>
               <a href={SITE_LINKS.github} target="_blank" rel="noreferrer">

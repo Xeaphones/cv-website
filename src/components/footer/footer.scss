@@ -1,19 +1,9 @@
 .site-footer {
     position: relative;
-    isolation: isolate;
-    margin-top: 5rem;
-    padding: 4.25rem clamp(1.25rem, 5vw, 4.5rem) 1.35rem;
-    overflow: hidden;
-    background: hsl(var(--background2) / 0.72);
+    z-index: 10;
+    width: 100%;
+    padding: 3.5rem clamp(1.25rem, 5vw, 4.5rem) 1.35rem;
     color: hsl(var(--foreground));
-}
-
-.site-footer__glow {
-    position: absolute;
-    inset: -10% 18% 28%;
-    z-index: -1;
-    background: radial-gradient(circle, hsl(var(--primary) / 0.12), transparent 68%);
-    pointer-events: none;
 }
 
 .site-footer__main {
@@ -57,6 +47,10 @@
     letter-spacing: 0.08em;
     text-transform: lowercase;
     color: hsl(var(--muted-foreground));
+}
+
+.site-footer__paren {
+    color: hsl(var(--primary));
 }
 
 .site-footer__links,
@@ -109,8 +103,7 @@
 
 @media (max-width: 800px) {
     .site-footer {
-        margin-top: 3rem;
-        padding: 3rem 1.25rem 1.25rem;
+        padding: 2.5rem 1.25rem 1.25rem;
     }
 
     .site-footer__main {
