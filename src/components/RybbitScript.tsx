@@ -1,17 +1,16 @@
 import { Helmet } from "react-helmet-async";
 
-import { ANALYTICS_SCRIPT_URL, ANALYTICS_SITE_ID, isAnalyticsEnabled } from "@/lib/rybbit";
+import { getAnalyticsScriptSrc, isAnalyticsEnabled } from "@/lib/rybbit";
 
 export function RybbitScript() {
   if (!isAnalyticsEnabled()) return null;
 
+  const src = getAnalyticsScriptSrc();
+  if (!src) return null;
+
   return (
     <Helmet>
-      <script
-        async
-        src={ANALYTICS_SCRIPT_URL}
-        data-site-id={ANALYTICS_SITE_ID}
-      />
+      <script defer src={src} />
     </Helmet>
   );
 }
