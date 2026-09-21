@@ -72,10 +72,11 @@ export function CursorWisp() {
     const TRAIL = 18;
 
     const host = canvas.parentElement;
+    if (!host) return;
 
     const resize = () => {
-      width = host?.clientWidth ?? 0;
-      height = host?.clientHeight ?? 0;
+      width = host.clientWidth;
+      height = host.clientHeight;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
@@ -182,7 +183,7 @@ export function CursorWisp() {
     };
 
     const onMove = (event: PointerEvent) => {
-      if (!active || !host) return;
+      if (!active) return;
       const rect = host.getBoundingClientRect();
       const nextX = event.clientX - rect.left;
       const nextY = event.clientY - rect.top;
@@ -202,15 +203,15 @@ export function CursorWisp() {
     };
 
     resize();
-    const observer = host ? new ResizeObserver(resize) : null;
-    observer?.observe(host);
+    const observer = new ResizeObserver(resize);
+    observer.observe(host);
     frame = requestAnimationFrame(paint);
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("resize", resize);
 
     return () => {
       cancelAnimationFrame(frame);
-      observer?.disconnect();
+      observer.disconnect();
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", resize);
     };
