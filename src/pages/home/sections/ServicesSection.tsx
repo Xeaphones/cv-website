@@ -2,9 +2,9 @@ import { useCallback, useEffect, useId, useRef, useState, type PointerEvent as R
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import Card, { CardSpread } from "@/components/card";
-import { PageSection } from "@/components/PageSection";
-import { Button } from "@/components/ui/button";
+import Card, { CardSpread } from "@/pages/home/components/ServiceCard";
+import { PageSection } from "@/shared/components/PageSection";
+import { Button } from "@/shared/ui/button";
 import { useIsMobile, usePrefersCoarsePointer } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
@@ -350,7 +350,7 @@ export function ServicesSection() {
   const useSwipeDeck = isMobile || coarsePointer;
 
   return (
-    <PageSection id="wicd" title={t("services")} className="overflow-visible">
+    <PageSection id="wicd" title={t("services")} className="!m-0 overflow-visible">
       <div className="flex min-h-0 flex-1 flex-col justify-center">
         {useSwipeDeck ? (
           <ServiceSlider items={SERVICES} />

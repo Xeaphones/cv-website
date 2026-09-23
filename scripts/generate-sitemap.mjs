@@ -68,7 +68,7 @@ const buildDate = toIsoDate(new Date());
 const staticPages = [
   { pathname: "/", changefreq: "weekly", priority: "1.0" },
   { pathname: "/blog", changefreq: "weekly", priority: "0.9" },
-  { pathname: "/more", changefreq: "monthly", priority: "0.8" },
+  { pathname: "/profile", changefreq: "monthly", priority: "0.8" },
   { pathname: "/projects", changefreq: "monthly", priority: "0.8" },
   { pathname: "/contact", changefreq: "yearly", priority: "0.7" },
 ];

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { PageSection } from "@/components/PageSection";
+import { PageSection } from "@/shared/components/PageSection";
 import { SITE_EMAIL, SITE_PHONE, formatPhoneDisplay } from "@/lib/siteConfig";
 
 export function ContactDetailsSection() {

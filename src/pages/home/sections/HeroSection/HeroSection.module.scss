@@ -1,0 +1,120 @@
+.hero-heading {
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    text-align: center;
+}
+
+.hero-heading__line--left,
+.hero-heading__line--right {
+    max-width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.hero-heading__line--left {
+    animation: hero-move-in-left 1.4s cubic-bezier(0.21, 1.11, 0.81, 0.99) both;
+}
+
+.hero-heading__line--right {
+    animation: hero-move-in-right 1.4s cubic-bezier(0.21, 1.11, 0.81, 0.99) both;
+}
+
+.hero-typewriter {
+    display: inline;
+    text-align: center;
+}
+
+.hero-typewriter__caret {
+    display: inline-block;
+    width: 0.08em;
+    height: 0.85em;
+    margin-left: 0.12em;
+    background: hsl(var(--primary));
+    transform: translateY(0.08em);
+    animation: hero-caret 0.8s steps(1) infinite;
+}
+
+.hero-typewriter__caret--solid {
+    animation: none;
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-typewriter__caret {
+        animation: none;
+    }
+}
+
+.hero-cta {
+    visibility: visible;
+    pointer-events: auto;
+    position: relative;
+    isolation: isolate;
+    animation: hero-move-in-bottom 0.7s cubic-bezier(0.21, 1.11, 0.81, 0.99) both;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border: 2px solid hsl(var(--primary));
+        border-radius: 3px;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+
+        &::before,
+        &::after {
+            border-color: transparent;
+            filter: blur(2px);
+            transform: scaleX(1.18) scaleY(1.7);
+            transition:
+                800ms transform ease,
+                1900ms filter ease,
+                700ms border-color ease;
+        }
+
+        &::after {
+            transition-delay: 150ms;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-heading__line--left,
+    .hero-heading__line--right,
+    .hero-cta {
+        animation: none;
+    }
+}
+
+
+@keyframes hero-move-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-3.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes hero-move-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(3.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes hero-caret {
+    50% {
+        opacity: 0;
+    }
+}

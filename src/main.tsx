@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
-import { ThemeProvider } from "@/components/themeProvider"
+import { ThemeProvider } from "@/shared/components/themeProvider"
 import { router } from './router'
-import './index.css'
-import './App.css'
+import './styles/theme.css'
+import './styles/base.css'
 import './styles/blog-markdown.css'
 
 import "./i18n";

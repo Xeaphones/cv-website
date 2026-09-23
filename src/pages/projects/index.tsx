@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { PageMeta } from "@/components/PageMeta";
-import { PageDivider } from "@/components/PageDivider";
-import { PageShell } from "@/components/PageShell";
+import { PageMeta } from "@/shared/components/PageMeta";
+import { PageDivider } from "@/shared/components/PageDivider";
+import { PageShell } from "@/shared/components/PageShell";
 
 import { ExperienceTimelineSection } from "./sections/ExperienceTimelineSection";
 import { ProjectsGallerySection } from "./sections/ProjectsGallerySection";

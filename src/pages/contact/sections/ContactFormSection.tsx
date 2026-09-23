@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PageSection } from "@/components/PageSection";
-import { Button } from "@/components/ui/button";
+import { PageSection } from "@/shared/components/PageSection";
+import { Button } from "@/shared/ui/button";
 import {
   Form,
   FormControl,
@@ -12,10 +12,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
+} from "@/shared/ui/form";
+import { Input } from "@/shared/ui/input";
+import { Textarea } from "@/shared/ui/textarea";
+import { useToast } from "@/shared/ui/use-toast";
 import { SITE_EMAIL } from "@/lib/siteConfig";
 import {
   CONTACT_FORM_DEFAULT_VALUES,

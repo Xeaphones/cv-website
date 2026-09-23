@@ -17,8 +17,10 @@ export function scrollToHomeSection(id: string, behavior: ScrollBehavior = "smoo
   const header = document.querySelector("header");
   const headerHeight =
     header instanceof HTMLElement ? header.getBoundingClientRect().height : HEADER_OFFSET_PX;
-  const usesTopPadding = el.classList.contains("profile");
-  const offset = usesTopPadding ? 0 : headerHeight;
+  // Full-viewport home sections that already pad for the header (e.g. aboutme).
+  // Don't key off CSS module class names — those are hashed.
+  const usesOwnHeaderPadding = id === "aboutme";
+  const offset = usesOwnHeaderPadding ? 0 : headerHeight;
   const top = Math.max(0, window.scrollY + el.getBoundingClientRect().top - offset);
 
   window.scrollTo({ top, behavior: resolveBehavior(behavior) });
@@ -59,18 +61,4 @@ export function useScrollToHomeSection() {
     },
     [navigate, location.pathname, location.search, location.hash],
   );
-}
-
-/** Clear in-page hash (e.g. back to hero) via React Router. */
-export function useClearHomeHash() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  return useCallback(() => {
-    if (!location.hash || location.hash === "#hero") return;
-    navigate(
-      { pathname: location.pathname, search: location.search, hash: "" },
-      { replace: true, preventScrollReset: true },
-    );
-  }, [navigate, location.pathname, location.search, location.hash]);
 }

@@ -20,7 +20,7 @@ const meta = {
       description:
         "Portfolio de Yohan Velay, développeur Fullstack / IoT / DevOps chez Andil. Développement web, API, plugins Moodle et projets personnels à Toulouse.",
     },
-    more: {
+    profile: {
       title: "Compétences & Parcours | Yohan Velay",
       description:
         "Compétences détaillées, parcours scolaire, centres d'intérêt et CV téléchargeable de Yohan Velay.",
@@ -46,7 +46,7 @@ const meta = {
       description:
         "Portfolio of Yohan Velay, fullstack / IoT / DevOps developer at Andil. Web development, APIs, Moodle plugins, and personal projects in Toulouse.",
     },
-    more: {
+    profile: {
       title: "Skills & Education | Yohan Velay",
       description:
         "Detailed skills, education timeline, interests, and downloadable resume for Yohan Velay.",
@@ -71,7 +71,7 @@ const meta = {
 const staticRoutes = [
   { bare: "/", key: "home", file: "index.html" },
   { bare: "/blog", key: "blog", file: "blog/index.html" },
-  { bare: "/more", key: "more", file: "more/index.html" },
+  { bare: "/profile", key: "profile", file: "profile/index.html" },
   { bare: "/projects", key: "projects", file: "projects/index.html" },
   { bare: "/contact", key: "contact", file: "contact/index.html" },
 ];

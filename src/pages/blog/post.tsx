@@ -2,19 +2,18 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { BlogFooterLinks } from "@/components/blog/BlogFooterLinks";
-import { BlogArticleMeta } from "@/components/blog/BlogArticleMeta";
-import { BlogArticleTags } from "@/components/blog/BlogArticleTags";
-import { BlogBackLink } from "@/components/blog/BlogBackLink";
-import { BlogTableOfContents } from "@/components/blog/BlogTableOfContents";
-import { BlogMarkdownContent } from "@/components/blog/BlogMarkdownContent";
-import { BlogPostingJsonLd } from "@/components/BlogPostingJsonLd";
-import { PageMeta } from "@/components/PageMeta";
-import { PageShell } from "@/components/PageShell";
+import { BlogArticleMeta } from "@/pages/blog/components/BlogArticleMeta";
+import { BlogArticleTags } from "@/pages/blog/components/BlogArticleTags";
+import { BlogBackLink } from "@/pages/blog/components/BlogBackLink";
+import { BlogTableOfContents } from "@/pages/blog/components/BlogTableOfContents";
+import { BlogMarkdownContent } from "@/pages/blog/components/BlogMarkdownContent";
+import { BlogPostingJsonLd } from "@/shared/seo/BlogPostingJsonLd";
+import { PageMeta } from "@/shared/components/PageMeta";
+import { PageShell } from "@/shared/components/PageShell";
 import { useLocalePath, useActiveHeading } from "@/lib/hooks";
-import { getBlogArticle, useContentLocale, type BlogSection } from "@/lib/content";
-import { extractMarkdownHeadings } from "@/lib/markdown";
-import { cn } from "@/lib/utils";
+import { useContentLocale } from "@/lib/content";
+import { getBlogArticle, type BlogSection } from "@/lib/blog";
+import { extractMarkdownHeadings } from "@/lib/blog/markdown";
 
 function parseBlogSection(section: string | undefined): BlogSection | undefined {
   if (section === "posts" || section === "writeups") return section;
@@ -95,22 +94,14 @@ export const BlogPost = () => {
               content={article.content}
               className="prose max-w-none blog-prose dark:prose-invert"
             />
-            <footer
-              className={cn(
-                "mt-10 flex flex-col gap-4 border-t border-border/60 pt-6 not-prose sm:flex-row sm:items-center",
-                article.tags.length > 0 ? "sm:justify-between" : "sm:justify-end",
-              )}
-            >
-              {article.tags.length > 0 ? (
-                <div className="min-w-0">
-                  <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    {t("blogTags")}
-                  </p>
-                  <BlogArticleTags tags={article.tags} />
-                </div>
-              ) : null}
-              <BlogFooterLinks align="end" className="shrink-0 self-end sm:self-auto" />
-            </footer>
+            {article.tags.length > 0 ? (
+              <footer className="mt-10 border-t border-border/60 pt-6 not-prose">
+                <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  {t("blogTags")}
+                </p>
+                <BlogArticleTags tags={article.tags} />
+              </footer>
+            ) : null}
           </div>
 
           {headings.length > 0 && (

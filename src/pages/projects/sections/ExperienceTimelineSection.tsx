@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { PageSection } from "@/components/PageSection";
-import { Timeline, TimelineItem } from "@/components/timeline";
+import { PageSection } from "@/shared/components/PageSection";
+import { Timeline, TimelineItem } from "@/shared/components/Timeline";
 import { useExperiences } from "@/lib/content";
 
 export function ExperienceTimelineSection() {

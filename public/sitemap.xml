@@ -38,22 +38,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://willowfox.dev/blog" />
   </url>
   <url>
-    <loc>https://willowfox.dev/more</loc>
+    <loc>https://willowfox.dev/profile</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://willowfox.dev/more" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://willowfox.dev/en/more" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://willowfox.dev/more" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://willowfox.dev/profile" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://willowfox.dev/en/profile" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://willowfox.dev/profile" />
   </url>
   <url>
-    <loc>https://willowfox.dev/en/more</loc>
+    <loc>https://willowfox.dev/en/profile</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://willowfox.dev/more" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://willowfox.dev/en/more" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://willowfox.dev/more" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://willowfox.dev/profile" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://willowfox.dev/en/profile" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://willowfox.dev/profile" />
   </url>
   <url>
     <loc>https://willowfox.dev/projects</loc>

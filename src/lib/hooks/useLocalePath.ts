@@ -10,6 +10,8 @@ export function useLocale(): Locale {
 }
 
 /** Build a locale-aware path for Links / navigate (FR unprefixed, EN under /en). */
+export function useLocalePath(path: string): string;
+export function useLocalePath(): (target: string) => string;
 export function useLocalePath(path?: string) {
   const locale = useLocale();
 

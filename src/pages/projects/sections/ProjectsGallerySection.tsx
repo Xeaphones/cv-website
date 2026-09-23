@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { MarkdownContent } from "@/components/MarkdownContent";
-import { PageSection } from "@/components/PageSection";
+import { MarkdownContent } from "@/shared/components/MarkdownContent";
+import { PageSection } from "@/shared/components/PageSection";
 import { useProjects, type Project } from "@/lib/content";
 import {
   Dialog,
@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/shared/ui/dialog";
 import { Figma, Go, ReactTSX } from "@/assets/svg";
 
 const TECHNOLOGY_ICONS = {

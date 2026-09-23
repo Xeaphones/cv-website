@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { BackToTop } from "@/components/BackToTop";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { SiteFooter } from "@/components/footer";
-import Header from "@/components/header";
-import { PageDivider } from "@/components/PageDivider";
-import { ParticleCanvas } from "@/components/ParticleCanvas";
-import { PersonJsonLd } from "@/components/PersonJsonLd";
-import { RouteErrorFallback } from "@/components/RouteErrorFallback";
-import { RybbitScript } from "@/components/RybbitScript";
-import { Toaster } from "@/components/ui/toaster";
+import { BackToTop } from "@/shared/components/BackToTop";
+import { ErrorBoundary } from "@/shared/components/ErrorBoundary";
+import { SiteFooter } from "@/shell/footer";
+import Header from "@/shell/header";
+import { PageDivider } from "@/shared/components/PageDivider";
+import { ParticleCanvas } from "@/shared/components/ParticleCanvas";
+import { PersonJsonLd } from "@/shared/seo/PersonJsonLd";
+import { RouteErrorFallback } from "@/shared/components/RouteErrorFallback";
+import { RybbitScript } from "@/shared/seo/RybbitScript";
+import { Toaster } from "@/shared/ui/toaster";
 
 export function MainLayout() {
   const { t } = useTranslation();

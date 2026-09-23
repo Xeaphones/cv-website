@@ -1,12 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import {
-  getLocale,
-  resolveBlogArticleForLanguageChange,
-  type BlogSection,
-  type Locale,
-} from "@/lib/content";
+import { getLocale, type Locale } from "@/lib/content";
+import { resolveBlogArticleForLanguageChange, type BlogSection } from "@/lib/blog";
 import { setLocalePreference, stripLocalePrefix, withLocalePrefix } from "@/lib/locale";
 
 const BLOG_ARTICLE_PATH = /^\/blog\/(posts|writeups)\/([^/]+)$/;

@@ -2,12 +2,11 @@ import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
-import { PageMeta } from "@/components/PageMeta";
-import { PageShell } from "@/components/PageShell";
+import { PageMeta } from "@/shared/components/PageMeta";
+import { PageShell } from "@/shared/components/PageShell";
 import { scrollToHomeSection } from "@/lib/hooks";
 
 import { HeroSection } from "./sections/HeroSection";
-import "./home.scss";
 
 const HomeRest = lazy(() => import("./HomeRest"));
 

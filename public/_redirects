@@ -1,0 +1,4 @@
+# Legacy profile URL (folder was pages/more)
+/more /profile 301
+/en/more /en/profile 301
+/fr/more /fr/profile 301

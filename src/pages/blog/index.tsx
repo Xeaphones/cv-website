@@ -2,21 +2,14 @@ import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { BlogFooterLinks } from "@/components/blog/BlogFooterLinks";
-import { BlogBackLink } from "@/components/blog/BlogBackLink";
-import { BlogEntry } from "@/components/blog/BlogEntry";
-import { BlogPanel } from "@/components/blog/BlogPanel";
-import { BlogSearchBar } from "@/components/blog/BlogSearchBar";
-import { TagCloud } from "@/components/blog/TagCloud";
-import { PageMeta } from "@/components/PageMeta";
-import { PageShell } from "@/components/PageShell";
-import {
-  filterBlogBySearch,
-  filterBlogByTag,
-  getBlogTags,
-  useBlogPosts,
-  useBlogWriteups,
-} from "@/lib/content";
+import { BlogBackLink } from "@/pages/blog/components/BlogBackLink";
+import { BlogEntry } from "@/pages/blog/components/BlogEntry";
+import { BlogPanel } from "@/pages/blog/components/BlogPanel";
+import { BlogSearchBar } from "@/pages/blog/components/BlogSearchBar";
+import { TagCloud } from "@/pages/blog/components/TagCloud";
+import { PageMeta } from "@/shared/components/PageMeta";
+import { PageShell } from "@/shared/components/PageShell";
+import { filterBlogBySearch, filterBlogByTag, getBlogTags, useBlogPosts, useBlogWriteups } from "@/lib/blog";
 import { useLocalePath } from "@/lib/hooks";
 
 export const BlogList = () => {
@@ -106,8 +99,6 @@ export const BlogList = () => {
             </div>
           </section>
         )}
-
-        <BlogFooterLinks className="border-t border-border/60 pt-8" />
       </div>
     </PageShell>
   );
