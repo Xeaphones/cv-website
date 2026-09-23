@@ -1,5 +1,7 @@
 import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+
+import { LocaleLayout } from "@/components/LocaleLayout";
 import { MainLayout } from "@/layouts/MainLayout";
 
 const Home = lazy(() => import("@/pages/home").then((module) => ({ default: module.Home })));
@@ -43,45 +45,58 @@ function HomeFallback() {
 }
 
 function withSuspense(element: JSX.Element, fallback = <RouteLoadingFallback />) {
-  return (
-    <Suspense fallback={fallback}>
-      {element}
-    </Suspense>
-  );
+  return <Suspense fallback={fallback}>{element}</Suspense>;
 }
 
-export const router = createBrowserRouter([
+function createPageChildren() {
+  return [
     {
-      element: <MainLayout />,
-      children: [
-        {
-          path: "/",
-          element: withSuspense(<Home />, <HomeFallback />),
-        },
-        {
-          path: "more",
-          element: withSuspense(<More />),
-        },
-        {
-          path: "projects",
-          element: withSuspense(<Projects />),
-        },
-        {
-          path: "blog",
-          element: withSuspense(<BlogList />),
-        },
-        {
-          path: "blog/:section/:slug",
-          element: withSuspense(<BlogPost />),
-        },
-        {
-          path: "contact",
-          element: withSuspense(<Contact />),
-        },
-        {
-          path: "*",
-          element: withSuspense(<NotFoundPage />),
-        },
-      ],
+      index: true,
+      element: withSuspense(<Home />, <HomeFallback />),
     },
+    {
+      path: "more",
+      element: withSuspense(<More />),
+    },
+    {
+      path: "projects",
+      element: withSuspense(<Projects />),
+    },
+    {
+      path: "blog",
+      element: withSuspense(<BlogList />),
+    },
+    {
+      path: "blog/:section/:slug",
+      element: withSuspense(<BlogPost />),
+    },
+    {
+      path: "contact",
+      element: withSuspense(<Contact />),
+    },
+    {
+      path: "*",
+      element: withSuspense(<NotFoundPage />),
+    },
+  ];
+}
+
+function localeBranch(path: "/" | "/fr" | "/en", locale: "fr" | "en") {
+  return {
+    path,
+    element: <MainLayout />,
+    children: [
+      {
+        element: <LocaleLayout locale={locale} />,
+        children: createPageChildren(),
+      },
+    ],
+  };
+}
+
+// Explicit /en and /fr (RR6 has no /:lang(fr|en) regex). `/` = default FR.
+export const router = createBrowserRouter([
+  localeBranch("/en", "en"),
+  localeBranch("/fr", "fr"),
+  localeBranch("/", "fr"),
 ]);

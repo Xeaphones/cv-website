@@ -7,6 +7,6 @@ bullets:
   - "Gestion & Utilisation de Windows Server"
   - "Création de plugin Wordpress (PHP)"
   - "Création de site web en utilisant ReactTS"
-  - "Utilisation & Masterisation de Linux"
+  - "Utilisation & maîtrise de Linux"
   - "Utilisation et création de base de données SQL"
 ---

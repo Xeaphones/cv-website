@@ -82,7 +82,8 @@ const ToastClose = React.forwardRef<
     toast-close=""
     {...props}
   >
-    <Cross2Icon className="h-4 w-4" />
+    <Cross2Icon className="h-4 w-4" aria-hidden />
+    {!props["aria-label"] ? <span className="sr-only">Close</span> : null}
   </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName

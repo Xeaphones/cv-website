@@ -12,6 +12,7 @@ type CardContent = {
     imgALT: string;
     index?: number;
     turned?: boolean;
+    tabIndex?: number;
 };
 
 const ROMAN = ["I", "II", "III", "IV"] as const;
@@ -64,7 +65,7 @@ export function CardSpread({ children }: { children: ReactNode }) {
     );
 }
 
-const Card = ({ title, content, imgSRC, imgALT, index = 0, turned = false }: CardContent) => {
+const Card = ({ title, content, imgSRC, imgALT, index = 0, turned = false, tabIndex = 0 }: CardContent) => {
     const theme = useResolvedTheme();
     const src = theme === "light" ? imgSRC.light : imgSRC.dark;
     const fan = FAN[index] ?? FAN[0];
@@ -87,7 +88,7 @@ const Card = ({ title, content, imgSRC, imgALT, index = 0, turned = false }: Car
             <article
                 className={cn(style.card, turned && style.turned, cardSettled && style.settled)}
                 aria-label={title}
-                tabIndex={0}
+                tabIndex={tabIndex}
                 style={
                     {
                         "--i": index,

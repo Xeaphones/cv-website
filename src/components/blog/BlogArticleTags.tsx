@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { useLocalePath } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 type BlogArticleTagsProps = {
@@ -8,6 +9,7 @@ type BlogArticleTagsProps = {
 };
 
 export function BlogArticleTags({ tags, className }: BlogArticleTagsProps) {
+  const localize = useLocalePath();
   if (tags.length === 0) return null;
 
   return (
@@ -15,7 +17,7 @@ export function BlogArticleTags({ tags, className }: BlogArticleTagsProps) {
       {tags.map((tag) => (
         <li key={tag}>
           <Link
-            to={`/blog?tag=${encodeURIComponent(tag)}`}
+            to={localize(`/blog?tag=${encodeURIComponent(tag)}`)}
             className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-foreground/40 hover:text-foreground"
           >
             {tag}

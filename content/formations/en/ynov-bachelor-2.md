@@ -7,6 +7,6 @@ bullets:
   - "Usage & Management of Windows Server"
   - "Wordpress plugin creation (PHP)"
   - "Website creation using ReactTS"
-  - "Linux Usage & Masterisation"
-  - "SQL based BDD Usage & Création"
+  - "Linux usage & system mastery"
+  - "SQL database usage & creation"
 ---

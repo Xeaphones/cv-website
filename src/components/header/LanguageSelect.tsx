@@ -20,7 +20,10 @@ export function LanguageSelect({ compact }: LanguageSelectProps) {
 
   return (
     <Select value={i18n.language} onValueChange={changeLanguage}>
-      <SelectTrigger className={compact ? "w-[70px] bg-background" : "w-[120px] bg-background"}>
+      <SelectTrigger
+        className={compact ? "w-[70px] bg-background" : "w-[120px] bg-background"}
+        aria-label={t("languageSelect")}
+      >
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

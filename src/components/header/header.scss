@@ -5,7 +5,7 @@ header.site-header {
     border-bottom: 1px solid hsl(var(--border) / 0.4);
 }
 
-header nav ul li a a[data-current="current"] {
+header nav ul li a[data-current="current"] {
     border-bottom: 2px solid hsl(var(--primary));
 }
 

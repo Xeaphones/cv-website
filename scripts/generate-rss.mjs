@@ -2,10 +2,10 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createBuilder } from "@content-collections/core";
+import { siteUrl } from "./site-url.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const configPath = path.join(root, "content-collections.ts");
-const siteUrl = (process.env.VITE_SITE_URL ?? "https://yohanvelay.nybtech.fr").replace(/\/$/, "");
 
 const builder = await createBuilder(configPath);
 await builder.build();
@@ -37,12 +37,13 @@ function collectArticles(locale) {
 
 function articleUrl(locale, section, article) {
   const slug = locale === "fr" ? article.fr : article.en;
-  return `${siteUrl}/blog/${section}/${slug}`;
+  if (locale === "fr") return `${siteUrl}/blog/${section}/${slug}`;
+  return `${siteUrl}/en/blog/${section}/${slug}`;
 }
 
 function buildFeed(locale, articles) {
   const feedPath = `/rss/${locale}.xml`;
-  const channelLink = `${siteUrl}/blog`;
+  const channelLink = locale === "fr" ? `${siteUrl}/blog` : `${siteUrl}/en/blog`;
   const title = locale === "fr" ? "Blog — Yohan Velay" : "Blog — Yohan Velay";
   const description =
     locale === "fr"

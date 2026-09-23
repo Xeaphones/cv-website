@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 
 import { PageSection } from "@/components/PageSection";
 import { calculateAge } from "@/lib/age";
+import { useLocalePath, useScrollToHomeSection } from "@/lib/hooks";
 
-import { scrollToHomeSection } from "./HeroSection";
 import { HeroTypewriter } from "./HeroTypewriter";
 
 export function AboutMeSection() {
   const { t, i18n } = useTranslation();
+  const localize = useLocalePath();
+  const scrollToSection = useScrollToHomeSection();
   const ticker = t("profileTicker", { returnObjects: true });
   const loop = useMemo(() => {
     const base = Array.isArray(ticker) ? ticker.map(String) : ["Fullstack"];
@@ -24,12 +26,11 @@ export function AboutMeSection() {
       className="profile"
     >
       <div className="profile-intro">
-        <p className="profile-badge">
-          <span className="profile-badge__dot" aria-hidden />
-          {t("profileBadge")}
+        <p className="profile-hello">
+          <span className="profile-hello__paren">(</span>
+          <span>{t("profileHello")}</span>
+          <span className="profile-hello__paren">)</span>
         </p>
-
-        <p className="profile-hello">{t("profileHello")}</p>
 
         <p className="profile-name">
           <span className="profile-name__first">{t("heroName")}</span>{" "}
@@ -45,6 +46,12 @@ export function AboutMeSection() {
 
         <p className="profile-bio">{t("bio")}</p>
 
+        <p className="profile-badge">
+          <span className="profile-badge__bracket">[</span>
+          <span>{t("profileBadge")}</span>
+          <span className="profile-badge__bracket">]</span>
+        </p>
+
         <ul className="profile-meta">
           <li>
             {calculateAge()} {t("years")}
@@ -54,10 +61,10 @@ export function AboutMeSection() {
         </ul>
 
         <div className="profile-actions">
-          <Link to="/contact" className="profile-btn profile-btn--solid">
+          <Link to={localize("/contact")} className="profile-btn profile-btn--solid">
             {t("contactme")}
           </Link>
-          <Link to="/projects" className="profile-btn profile-btn--ghost">
+          <Link to={localize("/projects")} className="profile-btn profile-btn--ghost">
             {t("profileViewWork")}
           </Link>
         </div>
@@ -66,7 +73,7 @@ export function AboutMeSection() {
       <button
         type="button"
         className="profile-scroll"
-        onClick={() => scrollToHomeSection("wicd")}
+        onClick={() => scrollToSection("wicd")}
       >
         <span className="profile-scroll__mouse" aria-hidden>
           <span className="profile-scroll__wheel" />

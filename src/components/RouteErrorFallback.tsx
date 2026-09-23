@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PageMeta } from "@/components/PageMeta";
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
+import { useLocalePath } from "@/lib/hooks";
 
 type RouteErrorFallbackProps = {
   error: Error;
@@ -12,6 +13,7 @@ type RouteErrorFallbackProps = {
 
 export function RouteErrorFallback({ error, onReset }: RouteErrorFallbackProps) {
   const { t } = useTranslation();
+  const homePath = useLocalePath("/");
 
   return (
     <PageShell id="error">
@@ -36,7 +38,7 @@ export function RouteErrorFallback({ error, onReset }: RouteErrorFallbackProps) 
             {t("errorBoundaryRetry")}
           </Button>
           <Button asChild variant="outline">
-            <Link to="/">{t("errorBoundaryBackHome")}</Link>
+            <Link to={homePath}>{t("errorBoundaryBackHome")}</Link>
           </Button>
         </div>
       </section>

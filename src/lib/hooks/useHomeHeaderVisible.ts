@@ -1,12 +1,24 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { stripLocalePrefix } from "@/lib/locale";
 
 const HOME_SCROLL_THRESHOLD = 24;
 
 export function useHomeHeaderVisible() {
-  const { pathname, hash } = useLocation();
-  const isHome = pathname === "/";
-  const [scrolled, setScrolled] = useState(() => !isHome);
+  const navigate = useNavigate();
+  const { pathname, search, hash } = useLocation();
+  const isHome = stripLocalePrefix(pathname) === "/";
+  // Deep-link arrival: show header until scroll settles; thereafter only scrollY matters
+  // (hash alone must not pin the header when the user returns to the hero).
+  const [scrolled, setScrolled] = useState(
+    () => !isHome || (hash !== "" && hash !== "#hero"),
+  );
+  const leftHero = useRef(false);
+
+  useEffect(() => {
+    leftHero.current = false;
+  }, [isHome]);
 
   useEffect(() => {
     if (!isHome) {
@@ -15,14 +27,26 @@ export function useHomeHeaderVisible() {
     }
 
     const update = () => {
-      const pastHero = hash !== "" && hash !== "#hero";
-      setScrolled(pastHero || window.scrollY > HOME_SCROLL_THRESHOLD);
+      const nearTop = window.scrollY <= HOME_SCROLL_THRESHOLD;
+      setScrolled(!nearTop);
+
+      if (!nearTop) {
+        leftHero.current = true;
+        return;
+      }
+
+      // Only clear hash after the user has been past the hero (avoids wiping deep-links
+      // before HomeRest scrolls into place).
+      if (leftHero.current && hash && hash !== "#hero") {
+        leftHero.current = false;
+        navigate({ pathname, search, hash: "" }, { replace: true });
+      }
     };
 
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
-  }, [hash, isHome]);
+  }, [hash, isHome, navigate, pathname, search]);
 
   return { isHome, scrolled };
 }

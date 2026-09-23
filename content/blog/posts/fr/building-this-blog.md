@@ -178,6 +178,6 @@ Le header est le même ; **Blog** reste souligné sur les pages d'article. Thèm
 
 ## La suite
 
-Des notes courtes sur mes experimentations du quotidien (homelab, outils, etc), des writeups plus longs quand le sujet le mérite, et parfois une note méta comme celle-ci quand le site évolue.
+Des notes courtes sur mes expérimentations du quotidien (homelab, outils, etc), des writeups plus longs quand le sujet le mérite, et parfois une note méta comme celle-ci quand le site évolue.
 
 Si vous lisez ceci en production, la boucle est bouclée : fichier markdown → build → la page sous vos yeux.

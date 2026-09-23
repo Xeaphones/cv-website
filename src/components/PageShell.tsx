@@ -7,8 +7,8 @@ type PageShellProps = {
 
 export function PageShell({ id, children }: PageShellProps) {
   return (
-    <div className="page" id={id}>
-      {children}
-    </div>
+    <main id="main-content" className="page" tabIndex={-1}>
+      <div id={id}>{children}</div>
+    </main>
   );
 }

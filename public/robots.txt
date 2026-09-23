@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yohanvelay.nybtech.fr/sitemap.xml
+Sitemap: https://willowfox.dev/sitemap.xml

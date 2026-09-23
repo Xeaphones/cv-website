@@ -8,15 +8,18 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useLocalePath } from "@/lib/hooks";
+import { stripLocalePrefix } from "@/lib/locale";
+import { cn } from "@/lib/utils";
 
 import { HEADER_ROUTES } from "./routes";
 
 function isNavLinkActive(link: string, pathname: string): boolean {
+  const bare = stripLocalePrefix(pathname);
   if (link === "/") {
-    return pathname === "/";
+    return bare === "/";
   }
-
-  return pathname === link || pathname.startsWith(`${link}/`);
+  return bare === link || bare.startsWith(`${link}/`);
 }
 
 type NavLinksProps = {
@@ -34,22 +37,30 @@ export function NavLinks({
 }: NavLinksProps) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const localize = useLocalePath();
 
   return (
     <NavigationMenu orientation={orientation === "vertical" ? "vertical" : undefined} className={className}>
       <NavigationMenuList className={orientation === "vertical" ? "flex-col" : undefined}>
-        {HEADER_ROUTES.map(({ link, labelKey }) => (
-          <NavigationMenuItem key={link}>
-            <Link to={link} className={linkClassName} onClick={onNavigate}>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle()}
-                data-current={isNavLinkActive(link, pathname) ? "current" : undefined}
-              >
-                {t(labelKey)}
+        {HEADER_ROUTES.map(({ link, labelKey }) => {
+          const active = isNavLinkActive(link, pathname);
+
+          return (
+            <NavigationMenuItem key={link}>
+              <NavigationMenuLink asChild>
+                <Link
+                  to={localize(link)}
+                  className={cn(navigationMenuTriggerStyle(), linkClassName)}
+                  onClick={onNavigate}
+                  data-current={active ? "current" : undefined}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {t(labelKey)}
+                </Link>
               </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        ))}
+            </NavigationMenuItem>
+          );
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   );

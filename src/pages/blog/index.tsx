@@ -17,9 +17,11 @@ import {
   useBlogPosts,
   useBlogWriteups,
 } from "@/lib/content";
+import { useLocalePath } from "@/lib/hooks";
 
 export const BlogList = () => {
   const { t, i18n } = useTranslation();
+  const localize = useLocalePath();
   const posts = useBlogPosts();
   const writeups = useBlogWriteups();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,7 +76,7 @@ export const BlogList = () => {
           <BlogPanel
             title={t("latestPosts")}
             allLinkLabel={t("allPosts")}
-            allLinkTo={activeKind === "post" ? "/blog" : "/blog?kind=post"}
+            allLinkTo={localize(activeKind === "post" ? "/blog" : "/blog?kind=post")}
             emptyLabel={hasSearch ? t("blogNoSearchResults") : t("blogEmpty")}
           >
             {filteredPosts.map((post) => (
@@ -87,7 +89,7 @@ export const BlogList = () => {
           <BlogPanel
             title={t("latestWriteups")}
             allLinkLabel={t("allWriteups")}
-            allLinkTo={activeKind === "writeup" ? "/blog" : "/blog?kind=writeup"}
+            allLinkTo={localize(activeKind === "writeup" ? "/blog" : "/blog?kind=writeup")}
             emptyLabel={hasSearch ? t("blogNoSearchResults") : t("writeupsEmpty")}
           >
             {filteredWriteups.map((writeup) => (

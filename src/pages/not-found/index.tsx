@@ -4,9 +4,11 @@ import { useTranslation } from "react-i18next";
 import { PageMeta } from "@/components/PageMeta";
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
+import { useLocalePath } from "@/lib/hooks";
 
 export function NotFoundPage() {
   const { t } = useTranslation();
+  const homePath = useLocalePath("/");
 
   return (
     <PageShell id="not-found">
@@ -16,7 +18,7 @@ export function NotFoundPage() {
         <h1 className="mt-2 text-3xl font-semibold text-foreground sm:text-4xl">{t("notFoundTitle")}</h1>
         <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">{t("notFoundDescription")}</p>
         <Button asChild className="mt-6">
-          <Link to="/">{t("notFoundBackHome")}</Link>
+          <Link to={homePath}>{t("notFoundBackHome")}</Link>
         </Button>
       </section>
     </PageShell>

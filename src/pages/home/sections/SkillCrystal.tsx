@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ThemedIcon } from "@/components/ThemedIcon";
+import { useLocalePath } from "@/lib/hooks";
+import { stripLocalePrefix } from "@/lib/locale";
 import { cn } from "@/lib/utils";
 
 import type { HomeSkillEntry } from "./skillData";
@@ -42,8 +45,10 @@ function splitSkillPools(skills: HomeSkillEntry[]) {
 }
 
 export function SkillCrystal({ skills }: { skills: HomeSkillEntry[] }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const moreSkillsPath = useLocalePath("/more#skills");
   const orbRef = useRef<HTMLSpanElement>(null);
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -118,16 +123,21 @@ export function SkillCrystal({ skills }: { skills: HomeSkillEntry[] }) {
   const Icon = skill.icon;
 
   const openSkills = () => {
-    if (location.pathname === "/more") {
+    if (stripLocalePrefix(location.pathname) === "/more") {
       document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" });
-      window.history.replaceState(null, "", "/more#skills");
+      window.history.replaceState(null, "", moreSkillsPath);
       return;
     }
-    navigate("/more#skills");
+    navigate(moreSkillsPath);
   };
 
   return (
-    <button type="button" className="skill-crystal" onClick={openSkills} aria-label={skill.name}>
+    <button
+      type="button"
+      className="skill-crystal"
+      onClick={openSkills}
+      aria-label={t("skillsCrystalAria", { name: skill.name })}
+    >
       <span ref={orbRef} className="skill-crystal__orb">
         <span className="skill-crystal__halo" aria-hidden />
         <span className="skill-crystal__glass">
@@ -139,7 +149,7 @@ export function SkillCrystal({ skills }: { skills: HomeSkillEntry[] }) {
             <span />
           </span>
           <span className="skill-crystal__core" aria-hidden />
-          <span className={cn("skill-crystal__vision", visible && "is-visible")} aria-live="polite">
+          <span className={cn("skill-crystal__vision", visible && "is-visible")}>
             <i>
               {skill.fillVariant ? <ThemedIcon icon={Icon} variant={skill.fillVariant} /> : <Icon />}
             </i>
@@ -179,8 +189,8 @@ function SkillCandle({ skills }: { skills: HomeSkillEntry[] }) {
   const Icon = skill?.icon;
 
   return (
-    <span className="skill-candle" aria-hidden>
-      <span className="skill-candle__smoke">
+    <span className="skill-candle" role="img" aria-label={skill?.name}>
+      <span className="skill-candle__smoke" aria-hidden>
         <span />
         <span />
         <span />
@@ -200,17 +210,17 @@ function SkillCandle({ skills }: { skills: HomeSkillEntry[] }) {
           </span>
         ) : null}
       </span>
-      <span className="skill-candle__flame">
+      <span className="skill-candle__flame" aria-hidden>
         <span />
         <span />
       </span>
-      <span className="skill-candle__wick" />
-      <span className="skill-candle__wax">
+      <span className="skill-candle__wick" aria-hidden />
+      <span className="skill-candle__wax" aria-hidden>
         <span className="skill-candle__melt" />
         <span className="skill-candle__drip" />
         <span className="skill-candle__drip" />
       </span>
-      <span className="skill-candle__holder" />
+      <span className="skill-candle__holder" aria-hidden />
     </span>
   );
 }
@@ -260,8 +270,8 @@ function SkillVial({ skills }: { skills: HomeSkillEntry[] }) {
   const Icon = skill.icon;
 
   return (
-    <span className="skill-vial" aria-hidden>
-      <span className="skill-vial__vessel">
+    <span className="skill-vial" role="img" aria-label={skill.name}>
+      <span className="skill-vial__vessel" aria-hidden>
         <span className="skill-vial__collar" />
         <span className="skill-vial__seal">
           <span />
@@ -283,15 +293,15 @@ function SkillVial({ skills }: { skills: HomeSkillEntry[] }) {
         </span>
       </span>
       <span className="skill-vial__cradle">
-        <span className="skill-vial__band" />
-        <span className="skill-vial__band skill-vial__band--low" />
-        <span className="skill-vial__prong" />
-        <span className="skill-vial__prong" />
-        <span className="skill-vial__prong" />
-        <span className="skill-vial__rivet" />
-        <span className="skill-vial__rivet" />
-        <span className="skill-vial__rivet" />
-        <span className="skill-vial__foot" />
+        <span className="skill-vial__band" aria-hidden />
+        <span className="skill-vial__band skill-vial__band--low" aria-hidden />
+        <span className="skill-vial__prong" aria-hidden />
+        <span className="skill-vial__prong" aria-hidden />
+        <span className="skill-vial__prong" aria-hidden />
+        <span className="skill-vial__rivet" aria-hidden />
+        <span className="skill-vial__rivet" aria-hidden />
+        <span className="skill-vial__rivet" aria-hidden />
+        <span className="skill-vial__foot" aria-hidden />
         <span className="skill-vial__label">{skill.name}</span>
       </span>
     </span>

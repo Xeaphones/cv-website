@@ -40,7 +40,7 @@ export function BlogPostingJsonLd({
     author: {
       "@type": "Person",
       name: SITE_NAME,
-      url: getAbsoluteUrl("/"),
+      url: getAbsoluteUrl(language.startsWith("fr") ? "/" : "/en"),
     },
     publisher: {
       "@type": "Person",

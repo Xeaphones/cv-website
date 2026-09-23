@@ -1,5 +1,5 @@
 ---
-title: "App Developper"
+title: "App Developer"
 dateLabel: "2018 - 2019"
 order: 4
 location: "Veltech, Toulouse"

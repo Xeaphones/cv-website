@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { useLocalePath } from "@/lib/hooks";
 import type { BlogArticle, BlogSection } from "@/lib/content";
 
 type BlogEntryProps = {
@@ -9,6 +10,7 @@ type BlogEntryProps = {
 };
 
 export function BlogEntry({ article, section, locale }: BlogEntryProps) {
+  const localize = useLocalePath();
   const date = article.date.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
@@ -19,7 +21,7 @@ export function BlogEntry({ article, section, locale }: BlogEntryProps) {
     <article className="border-b border-border/60 py-5 last:border-b-0 last:pb-0 first:pt-0">
       <div className="flex items-baseline justify-between gap-4">
         <Link
-          to={`/blog/${section}/${article.slug}`}
+          to={localize(`/blog/${section}/${article.slug}`)}
           className="text-base font-semibold text-foreground transition-colors hover:text-primary"
         >
           {article.title}

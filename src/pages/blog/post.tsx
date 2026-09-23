@@ -11,8 +11,8 @@ import { BlogMarkdownContent } from "@/components/blog/BlogMarkdownContent";
 import { BlogPostingJsonLd } from "@/components/BlogPostingJsonLd";
 import { PageMeta } from "@/components/PageMeta";
 import { PageShell } from "@/components/PageShell";
+import { useLocalePath, useActiveHeading } from "@/lib/hooks";
 import { getBlogArticle, useContentLocale, type BlogSection } from "@/lib/content";
-import { useActiveHeading } from "@/lib/hooks";
 import { extractMarkdownHeadings } from "@/lib/markdown";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,7 @@ export const BlogPost = () => {
   const { section, slug } = useParams();
   const { t, i18n } = useTranslation();
   const locale = useContentLocale();
+  const localize = useLocalePath();
   const blogSection = parseBlogSection(section);
   const article = blogSection && slug ? getBlogArticle(locale, blogSection, slug) : undefined;
   const headings = useMemo(() => (article ? extractMarkdownHeadings(article.content) : []), [article]);
@@ -57,7 +58,7 @@ export const BlogPost = () => {
       <BlogPostingJsonLd
         title={article.title}
         description={article.summary}
-        url={`/blog/${blogSection}/${slug}`}
+        url={localize(`/blog/${blogSection}/${slug}`)}
         datePublished={article.date}
         language={i18n.language}
         tags={article.tags}

@@ -80,7 +80,7 @@ export const SKILL_GRID: HomeSkillEntry[] = [
   { name: "Linux", icon: Linux, fillVariant: "dark" },
   { name: "PHP", icon: PHP, fillVariant: "dark" },
   { name: "Laravel", icon: Laravel },
-  { name: "BDD", icon: BDD, fillVariant: "dark" },
+  { name: "Databases", icon: BDD, fillVariant: "dark" },
   { name: "MongoDB", icon: MongoDB },
   { name: "Python", icon: Python },
   { name: "Unreal Engine", icon: UnrealEngine, fillVariant: "dark" },

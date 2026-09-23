@@ -7,9 +7,11 @@ import {
   ToastViewport,
 } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import { useTranslation } from "react-i18next"
 
 export function Toaster() {
   const { toasts } = useToast()
+  const { t } = useTranslation()
 
   return (
     <ToastProvider>
@@ -23,7 +25,7 @@ export function Toaster() {
               )}
             </div>
             {action}
-            <ToastClose />
+            <ToastClose aria-label={t("toastClose")} />
           </Toast>
         )
       })}

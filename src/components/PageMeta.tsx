@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
 import { getAbsoluteUrl, getRssFeedPath, OG_IMAGE_PATH, SITE_NAME } from "@/lib/siteConfig";
+import { stripLocalePrefix, withLocalePrefix } from "@/lib/locale";
+import type { Locale } from "@/lib/content";
 
 export type PageKey = "home" | "more" | "projects" | "contact" | "blog";
 
@@ -26,6 +28,9 @@ type PageMetaProps =
 export function PageMeta(props: PageMetaProps) {
   const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
+  const barePath = stripLocalePrefix(pathname);
+  const locale = (i18n.language.startsWith("fr") ? "fr" : "en") as Locale;
+  const alternateLocale: Locale = locale === "fr" ? "en" : "fr";
 
   const pageTitle =
     "page" in props ? t(`meta${capitalize(props.page)}Title`) : props.title;
@@ -33,10 +38,12 @@ export function PageMeta(props: PageMetaProps) {
     "page" in props ? t(`meta${capitalize(props.page)}Description`) : props.description;
   const fullTitle =
     "page" in props && props.page === "home" ? pageTitle : `${pageTitle} | ${SITE_NAME}`;
-  const canonical = getAbsoluteUrl(pathname);
+  const canonicalPath = withLocalePrefix(barePath, locale);
+  const canonical = getAbsoluteUrl(canonicalPath);
+  const alternateUrl = getAbsoluteUrl(withLocalePrefix(barePath, alternateLocale));
   const image = getAbsoluteUrl(OG_IMAGE_PATH);
   const imageAlt = t("metaImageAlt");
-  const isBlogRoute = pathname.startsWith("/blog");
+  const isBlogRoute = barePath === "/blog" || barePath.startsWith("/blog/");
   const rssFeedUrl = getAbsoluteUrl(getRssFeedPath(i18n.language));
   const noindex = props.noindex ?? false;
   const ogType =
@@ -55,12 +62,15 @@ export function PageMeta(props: PageMetaProps) {
 
   return (
     <Helmet>
-      <html lang={i18n.language} />
+      <html lang={locale} />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="author" content={SITE_NAME} />
       {noindex ? <meta name="robots" content="noindex, follow" /> : null}
       <link rel="canonical" href={canonical} />
+      <link rel="alternate" hrefLang={locale} href={canonical} />
+      <link rel="alternate" hrefLang={alternateLocale} href={alternateUrl} />
+      <link rel="alternate" hrefLang="x-default" href={getAbsoluteUrl(withLocalePrefix(barePath, "fr"))} />
       {isBlogRoute ? (
         <link
           rel="alternate"
@@ -80,7 +90,7 @@ export function PageMeta(props: PageMetaProps) {
       <meta property="og:locale" content={t("metaOgLocale")} />
       <meta
         property="og:locale:alternate"
-        content={i18n.language === "fr" ? "en_GB" : "fr_FR"}
+        content={locale === "fr" ? "en_GB" : "fr_FR"}
       />
       {publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
       {modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}

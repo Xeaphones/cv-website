@@ -5,5 +5,5 @@ order: 5
 location: "Veltech, Toulouse"
 bullets:
   - "Application debug and error log"
-  - "Help in programing"
+  - "Help with programming"
 ---

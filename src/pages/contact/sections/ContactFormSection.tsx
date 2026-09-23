@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,14 +15,34 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { SITE_EMAIL } from "@/lib/siteConfig";
 import {
   CONTACT_FORM_DEFAULT_VALUES,
   CONTACT_FORM_FIELDS,
   createContactFormSchema,
 } from "../contactFormConfig";
 
+function buildMailtoUrl(data: typeof CONTACT_FORM_DEFAULT_VALUES): string {
+  const subject = encodeURIComponent(data.object.trim());
+  const lines = [
+    data.message.trim(),
+    "",
+    "—",
+    `${data.firstname.trim()} ${data.lastname.trim()}`.trim(),
+    data.email.trim(),
+  ];
+  if (data.phone.trim()) {
+    lines.push(data.phone.trim());
+  }
+  const body = encodeURIComponent(lines.join("\n"));
+  return `mailto:${SITE_EMAIL}?subject=${subject}&body=${body}`;
+}
+
 export function ContactFormSection() {
   const { t } = useTranslation();
+  const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
   const formSchema = createContactFormSchema(t);
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -29,7 +50,25 @@ export function ContactFormSection() {
   });
 
   const onSubmit = (data: typeof CONTACT_FORM_DEFAULT_VALUES) => {
-    console.log(data);
+    setSubmitting(true);
+    try {
+      const mailto = buildMailtoUrl(data);
+      window.location.href = mailto;
+      toast({
+        variant: "success",
+        title: t("contactSuccess"),
+        duration: 4000,
+      });
+      form.reset();
+    } catch {
+      toast({
+        variant: "destructive",
+        title: t("contactError"),
+        duration: 4000,
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const firstRow = CONTACT_FORM_FIELDS.filter((field) => field.name === "firstname" || field.name === "lastname");
@@ -44,6 +83,7 @@ export function ContactFormSection() {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="mx-auto w-full max-w-3xl rounded-lg border border-border/60 bg-card/30 p-4 shadow-sm sm:p-6"
+          noValidate
         >
           <div className="grid gap-5 sm:grid-cols-2">
             {firstRow.map((fieldConfig) => (
@@ -57,7 +97,12 @@ export function ContactFormSection() {
                       {t(fieldConfig.labelKey)} {fieldConfig.required ? "*" : ""}
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder={t(fieldConfig.placeholderKey)} {...field} />
+                      <Input
+                        placeholder={t(fieldConfig.placeholderKey)}
+                        required={fieldConfig.required}
+                        aria-required={fieldConfig.required || undefined}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -78,7 +123,13 @@ export function ContactFormSection() {
                       {t(fieldConfig.labelKey)} {fieldConfig.required ? "*" : ""}
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder={t(fieldConfig.placeholderKey)} {...field} />
+                      <Input
+                        placeholder={t(fieldConfig.placeholderKey)}
+                        type={fieldConfig.name === "email" ? "email" : "text"}
+                        required={fieldConfig.required}
+                        aria-required={fieldConfig.required || undefined}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -100,9 +151,20 @@ export function ContactFormSection() {
                     </FormLabel>
                     <FormControl>
                       {fieldConfig.type === "textarea" ? (
-                        <Textarea placeholder={t(fieldConfig.placeholderKey)} className="min-h-32" {...field} />
+                        <Textarea
+                          placeholder={t(fieldConfig.placeholderKey)}
+                          className="min-h-32"
+                          required={fieldConfig.required}
+                          aria-required={fieldConfig.required || undefined}
+                          {...field}
+                        />
                       ) : (
-                        <Input placeholder={t(fieldConfig.placeholderKey)} {...field} />
+                        <Input
+                          placeholder={t(fieldConfig.placeholderKey)}
+                          required={fieldConfig.required}
+                          aria-required={fieldConfig.required || undefined}
+                          {...field}
+                        />
                       )}
                     </FormControl>
                     <FormMessage />
@@ -114,7 +176,9 @@ export function ContactFormSection() {
 
           <div className="mt-6 flex flex-col-reverse items-start justify-between gap-3 sm:flex-row sm:items-center">
             <p className="text-sm text-muted-foreground">{t("required")}</p>
-            <Button type="submit">{t("send")}</Button>
+            <Button type="submit" disabled={submitting}>
+              {t("send")}
+            </Button>
           </div>
         </form>
       </Form>

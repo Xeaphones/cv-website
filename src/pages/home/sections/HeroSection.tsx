@@ -1,43 +1,44 @@
 import { ArrowDown } from "lucide-react";
-import type { MouseEvent } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ParticleCanvas } from "@/components/ParticleCanvas";
 import { LanguageSelect } from "@/components/header/LanguageSelect";
 import { ThemeToggle } from "@/components/themeToggle";
-import { useHomeHeaderVisible } from "@/lib/hooks";
+import { useHomeHeaderVisible, useScrollToHomeSection } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 import { HeroTypewriter } from "./HeroTypewriter";
 
-const HEADER_OFFSET_PX = 80;
+export {
+  scrollToHomeSection,
+  useScrollToHomeSection,
+  useClearHomeHash,
+} from "@/lib/hooks/useHomeScroll";
 
-export function scrollToHomeSection(id: string, behavior: ScrollBehavior = "smooth") {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  const fullPane = window.matchMedia("(min-width: 801px)").matches;
-  const target = fullPane ? (el.closest(".home-work") ?? el) : el;
-  const header = document.querySelector("header");
-  const headerHeight =
-    header instanceof HTMLElement ? header.getBoundingClientRect().height : HEADER_OFFSET_PX;
-  const usesTopPadding =
-    target.classList.contains("profile") ||
-    (fullPane && target.classList.contains("home-work"));
-  const offset = usesTopPadding ? 0 : headerHeight;
-  const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset);
-
-  window.scrollTo({ top, behavior });
+function setInert(element: HTMLElement | null, inert: boolean) {
+  if (!element) return;
+  if (inert) {
+    element.setAttribute("inert", "");
+  } else {
+    element.removeAttribute("inert");
+  }
 }
 
-export function HeroSection({ ctaReady = false }: { ctaReady?: boolean }) {
+export function HeroSection() {
   const { t } = useTranslation();
   const { isHome, scrolled } = useHomeHeaderVisible();
+  const scrollToSection = useScrollToHomeSection();
   const showCornerControls = isHome && !scrolled;
+  const cornerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setInert(cornerRef.current, !showCornerControls);
+  }, [showCornerControls]);
 
   const scrollToAbout = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    scrollToHomeSection("aboutme");
+    scrollToSection("aboutme");
   };
 
   return (
@@ -47,6 +48,8 @@ export function HeroSection({ ctaReady = false }: { ctaReady?: boolean }) {
     >
       <ParticleCanvas linked fill className="absolute inset-0" />
       <div
+        ref={cornerRef}
+        data-hero-corner
         className={cn(
           "absolute right-4 top-4 z-20 flex gap-2 sm:right-6 sm:top-6",
           "transition-opacity duration-200 motion-reduce:transition-none",
@@ -74,15 +77,10 @@ export function HeroSection({ ctaReady = false }: { ctaReady?: boolean }) {
         <a
           href="#aboutme"
           onClick={scrollToAbout}
-          className={cn(
-            "hero-cta group mt-8 inline-flex items-center gap-3 rounded-sm border-2 border-primary bg-background2/60 px-8 py-3 text-lg font-medium text-primary no-underline sm:text-xl",
-            ctaReady && "is-ready",
-          )}
-          aria-hidden={ctaReady ? undefined : true}
-          tabIndex={ctaReady ? undefined : -1}
+          className="hero-cta group mt-8 inline-flex items-center gap-3 rounded-sm border-2 border-primary bg-background2/60 px-8 py-3 text-lg font-medium text-primary no-underline sm:text-xl"
         >
           {t("heroCta")}
-          <ArrowDown className="h-5 w-5 transition-transform duration-300 group-hover:translate-y-0.5" />
+          <ArrowDown className="h-5 w-5" aria-hidden />
         </a>
       </div>
     </section>

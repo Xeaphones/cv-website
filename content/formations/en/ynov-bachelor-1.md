@@ -7,5 +7,5 @@ bullets:
   - "Web Server creation (Go and NodeJS/Express)"
   - "Website creation (HTML/CSS/JS)"
   - "Game Creation (Unity Engine)"
-  - "Usage and creation of an REST API"
+  - "Usage and creation of a REST API"
 ---
