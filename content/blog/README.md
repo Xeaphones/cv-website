@@ -1,22 +1,19 @@
 # Blog content guide
 
-How to write posts and writeups for this site. Reference style: [velnic.dev example](https://velnic.dev/posts/new-blog-s3-cloudfront-aws-deploy/).
+How to write posts for this site. Reference style: [velnic.dev example](https://velnic.dev/posts/new-blog-s3-cloudfront-aws-deploy/).
 
 ## Folder layout
 
 ```
 content/blog/
-├── posts/
-│   ├── fr/   # French blog posts
-│   └── en/   # English blog posts
-└── writeups/
-    ├── fr/   # French technical writeups
-    └── en/   # English technical writeups
+└── posts/
+    ├── fr/   # French posts
+    └── en/   # English posts
 ```
 
-- **Posts** → general articles (`content/blog/posts/`)
-- **Writeups** → technical deep-dives (`content/blog/writeups/`)
+- Every article lives under **`posts/`** (both locales)
 - Each article exists in **both** `fr/` and `en/` with matching translation slugs in frontmatter
+- Optional **`project`** frontmatter groups posts into a series (sidebar nav + `/blog?project=…`)
 
 ## Frontmatter
 
@@ -32,7 +29,7 @@ tags:
   - moodle
   - php
 theme: https://www.youtube.com/watch?v=VIDEO_ID#t=42
-project: Project Name
+project: Homelab
 ---
 ```
 
@@ -41,12 +38,12 @@ project: Project Name
 | `title` | yes | Display title |
 | `summary` | yes | Shown on blog index |
 | `date` | yes | `YYYY-MM-DD` |
-| `fr` | yes | Slug used in `/blog/.../fr-slug` when viewing FR |
-| `en` | yes | Slug used in `/blog/.../en-slug` when viewing EN |
+| `fr` | yes | Slug used in `/blog/posts/fr-slug` when viewing FR |
+| `en` | yes | Slug used in `/blog/posts/en-slug` when viewing EN |
 | `draft` | no | `true` hides from the blog (default: `false`) |
 | `tags` | no | Used for tag filtering on `/blog` |
 | `theme` | no | **Full URL** to a background music/video (hash `#` allowed) |
-| `project` | no | Writeups only — shown in metadata line |
+| `project` | no | Series name — enables project nav, breadcrumb, and `?project=` filter |
 
 `theme` must be a URL, not a label:
 
@@ -58,6 +55,16 @@ theme: https://www.youtube.com/watch?v=abc123#t=30
 theme: moodle
 ```
 
+## Project collections
+
+Posts that share the same `project` value form a series:
+
+- Sidebar list of sibling posts (oldest → newest)
+- Breadcrumb: Blog / Project
+- Index filter: `/blog?project=Homelab`
+
+Standalone posts omit `project`.
+
 ## Headings and summary
 
 Headings `#`, `##`, and `###` in the body:
@@ -68,6 +75,19 @@ Headings `#`, `##`, and `###` in the body:
 - **Ignored inside fenced code blocks** — a `# comment` in a ` ``` ` block will not appear in the summary
 
 The page title in frontmatter is shown separately in the header — the `#` heading in the body is optional but recommended for the summary.
+
+## Mermaid diagrams
+
+Fenced `mermaid` blocks are rendered as diagrams (not as code):
+
+````markdown
+```mermaid
+flowchart LR
+  A[Host] --> B[Service]
+```
+````
+
+Theme follows the site light/dark mode. Invalid syntax falls back to an error + raw source.
 
 ## Callouts
 
@@ -90,67 +110,22 @@ Use GitHub alert syntax (same as velnic.dev):
 > Negative consequences of an action.
 ```
 
-Multi-line callouts:
-
-```markdown
-> [!WARNING]
-> Pricing depends on usage and region.
-> Always check the AWS pricing page before deploying.
-```
-
 ## Code blocks
 
-Fenced blocks with a language tag get syntax highlighting and a **Copy** button (toast on success).
-
-**Default (file window)** — tab label with a primary accent line, ideal for source files:
-
-````markdown
-```python title="app.py — the filter"
-PING_BLOCK_RE = re.compile(r"[;|`$&]")
+```markdown
+```bash title="Install dependencies"
+npm install
 ```
-````
-
-Without `title`, the language name is used as the tab label (e.g. `python`).
-
-**Terminal style** — add `is-terminal` for shell commands (language left, title centered, copy right):
-
-````markdown
-```bash is-terminal title="Run the local Moodle stack"
-npm run dev
 ```
-````
 
-**No header** — add `no-title` to hide the title bar; copy button floats inside the block (top-right):
+Optional modifiers go in the fence meta (after the language):
 
-````markdown
-```json no-title
-{ "hello": "world" }
-```
-````
-
-Works with `is-terminal` and `highlight` as well.
-
-### Line highlights
-
-Highlight specific lines with a blue background and left accent — useful for drawing attention to key lines in a longer block.
-
-Use `highlight="3-4"` for a range, or comma-separated values like `highlight="1,3-5"`:
-
-````markdown
-```bash is-terminal title="Run the local Moodle stack" highlight="2-3"
-# From the project root
-cd moodle-docker-wrapper
-npm run dev
-```
-````
-
-Alternative brace syntax: `{3-4}` on the fence line.
-
-Supported languages follow [Prism](https://prismjs.com/#supported-languages) (e.g. `bash`, `php`, `js`, `ts`, `json`, `yaml`, `sql`).
-
-### Inline code
-
-Single backticks render as a primary-colored pill: `` `app.py` ``.
+| Tag | Effect |
+|-----|--------|
+| `title="…"` | Custom header label |
+| `{1,3-5}` or `highlight="1,3-5"` | Highlight those lines |
+| `is-terminal` | Terminal-style chrome |
+| `no-title` | Hide the language/title bar |
 
 ## Images
 
@@ -198,6 +173,10 @@ Captions render in italic inside the frame, below the image, with a shared borde
 
 [link text](https://example.com)
 
+[Rybbit](https://rybbit.io "icon")
+[Beszel](https://beszel.dev "icon: sh/beszel")
+[Dockhand](https://github.com/Finsys/dockhand "icon: si/github")
+
 - bullet list
 - second item
 
@@ -208,6 +187,19 @@ Captions render in italic inside the frame, below the image, with a shared borde
 |--------|-------|
 | Key    | Data  |
 ```
+
+Optional link title tags (same idea as image titles):
+
+| Tag | Effect |
+|-----|--------|
+| `icon` | Try `/icon.svg` → `/favicon.ico` → Google s2 → DuckDuckGo |
+| `icon: si/github` | [Simple Icons](https://simpleicons.org) slug (white in dark theme) |
+| `icon: si/github/white` | Simple Icons with an explicit color |
+| `icon: sh/rybbit` | [selfh.st/icons](https://github.com/selfhst/icons) (auto `-light` on dark UI / `-dark` on light) |
+| `icon: sh/rybbit-dark` | Exact selfh.st slug |
+| `icon: /path.svg` or `icon:https://…` | Custom icon URL |
+
+Without a title tag, links stay plain text (no icon).
 
 Tables, strikethrough (`~~text~~`), and task lists (`- [ ] todo`) are supported via GFM.
 
@@ -224,6 +216,7 @@ draft: false
 tags:
   - web
 theme: https://www.youtube.com/watch?v=example
+project: Homelab
 ---
 
 # My article
@@ -244,9 +237,17 @@ npm install
 Final thoughts.
 ```
 
+## Checklist before publishing
+
+- [ ] Both `fr/` and `en/` files exist
+- [ ] `fr` / `en` slugs in frontmatter match the other locale's filename
+- [ ] `draft: false` (or omit) when ready
+- [ ] Tags are lowercase and consistent across locales
+- [ ] Images live under `public/` and use root paths
+- [ ] Series posts share the same `project` string in both locales
+
 ## Common mistakes
 
-- Putting posts in `content/blog/fr/` — use `content/blog/posts/fr/` instead
-- Using `kind: post` in frontmatter — folder (`posts/` vs `writeups/`) defines the type
 - Mismatched `fr` / `en` slugs between translation files — language switch won't find the counterpart page
-- Forgetting the matching file in the other locale folder
+- Putting images outside `public/` — they won't be served
+- Using a label instead of a URL for `theme`

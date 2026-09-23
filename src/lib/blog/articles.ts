@@ -1,60 +1,57 @@
 import { useMemo } from "react";
-import type {
-  BlogPostsEn,
-  BlogPostsFr,
-  BlogWriteupsEn,
-  BlogWriteupsFr,
-} from "content-collections";
-import {
-  allBlogPostsEns,
-  allBlogPostsFrs,
-  allBlogWriteupsEns,
-  allBlogWriteupsFrs,
-} from "content-collections";
+import type { BlogPostsEn, BlogPostsFr } from "content-collections";
+import { allBlogPostsEns, allBlogPostsFrs } from "content-collections";
 
 import { useContentLocale, type Locale } from "@/lib/content";
 
-export type BlogSection = "posts" | "writeups";
 export type BlogPost = BlogPostsFr | BlogPostsEn;
-export type BlogWriteup = BlogWriteupsFr | BlogWriteupsEn;
-export type BlogArticle = BlogPost | BlogWriteup;
+/** @deprecated Use BlogPost — writeups live under posts with optional `project`. */
+export type BlogWriteup = BlogPost;
+export type BlogArticle = BlogPost;
 
 type DatedContent = {
   date: Date;
   draft: boolean;
 };
 
-function sortByDate<T extends DatedContent>(items: T[]): T[] {
+function sortByDateDesc<T extends DatedContent>(items: T[]): T[] {
   return [...items]
     .filter((item) => !item.draft)
     .sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
+function allPostsRaw(locale: Locale): BlogPost[] {
+  return locale === "fr" ? allBlogPostsFrs : allBlogPostsEns;
+}
+
 export function getBlogPosts(locale: Locale): BlogPost[] {
-  const posts = locale === "fr" ? allBlogPostsFrs : allBlogPostsEns;
-  return sortByDate(posts);
+  return sortByDateDesc(allPostsRaw(locale));
 }
 
-export function getBlogWriteups(locale: Locale): BlogWriteup[] {
-  const writeups = locale === "fr" ? allBlogWriteupsFrs : allBlogWriteupsEns;
-  return sortByDate(writeups);
-}
-
+/** Direct URL lookup — includes drafts so unpublished articles remain previewable. */
 export function getBlogPost(locale: Locale, slug: string): BlogPost | undefined {
-  return getBlogPosts(locale).find((post) => post.slug === slug);
+  return allPostsRaw(locale).find((post) => post.slug === slug);
 }
 
-export function getBlogWriteup(locale: Locale, slug: string): BlogWriteup | undefined {
-  return getBlogWriteups(locale).find((writeup) => writeup.slug === slug);
-}
-
-export function getBlogArticle(
+/**
+ * Posts sharing a `project` value, oldest-first (series reading order).
+ * Published only, plus `includeSlug` when that article is a draft being previewed.
+ */
+export function getPostsByProject(
   locale: Locale,
-  section: BlogSection,
-  slug: string,
-): BlogArticle | undefined {
-  return section === "writeups" ? getBlogWriteup(locale, slug) : getBlogPost(locale, slug);
+  project: string,
+  options?: { includeSlug?: string },
+): BlogPost[] {
+  return allPostsRaw(locale)
+    .filter(
+      (post) =>
+        post.project === project && (!post.draft || post.slug === options?.includeSlug),
+    )
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
 }
+
+/** @deprecated Use getPostsByProject */
+export const getWriteupsByProject = getPostsByProject;
 
 export function getLocalizedBlogSlug(article: BlogArticle, locale: Locale): string {
   return locale === "fr" ? article.fr : article.en;
@@ -63,17 +60,16 @@ export function getLocalizedBlogSlug(article: BlogArticle, locale: Locale): stri
 export function resolveBlogArticleForLanguageChange(
   currentLocale: Locale,
   nextLocale: Locale,
-  section: BlogSection,
   slug: string,
 ): string | undefined {
-  const article = getBlogArticle(currentLocale, section, slug);
+  const article = getBlogPost(currentLocale, slug);
   if (!article) return undefined;
 
   const targetSlug = getLocalizedBlogSlug(article, nextLocale);
-  const targetArticle = getBlogArticle(nextLocale, section, targetSlug);
+  const targetArticle = getBlogPost(nextLocale, targetSlug);
   if (!targetArticle) return undefined;
 
-  return `/blog/${section}/${targetSlug}`;
+  return `/blog/posts/${targetSlug}`;
 }
 
 type TaggableArticle = {
@@ -104,18 +100,11 @@ export function filterBlogBySearch<T extends SearchableArticle>(
   });
 }
 
-export function getBlogTags(posts: BlogPost[], writeups: BlogWriteup[]): string[] {
-  return [...new Set([...posts, ...writeups].flatMap((article) => article.tags))].sort((a, b) =>
-    a.localeCompare(b),
-  );
+export function getBlogTags(posts: BlogPost[]): string[] {
+  return [...new Set(posts.flatMap((article) => article.tags))].sort((a, b) => a.localeCompare(b));
 }
 
 export function useBlogPosts(): BlogPost[] {
   const locale = useContentLocale();
   return useMemo(() => getBlogPosts(locale), [locale]);
-}
-
-export function useBlogWriteups(): BlogWriteup[] {
-  const locale = useContentLocale();
-  return useMemo(() => getBlogWriteups(locale), [locale]);
 }

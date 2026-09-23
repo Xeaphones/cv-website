@@ -2,3 +2,8 @@
 /more /profile 301
 /en/more /en/profile 301
 /fr/more /fr/profile 301
+
+# Writeups merged into posts (project series kept via frontmatter)
+/blog/writeups/* /blog/posts/:splat 301
+/en/blog/writeups/* /en/blog/posts/:splat 301
+/fr/blog/writeups/* /fr/blog/posts/:splat 301

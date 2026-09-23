@@ -2,10 +2,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { getLocale, type Locale } from "@/lib/content";
-import { resolveBlogArticleForLanguageChange, type BlogSection } from "@/lib/blog";
+import { resolveBlogArticleForLanguageChange } from "@/lib/blog";
 import { setLocalePreference, stripLocalePrefix, withLocalePrefix } from "@/lib/locale";
 
-const BLOG_ARTICLE_PATH = /^\/blog\/(posts|writeups)\/([^/]+)$/;
+const BLOG_ARTICLE_PATH = /^\/blog\/(?:posts|writeups)\/([^/]+)$/;
 
 export function useLanguageAwareNavigation() {
   const navigate = useNavigate();
@@ -21,13 +21,8 @@ export function useLanguageAwareNavigation() {
     const match = barePath.match(BLOG_ARTICLE_PATH);
 
     if (match && currentLocale !== nextLocale) {
-      const [, section, slug] = match;
-      const resolved = resolveBlogArticleForLanguageChange(
-        currentLocale,
-        nextLocale,
-        section as BlogSection,
-        slug,
-      );
+      const [, slug] = match;
+      const resolved = resolveBlogArticleForLanguageChange(currentLocale, nextLocale, slug);
       nextBare = resolved ?? "/blog";
     }
 

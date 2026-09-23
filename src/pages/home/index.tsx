@@ -4,8 +4,9 @@ import { useLocation } from "react-router-dom";
 
 import { PageMeta } from "@/shared/components/PageMeta";
 import { PageShell } from "@/shared/components/PageShell";
-import { scrollToHomeSection } from "@/lib/hooks";
+import { scrollToHomeSection, usePreferMachineReadable } from "@/lib/hooks";
 
+import { HomeCompact } from "./HomeCompact";
 import { HeroSection } from "./sections/HeroSection";
 
 const HomeRest = lazy(() => import("./HomeRest"));
@@ -17,23 +18,28 @@ function isDeepLink(hash: string) {
 export const Home = () => {
   const { t } = useTranslation();
   const { hash } = useLocation();
+  const compact = usePreferMachineReadable();
   const deepLink = isDeepLink(hash);
   const [loadRest, setLoadRest] = useState(deepLink);
   const [ctaReady, setCtaReady] = useState(false);
   const markReady = useCallback(() => setCtaReady(true), []);
 
   useEffect(() => {
-    if (loadRest) return;
+    if (compact || loadRest) return;
     const frame = window.requestAnimationFrame(() => setLoadRest(true));
     return () => window.cancelAnimationFrame(frame);
-  }, [loadRest]);
+  }, [compact, loadRest]);
 
   useEffect(() => {
-    if (!ctaReady || !deepLink) return;
+    if (compact || !ctaReady || !deepLink) return;
     const id = hash.slice(1);
     if (!id) return;
     scrollToHomeSection(id, "auto");
-  }, [ctaReady, deepLink, hash]);
+  }, [compact, ctaReady, deepLink, hash]);
+
+  if (compact) {
+    return <HomeCompact />;
+  }
 
   const showDeepLinkStatus = deepLink && !ctaReady;
 

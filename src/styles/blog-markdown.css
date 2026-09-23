@@ -79,6 +79,22 @@
   text-underline-offset: 2px;
 }
 
+.blog-prose a.blog-link-with-icon {
+  white-space: nowrap;
+  text-decoration-thickness: from-font;
+}
+
+.blog-prose a.blog-link-with-icon .blog-link-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin: 0 0.3em 0 0;
+  max-width: none;
+  vertical-align: -0.15em;
+  border-radius: 0.15em;
+  object-fit: contain;
+}
+
 .blog-prose a:hover {
   opacity: 0.85;
 }
@@ -191,6 +207,20 @@
   background: hsl(var(--muted) / 0.4);
 }
 
+.blog-mermaid-svg svg {
+  display: block;
+  height: auto;
+}
+
+.blog-project-nav-sticky {
+  position: sticky;
+  /* Site header (5rem) + article top margin (2rem) */
+  top: calc(5rem + 2rem);
+  max-height: calc(100vh - 5rem - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 .blog-summary-fixed {
   position: fixed;
   /* Site header (5rem) + article top margin (2rem) — aligns with “Back to blog” */
@@ -201,6 +231,11 @@
   max-height: calc(100vh - 5rem - 2rem);
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* max-w-7xl (80rem) when project sidebar is present */
+.blog-summary-fixed--with-project-nav {
+  right: max(1rem, calc((100vw - 80rem) / 2 + 1rem));
 }
 
 .code-block pre {

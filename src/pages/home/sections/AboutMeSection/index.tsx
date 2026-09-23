@@ -82,11 +82,14 @@ export function AboutMeSection() {
         type="button"
         className={modCn(styles, "profile-scroll")}
         onClick={() => scrollToSection("wicd")}
+        aria-label={t("profileScroll")}
       >
         <span className={modCn(styles, "profile-scroll__mouse")} aria-hidden>
           <span className={modCn(styles, "profile-scroll__wheel")} />
         </span>
-        <span className={modCn(styles, "profile-scroll__label")}>{t("profileScroll")}</span>
+        <span className={modCn(styles, "profile-scroll__label")} aria-hidden>
+          {t("profileScroll")}
+        </span>
       </button>
 
       <div className={modCn(styles, "profile-marquee")} aria-hidden>

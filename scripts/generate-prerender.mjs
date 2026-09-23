@@ -177,19 +177,15 @@ const generated = await import(
 for (const locale of ["fr", "en"]) {
   const altLocale = locale === "fr" ? "en" : "fr";
   const posts = locale === "fr" ? generated.allBlogPostsFrs : generated.allBlogPostsEns;
-  const writeups = locale === "fr" ? generated.allBlogWriteupsFrs : generated.allBlogWriteupsEns;
-  const articles = [
-    ...posts.map((a) => ({ ...a, section: "posts" })),
-    ...writeups.map((a) => ({ ...a, section: "writeups" })),
-  ].filter((a) => !a.draft);
+  const articles = posts.filter((a) => !a.draft);
 
   for (const article of articles) {
     const slug = locale === "fr" ? article.fr : article.en;
     const altSlug = altLocale === "fr" ? article.fr : article.en;
-    const bare = `/blog/${article.section}/${slug}`;
+    const bare = `/blog/posts/${slug}`;
     const pathname = publicPath(bare, locale);
-    const frUrl = `${siteUrl}${publicPath(`/blog/${article.section}/${article.fr}`, "fr")}`;
-    const enUrl = `${siteUrl}${publicPath(`/blog/${article.section}/${article.en}`, "en")}`;
+    const frUrl = `${siteUrl}${publicPath(`/blog/posts/${article.fr}`, "fr")}`;
+    const enUrl = `${siteUrl}${publicPath(`/blog/posts/${article.en}`, "en")}`;
     const html = injectHead(template, {
       title: `${article.title} | Yohan Velay`,
       description: article.summary,
@@ -200,13 +196,13 @@ for (const locale of ["fr", "en"]) {
     });
     const out =
       locale === "fr"
-        ? `blog/${article.section}/${slug}/index.html`
-        : `en/blog/${article.section}/${slug}/index.html`;
+        ? `blog/posts/${slug}/index.html`
+        : `en/blog/posts/${slug}/index.html`;
     writeRoute(out, html);
     count += 1;
 
     if (locale === "fr") {
-      writeRoute(`fr/blog/${article.section}/${slug}/index.html`, html);
+      writeRoute(`fr/blog/posts/${slug}/index.html`, html);
       count += 1;
     }
   }

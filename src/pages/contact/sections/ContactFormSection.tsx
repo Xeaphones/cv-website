@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type FieldErrors } from "react-hook-form";
 
 import { PageSection } from "@/shared/components/PageSection";
 import { Button } from "@/shared/ui/button";
@@ -15,16 +14,25 @@ import {
 } from "@/shared/ui/form";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { useToast } from "@/shared/ui/use-toast";
-import { SITE_EMAIL } from "@/lib/siteConfig";
+import { toast } from "@/shared/ui/use-toast";
+import { EMAIL_PRE_SUBJECT, SITE_EMAIL } from "@/lib/siteConfig";
 import {
   CONTACT_FORM_DEFAULT_VALUES,
   CONTACT_FORM_FIELDS,
-  createContactFormSchema,
+  createContactFormResolver,
+  type ContactFormValues,
 } from "../contactFormConfig";
 
-function buildMailtoUrl(data: typeof CONTACT_FORM_DEFAULT_VALUES): string {
-  const subject = encodeURIComponent(data.object.trim());
+function buildMailtoSubject(object: string): string {
+  const topic = object.trim();
+  const prefix = EMAIL_PRE_SUBJECT.trim();
+  if (!prefix) return topic;
+  if (!topic) return prefix;
+  return `${prefix} ${topic}`;
+}
+
+function buildMailtoUrl(data: ContactFormValues): string {
+  const subject = encodeURIComponent(buildMailtoSubject(data.object));
   const lines = [
     data.message.trim(),
     "",
@@ -39,17 +47,33 @@ function buildMailtoUrl(data: typeof CONTACT_FORM_DEFAULT_VALUES): string {
   return `mailto:${SITE_EMAIL}?subject=${subject}&body=${body}`;
 }
 
+function collectErrorMessages(errors: FieldErrors<ContactFormValues>): string[] {
+  return CONTACT_FORM_FIELDS.flatMap((field) => {
+    const message = errors[field.name]?.message;
+    return typeof message === "string" && message.trim() ? [message] : [];
+  });
+}
+
 export function ContactFormSection() {
   const { t } = useTranslation();
-  const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
-  const formSchema = createContactFormSchema(t);
-  const form = useForm({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ContactFormValues>({
+    resolver: createContactFormResolver(t),
     defaultValues: CONTACT_FORM_DEFAULT_VALUES,
+    mode: "onSubmit",
   });
 
-  const onSubmit = (data: typeof CONTACT_FORM_DEFAULT_VALUES) => {
+  const onInvalid = (errors: FieldErrors<ContactFormValues>) => {
+    const issues = collectErrorMessages(errors);
+    toast({
+      variant: "destructive",
+      title: t("contactValidationError"),
+      description: issues.length > 0 ? issues.join(" · ") : undefined,
+      duration: 5000,
+    });
+  };
+
+  const onSubmit = (data: ContactFormValues) => {
     setSubmitting(true);
     try {
       const mailto = buildMailtoUrl(data);
@@ -60,11 +84,12 @@ export function ContactFormSection() {
         duration: 4000,
       });
       form.reset();
-    } catch {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: t("contactError"),
-        duration: 4000,
+        description: error instanceof Error ? error.message : undefined,
+        duration: 5000,
       });
     } finally {
       setSubmitting(false);
@@ -81,7 +106,7 @@ export function ContactFormSection() {
     <PageSection id="contact-form" title={t("contactme")}>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="mx-auto w-full max-w-3xl rounded-lg border border-border/60 bg-card/30 p-4 shadow-sm sm:p-6"
           noValidate
         >
@@ -99,7 +124,6 @@ export function ContactFormSection() {
                     <FormControl>
                       <Input
                         placeholder={t(fieldConfig.placeholderKey)}
-                        required={fieldConfig.required}
                         aria-required={fieldConfig.required || undefined}
                         {...field}
                       />
@@ -126,7 +150,6 @@ export function ContactFormSection() {
                       <Input
                         placeholder={t(fieldConfig.placeholderKey)}
                         type={fieldConfig.name === "email" ? "email" : "text"}
-                        required={fieldConfig.required}
                         aria-required={fieldConfig.required || undefined}
                         {...field}
                       />
@@ -154,14 +177,12 @@ export function ContactFormSection() {
                         <Textarea
                           placeholder={t(fieldConfig.placeholderKey)}
                           className="min-h-32"
-                          required={fieldConfig.required}
                           aria-required={fieldConfig.required || undefined}
                           {...field}
                         />
                       ) : (
                         <Input
                           placeholder={t(fieldConfig.placeholderKey)}
-                          required={fieldConfig.required}
                           aria-required={fieldConfig.required || undefined}
                           {...field}
                         />

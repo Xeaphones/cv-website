@@ -1,21 +1,30 @@
 export {
   filterBlogBySearch,
   filterBlogByTag,
-  getBlogArticle,
   getBlogPost,
   getBlogPosts,
   getBlogTags,
-  getBlogWriteup,
-  getBlogWriteups,
   getLocalizedBlogSlug,
+  getPostsByProject,
+  getWriteupsByProject,
   resolveBlogArticleForLanguageChange,
   useBlogPosts,
-  useBlogWriteups,
 } from "./articles";
-export type { BlogArticle, BlogPost, BlogSection, BlogWriteup } from "./articles";
+export type { BlogArticle, BlogPost, BlogWriteup } from "./articles";
+
+export { blogProjectUrl, blogWriteupProjectUrl } from "./projectUrl";
 
 export { parseBlogImageMeta } from "./blogImageMeta";
 export type { BlogImageMeta } from "./blogImageMeta";
+
+export {
+  parseBlogLinkMeta,
+  selfhstIconUrl,
+  selfhstThemedSlug,
+  simpleIconUrl,
+  siteFaviconCandidates,
+} from "./blogLinkMeta";
+export type { BlogLinkIconKind, BlogLinkMeta } from "./blogLinkMeta";
 
 export { parseCodeFenceMeta } from "./codeFenceMeta";
 export type { CodeFenceMeta } from "./codeFenceMeta";

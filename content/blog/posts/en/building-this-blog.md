@@ -61,12 +61,11 @@ Inline code like `content-collections.ts` gets a highlighted pill; fenced blocks
 
 ## What the blog can do
 
-Two content types live side by side:
+All articles live under one folder; optional `project` groups them into a series:
 
 ```text title="content/blog/"
 blog/
-├── posts/     # shorter articles and notes
-└── writeups/  # longer technical deep-dives
+└── posts/     # all articles (add project: for a series)
 ```
 
 Each entry has frontmatter validated at build time:
@@ -89,8 +88,9 @@ theme: https://www.youtube.com/watch?v=pR4iCWB-VVQ
 - **`draft: true`** — hides the article from the blog until it is ready
 - **`tags`** — clickable filters on `/blog`
 - **`theme`** — a **Theme** link in the metadata line (like on this article)
+- **`project`** — series name (sidebar nav + `/blog?project=…`)
 
-On **`/blog`**, the index offers **full-text search** and a **tag cloud**. Posts and writeups are listed separately.
+On **`/blog`**, the index offers **full-text search** and a **tag cloud**. Posts that share a `project` value form a series (sidebar + `/blog?project=…`).
 
 On **each article page**:
 
@@ -168,13 +168,13 @@ Nothing about routing replaces the portfolio:
 
 - `/` — about and skills
 - `/projects` — timelines and project cards
-- `/blog` — latest posts and writeups, tag filter, search
+- `/blog` — latest posts, tag filter, search (and `?project=` for series)
 - `/contact` — form and links
 
 The header stays the same; **Blog** stays underlined on post pages too. Theme toggle, i18n, and Catppuccin-inspired colours apply everywhere.
 
 ## What's next
 
-Short posts from day-to-day experimentations (homelab, tooling and more), longer writeups when a topic deserves a deep dive, and the occasional meta note like this one when the site itself changes.
+Short posts from day-to-day experimentations (homelab, tooling and more), longer series when a topic deserves a deep dive (`project:` in frontmatter), and the occasional meta note like this one when the site itself changes.
 
 If you are reading this on the live site, the loop closed successfully: markdown file → build → the page you are on now.

@@ -5,10 +5,12 @@ import remarkGfm from "remark-gfm";
 import { remarkAlert } from "remark-github-blockquote-alert";
 
 import { CodeBlock } from "@/pages/blog/components/CodeBlock";
+import { MermaidDiagram } from "@/pages/blog/components/MermaidDiagram";
 import { parseBlogImageMeta } from "@/lib/blog/blogImageMeta";
 import { parseCodeFenceMeta } from "@/lib/blog/codeFenceMeta";
 import { remarkCodeFenceMeta } from "@/lib/blog/remarkCodeFenceMeta";
 import { slugifyHeading } from "@/lib/blog/markdown";
+import { BlogMarkdownLink } from "@/pages/blog/components/BlogMarkdownLink";
 import { cn } from "@/lib/utils";
 
 type BlogMarkdownContentProps = {
@@ -44,6 +46,10 @@ function Pre({ children }: ComponentPropsWithoutRef<"pre">) {
       codeProps.props["data-fence-meta"],
     );
     const code = childrenToText(codeProps.props.children).replace(/\n$/, "");
+
+    if (language === "mermaid") {
+      return <MermaidDiagram chart={code} />;
+    }
 
     return (
       <CodeBlock
@@ -116,19 +122,11 @@ const blogMarkdownComponents: Components = {
       </code>
     );
   },
-  a: ({ href, children, ...props }) => {
-    const isExternal = href?.startsWith("http");
-
-    return (
-      <a
-        href={href}
-        {...props}
-        {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
-      >
-        {children}
-      </a>
-    );
-  },
+  a: ({ href, title, children, className, ...props }) => (
+    <BlogMarkdownLink href={href} title={title} className={className} {...props}>
+      {children}
+    </BlogMarkdownLink>
+  ),
   table: ({ children, ...props }) => (
     <div className="overflow-x-auto">
       <table {...props}>{children}</table>

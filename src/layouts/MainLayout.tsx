@@ -11,13 +11,15 @@ import { PersonJsonLd } from "@/shared/seo/PersonJsonLd";
 import { RouteErrorFallback } from "@/shared/components/RouteErrorFallback";
 import { RybbitScript } from "@/shared/seo/RybbitScript";
 import { Toaster } from "@/shared/ui/toaster";
+import { usePreferMachineReadable } from "@/lib/hooks";
 
 export function MainLayout() {
   const { t } = useTranslation();
+  const compact = usePreferMachineReadable();
 
   return (
     <>
-      <RybbitScript />
+      {!compact ? <RybbitScript /> : null}
       <PersonJsonLd />
       <a
         href="#main-content"
@@ -25,8 +27,8 @@ export function MainLayout() {
       >
         {t("skipToContent")}
       </a>
-      <ParticleCanvas className="fixed inset-0 z-0" />
-      <Header />
+      {compact ? null : <ParticleCanvas className="fixed inset-0 z-0" aria-hidden />}
+      {compact ? null : <Header />}
       <ErrorBoundary
         fallback={({ error, reset }) => (
           <RouteErrorFallback error={error} onReset={reset} />
@@ -34,10 +36,14 @@ export function MainLayout() {
       >
         <Outlet />
       </ErrorBoundary>
-      <PageDivider />
-      <SiteFooter />
-      <BackToTop />
-      <Toaster />
+      {compact ? null : (
+        <>
+          <PageDivider />
+          <SiteFooter />
+          <BackToTop />
+        </>
+      )}
+      {compact ? null : <Toaster />}
     </>
   );
 }

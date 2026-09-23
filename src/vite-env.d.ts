@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_FALLBACK_URL?: string;
   readonly VITE_SITE_NAME?: string;
   readonly VITE_SITE_EMAIL?: string;
+  readonly VITE_EMAIL_PRE_SUBJECT?: string;
   readonly VITE_SITE_PHONE?: string;
   readonly VITE_LINKEDIN_URL?: string;
   readonly VITE_GITHUB_URL?: string;

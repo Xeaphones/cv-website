@@ -92,3 +92,9 @@
   background-color: hsl(var(--success));
   color: hsl(var(--success-foreground));
 }
+
+.destructive {
+  border-color: hsl(var(--destructive));
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+}

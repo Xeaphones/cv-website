@@ -28,17 +28,16 @@ function toRfc822(date) {
 
 function collectArticles(locale) {
   const posts = locale === "fr" ? generated.allBlogPostsFrs : generated.allBlogPostsEns;
-  const writeups = locale === "fr" ? generated.allBlogWriteupsFrs : generated.allBlogWriteupsEns;
 
-  return [...posts.map((article) => ({ ...article, section: "posts" })), ...writeups.map((article) => ({ ...article, section: "writeups" }))]
+  return posts
     .filter((article) => !article.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-function articleUrl(locale, section, article) {
+function articleUrl(locale, article) {
   const slug = locale === "fr" ? article.fr : article.en;
-  if (locale === "fr") return `${siteUrl}/blog/${section}/${slug}`;
-  return `${siteUrl}/en/blog/${section}/${slug}`;
+  if (locale === "fr") return `${siteUrl}/blog/posts/${slug}`;
+  return `${siteUrl}/en/blog/posts/${slug}`;
 }
 
 function buildFeed(locale, articles) {
@@ -47,12 +46,12 @@ function buildFeed(locale, articles) {
   const title = locale === "fr" ? "Blog — Yohan Velay" : "Blog — Yohan Velay";
   const description =
     locale === "fr"
-      ? "Articles et writeups techniques de Yohan Velay."
-      : "Articles and technical writeups by Yohan Velay.";
+      ? "Articles et notes techniques de Yohan Velay."
+      : "Articles and technical notes by Yohan Velay.";
 
   const items = articles
     .map((article) => {
-      const link = articleUrl(locale, article.section, article);
+      const link = articleUrl(locale, article);
       return `    <item>
       <title>${escapeXml(article.title)}</title>
       <link>${escapeXml(link)}</link>

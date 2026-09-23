@@ -65,7 +65,7 @@ export function CardSpread({ children }: { children: ReactNode }) {
     );
 }
 
-const Card = ({ title, content, imgSRC, imgALT, index = 0, turned = false, tabIndex = 0 }: CardContent) => {
+const Card = ({ title, content, imgSRC, index = 0, turned = false, tabIndex = 0 }: CardContent) => {
     const theme = useResolvedTheme();
     const src = theme === "light" ? imgSRC.light : imgSRC.dark;
     const fan = FAN[index] ?? FAN[0];
@@ -110,7 +110,7 @@ const Card = ({ title, content, imgSRC, imgALT, index = 0, turned = false, tabIn
                     </div>
                     <div className={[style.face, style.front].join(" ")}>
                         <span className={style.numeral}>{ROMAN[index] ?? ROMAN[0]}</span>
-                        <img src={src} alt={imgALT} />
+                        <img src={src} alt="" aria-hidden />
                         <h3>{title}</h3>
                         {paragraphs}
                         <div className={style.ornament} aria-hidden />

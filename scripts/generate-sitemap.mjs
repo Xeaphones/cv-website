@@ -34,12 +34,8 @@ function withLocale(pathname, locale) {
 
 function collectArticles(locale) {
   const posts = locale === "fr" ? generated.allBlogPostsFrs : generated.allBlogPostsEns;
-  const writeups = locale === "fr" ? generated.allBlogWriteupsFrs : generated.allBlogWriteupsEns;
 
-  return [
-    ...posts.map((article) => ({ ...article, section: "posts" })),
-    ...writeups.map((article) => ({ ...article, section: "writeups" })),
-  ]
+  return posts
     .filter((article) => !article.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
@@ -89,10 +85,10 @@ for (const locale of ["fr", "en"]) {
     const slug = locale === "fr" ? article.fr : article.en;
     const altLocale = locale === "fr" ? "en" : "fr";
     const altSlug = altLocale === "fr" ? article.fr : article.en;
-    const bare = `/blog/${article.section}/${slug}`;
-    const pathname = withLocale(`/blog/${article.section}/${slug}`, locale);
-    const altPath = withLocale(`/blog/${article.section}/${altSlug}`, altLocale);
-    const frPath = withLocale(`/blog/${article.section}/${article.fr}`, "fr");
+    const bare = `/blog/posts/${slug}`;
+    const pathname = withLocale(`/blog/posts/${slug}`, locale);
+    const altPath = withLocale(`/blog/posts/${altSlug}`, altLocale);
+    const frPath = withLocale(`/blog/posts/${article.fr}`, "fr");
     blogUrlBlocks.push(`  <url>
     <loc>${escapeXml(`${siteUrl}${pathname}`)}</loc>
     <lastmod>${toIsoDate(article.date)}</lastmod>

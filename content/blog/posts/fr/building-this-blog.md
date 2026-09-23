@@ -61,12 +61,11 @@ Le code inline comme `content-collections.ts` apparaît en pastille ; les blocs 
 
 ## Ce que le blog sait faire
 
-Deux types de contenu coexistent :
+Tous les articles vivent dans un seul dossier ; un `project` optionnel les regroupe en série :
 
 ```text title="content/blog/"
 blog/
-├── posts/     # articles courts ou notes
-└── writeups/  # analyses techniques plus longues
+└── posts/     # tous les articles (project: pour une série)
 ```
 
 Chaque entrée a un frontmatter validé au build :
@@ -89,8 +88,9 @@ theme: https://www.youtube.com/watch?v=pR4iCWB-VVQ
 - **`draft: true`** — masque l'article du blog tant qu'il n'est pas prêt
 - **`tags`** — filtres cliquables sur `/blog`
 - **`theme`** — lien « Thème » dans la ligne de métadonnées (comme sur cet article)
+- **`project`** — nom de série (nav latérale + `/blog?project=…`)
 
-Sur **`/blog`**, la liste propose une **recherche** plein texte et un **nuage de tags**. Les posts et writeups sont affichés séparément.
+Sur **`/blog`**, la liste propose une **recherche** plein texte et un **nuage de tags**. Les articles qui partagent un `project` forment une série (sidebar + `/blog?project=…`).
 
 Sur **chaque article** :
 
@@ -171,13 +171,13 @@ Les routes portfolio ne changent pas :
 
 - `/` — à propos et compétences
 - `/projects` — frises et fiches projets
-- `/blog` — derniers articles et writeups, filtres par tags, recherche
+- `/blog` — derniers articles, filtres par tags, recherche (et `?project=` pour une série)
 - `/contact` — formulaire et liens
 
 Le header est le même ; **Blog** reste souligné sur les pages d'article. Thème clair/sombre, i18n et couleurs inspirées de Catppuccin partout.
 
 ## La suite
 
-Des notes courtes sur mes expérimentations du quotidien (homelab, outils, etc), des writeups plus longs quand le sujet le mérite, et parfois une note méta comme celle-ci quand le site évolue.
+Des notes courtes sur mes expérimentations du quotidien (homelab, outils, etc), des séries plus longues quand le sujet le mérite (`project:` dans le frontmatter), et parfois une note méta comme celle-ci quand le site évolue.
 
 Si vous lisez ceci en production, la boucle est bouclée : fichier markdown → build → la page sous vos yeux.

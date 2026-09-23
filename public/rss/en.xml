@@ -3,10 +3,45 @@
   <channel>
     <title>Blog — Yohan Velay</title>
     <link>https://willowfox.dev/en/blog</link>
-    <description>Articles and technical writeups by Yohan Velay.</description>
+    <description>Articles and technical notes by Yohan Velay.</description>
     <language>en-GB</language>
-    <lastBuildDate>Wed, 23 Sep 2026 19:06:44 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2026 15:03:22 GMT</lastBuildDate>
     <atom:link href="https://willowfox.dev/rss/en.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Self-hosting an analytics stack</title>
+      <link>https://willowfox.dev/en/blog/posts/analytics-stack-homelab</link>
+      <guid isPermaLink="true">https://willowfox.dev/en/blog/posts/analytics-stack-homelab</guid>
+      <pubDate>Thu, 24 Sep 2026 00:00:00 GMT</pubDate>
+      <description>Why Umami left the utils box, how Rybbit, Beszel, Speedtest, and Dockhand share one analytics LXC, and what stays internal versus public.</description>
+    </item>
+    <item>
+      <title>The *arr stack: request, download, import</title>
+      <link>https://willowfox.dev/en/blog/posts/arr-pipeline-homelab</link>
+      <guid isPermaLink="true">https://willowfox.dev/en/blog/posts/arr-pipeline-homelab</guid>
+      <pubDate>Thu, 20 Aug 2026 00:00:00 GMT</pubDate>
+      <description>How Sonarr, Radarr, Prowlarr, qBittorrent, and friends share one bulk volume so requests become a library without babysitting torrents.</description>
+    </item>
+    <item>
+      <title>Utils LXC: Glance dashboard and Vaultwarden</title>
+      <link>https://willowfox.dev/en/blog/posts/utils-stack-homelab</link>
+      <guid isPermaLink="true">https://willowfox.dev/en/blog/posts/utils-stack-homelab</guid>
+      <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+      <description>The small Docker box that stays after analytics left: Glance as the homelab start page, Vaultwarden for secrets, and how widget URLs differ from browser bookmarks.</description>
+    </item>
+    <item>
+      <title>DNS and Caddy: *.internal vs *.external</title>
+      <link>https://willowfox.dev/en/blog/posts/dns-and-caddy</link>
+      <guid isPermaLink="true">https://willowfox.dev/en/blog/posts/dns-and-caddy</guid>
+      <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Split the homelab edge into two Caddy proxies, wire public DNS for internal and external zones, and terminate TLS where it belongs.</description>
+    </item>
+    <item>
+      <title>From Windows Server to Proxmox</title>
+      <link>https://willowfox.dev/en/blog/posts/proxmox-setup</link>
+      <guid isPermaLink="true">https://willowfox.dev/en/blog/posts/proxmox-setup</guid>
+      <pubDate>Thu, 02 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Backing up a Windows Server box, installing Proxmox VE clean, and carving storage roles for VMs, media, and encrypted data.</description>
+    </item>
     <item>
       <title>Building an Astro-like blog on my CV site</title>
       <link>https://willowfox.dev/en/blog/posts/building-this-blog</link>

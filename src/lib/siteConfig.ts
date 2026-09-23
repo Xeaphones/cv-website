@@ -7,6 +7,9 @@ export const SITE_NAME = envString("VITE_SITE_NAME", "Yohan Velay");
 
 export const SITE_EMAIL = envString("VITE_SITE_EMAIL", "yohan2003@free.fr");
 
+/** Prefixed to contact-form mailto subjects, e.g. "[CV] Hello". */
+export const EMAIL_PRE_SUBJECT = envString("VITE_EMAIL_PRE_SUBJECT", "[CV]");
+
 export const SITE_PHONE = envString("VITE_SITE_PHONE", "+33781072178");
 
 export const SITE_LINKS = {

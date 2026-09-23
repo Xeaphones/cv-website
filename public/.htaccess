@@ -3,6 +3,11 @@
   RewriteEngine On
   RewriteBase /
 
+  # Writeups merged into posts
+  RewriteRule ^blog/writeups/(.*)$ /blog/posts/$1 [R=301,L]
+  RewriteRule ^en/blog/writeups/(.*)$ /en/blog/posts/$1 [R=301,L]
+  RewriteRule ^fr/blog/writeups/(.*)$ /fr/blog/posts/$1 [R=301,L]
+
   # Existing assets and prerendered route folders
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d

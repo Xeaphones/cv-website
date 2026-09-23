@@ -1,22 +1,19 @@
 import { useTranslation } from "react-i18next";
 
-import type { BlogSection } from "@/lib/blog";
 import { estimateReadingTimeMinutes } from "@/lib/blog/markdown";
 
 type BlogArticleMetaProps = {
   date: Date;
   locale: string;
   content: string;
-  section: BlogSection;
   theme?: string;
-  project?: string;
 };
 
 function MetaSeparator() {
   return <span aria-hidden>|</span>;
 }
 
-export function BlogArticleMeta({ date, locale, content, section, theme, project }: BlogArticleMetaProps) {
+export function BlogArticleMeta({ date, locale, content, theme }: BlogArticleMetaProps) {
   const { t } = useTranslation();
   const readingTime = estimateReadingTimeMinutes(content);
 
@@ -42,12 +39,6 @@ export function BlogArticleMeta({ date, locale, content, section, theme, project
           >
             {t("blogTheme")}
           </a>
-        </>
-      )}
-      {section === "writeups" && project && (
-        <>
-          <MetaSeparator />
-          <span>{project}</span>
         </>
       )}
     </p>
