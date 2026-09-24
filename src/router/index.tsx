@@ -1,9 +1,14 @@
 import { Suspense, lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter, useLocation } from "react-router-dom";
+
+import { LocaleLayout } from "@/layouts/LocaleLayout";
 import { MainLayout } from "@/layouts/MainLayout";
+import { localeFromPathname, withLocalePrefix } from "@/lib/locale";
 
 const Home = lazy(() => import("@/pages/home").then((module) => ({ default: module.Home })));
-const More = lazy(() => import("@/pages/more").then((module) => ({ default: module.More })));
+const Profile = lazy(() =>
+  import("@/pages/profile").then((module) => ({ default: module.Profile })),
+);
 const Projects = lazy(() =>
   import("@/pages/projects").then((module) => ({ default: module.Projects })),
 );
@@ -17,7 +22,7 @@ const BlogPost = lazy(() =>
   import("@/pages/blog/post").then((module) => ({ default: module.BlogPost })),
 );
 const NotFoundPage = lazy(() =>
-  import("@/pages/not-found").then((module) => ({ default: module.NotFoundPage })),
+  import("@/pages/NotFound").then((module) => ({ default: module.NotFoundPage })),
 );
 
 function RouteLoadingFallback() {
@@ -43,45 +48,69 @@ function HomeFallback() {
 }
 
 function withSuspense(element: JSX.Element, fallback = <RouteLoadingFallback />) {
-  return (
-    <Suspense fallback={fallback}>
-      {element}
-    </Suspense>
-  );
+  return <Suspense fallback={fallback}>{element}</Suspense>;
 }
 
-export const router = createBrowserRouter([
+/** Keep old `/more` links working after the profile URL rename. */
+function LegacyMoreRedirect() {
+  const { pathname, search, hash } = useLocation();
+  const locale = localeFromPathname(pathname);
+  return <Navigate to={withLocalePrefix(`/profile${search}${hash}`, locale)} replace />;
+}
+
+function createPageChildren() {
+  return [
     {
-      element: <MainLayout />,
-      children: [
-        {
-          path: "/",
-          element: withSuspense(<Home />, <HomeFallback />),
-        },
-        {
-          path: "more",
-          element: withSuspense(<More />),
-        },
-        {
-          path: "projects",
-          element: withSuspense(<Projects />),
-        },
-        {
-          path: "blog",
-          element: withSuspense(<BlogList />),
-        },
-        {
-          path: "blog/:section/:slug",
-          element: withSuspense(<BlogPost />),
-        },
-        {
-          path: "contact",
-          element: withSuspense(<Contact />),
-        },
-        {
-          path: "*",
-          element: withSuspense(<NotFoundPage />),
-        },
-      ],
+      index: true,
+      element: withSuspense(<Home />, <HomeFallback />),
     },
+    {
+      path: "profile",
+      element: withSuspense(<Profile />),
+    },
+    {
+      path: "more",
+      element: <LegacyMoreRedirect />,
+    },
+    {
+      path: "projects",
+      element: withSuspense(<Projects />),
+    },
+    {
+      path: "blog",
+      element: withSuspense(<BlogList />),
+    },
+    {
+      path: "blog/:section/:slug",
+      element: withSuspense(<BlogPost />),
+    },
+    {
+      path: "contact",
+      element: withSuspense(<Contact />),
+    },
+    {
+      path: "*",
+      element: withSuspense(<NotFoundPage />),
+    },
+  ];
+}
+
+function localeBranch(path: "/" | "/fr" | "/en", locale: "fr" | "en") {
+  return {
+    path,
+    element: <MainLayout />,
+    children: [
+      {
+        element: <LocaleLayout locale={locale} />,
+        children: createPageChildren(),
+      },
+    ],
+  };
+}
+
+// Explicit /en and /fr (RR6 has no /:lang(fr|en) regex). `/` = default FR.
+export const router = createBrowserRouter([
+  localeBranch("/en", "en"),
+  localeBranch("/fr", "fr"),
+  localeBranch("/", "fr"),
 ]);

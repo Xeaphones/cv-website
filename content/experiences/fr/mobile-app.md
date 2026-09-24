@@ -7,7 +7,7 @@ summary: "Application mobile pour permettre de lister les différents événemen
 bullets:
   - "Cahier des charges"
   - "Utilisation de l'API Google Map et Geocoding"
-  - "Developpement Front-End React-Native"
-  - "Developpement Back-End (Mongoose,Axios,Express/NodeJS)"
+  - "Développement Front-End React-Native"
+  - "Développement Back-End (Mongoose,Axios,Express/NodeJS)"
   - "Utilisation de MongoDB"
 ---

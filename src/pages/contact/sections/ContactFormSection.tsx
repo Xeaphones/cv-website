@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type FieldErrors } from "react-hook-form";
 
-import { PageSection } from "@/components/PageSection";
-import { Button } from "@/components/ui/button";
+import { PageSection } from "@/shared/components/PageSection";
+import { Button } from "@/shared/ui/button";
 import {
   Form,
   FormControl,
@@ -11,25 +11,89 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/shared/ui/form";
+import { Input } from "@/shared/ui/input";
+import { Textarea } from "@/shared/ui/textarea";
+import { toast } from "@/shared/ui/use-toast";
+import { EMAIL_PRE_SUBJECT, SITE_EMAIL } from "@/lib/siteConfig";
 import {
   CONTACT_FORM_DEFAULT_VALUES,
   CONTACT_FORM_FIELDS,
-  createContactFormSchema,
+  createContactFormResolver,
+  type ContactFormValues,
 } from "../contactFormConfig";
+
+function buildMailtoSubject(object: string): string {
+  const topic = object.trim();
+  const prefix = EMAIL_PRE_SUBJECT.trim();
+  if (!prefix) return topic;
+  if (!topic) return prefix;
+  return `${prefix} ${topic}`;
+}
+
+function buildMailtoUrl(data: ContactFormValues): string {
+  const subject = encodeURIComponent(buildMailtoSubject(data.object));
+  const lines = [
+    data.message.trim(),
+    "",
+    "—",
+    `${data.firstname.trim()} ${data.lastname.trim()}`.trim(),
+    data.email.trim(),
+  ];
+  if (data.phone.trim()) {
+    lines.push(data.phone.trim());
+  }
+  const body = encodeURIComponent(lines.join("\n"));
+  return `mailto:${SITE_EMAIL}?subject=${subject}&body=${body}`;
+}
+
+function collectErrorMessages(errors: FieldErrors<ContactFormValues>): string[] {
+  return CONTACT_FORM_FIELDS.flatMap((field) => {
+    const message = errors[field.name]?.message;
+    return typeof message === "string" && message.trim() ? [message] : [];
+  });
+}
 
 export function ContactFormSection() {
   const { t } = useTranslation();
-  const formSchema = createContactFormSchema(t);
-  const form = useForm({
-    resolver: zodResolver(formSchema),
+  const [submitting, setSubmitting] = useState(false);
+  const form = useForm<ContactFormValues>({
+    resolver: createContactFormResolver(t),
     defaultValues: CONTACT_FORM_DEFAULT_VALUES,
+    mode: "onSubmit",
   });
 
-  const onSubmit = (data: typeof CONTACT_FORM_DEFAULT_VALUES) => {
-    console.log(data);
+  const onInvalid = (errors: FieldErrors<ContactFormValues>) => {
+    const issues = collectErrorMessages(errors);
+    toast({
+      variant: "destructive",
+      title: t("contactValidationError"),
+      description: issues.length > 0 ? issues.join(" · ") : undefined,
+      duration: 5000,
+    });
+  };
+
+  const onSubmit = (data: ContactFormValues) => {
+    setSubmitting(true);
+    try {
+      const mailto = buildMailtoUrl(data);
+      window.location.href = mailto;
+      toast({
+        variant: "success",
+        title: t("contactSuccess"),
+        duration: 4000,
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: t("contactError"),
+        description: error instanceof Error ? error.message : undefined,
+        duration: 5000,
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const firstRow = CONTACT_FORM_FIELDS.filter((field) => field.name === "firstname" || field.name === "lastname");
@@ -42,8 +106,9 @@ export function ContactFormSection() {
     <PageSection id="contact-form" title={t("contactme")}>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="mx-auto w-full max-w-3xl rounded-lg border border-border/60 bg-card/30 p-4 shadow-sm sm:p-6"
+          noValidate
         >
           <div className="grid gap-5 sm:grid-cols-2">
             {firstRow.map((fieldConfig) => (
@@ -57,7 +122,11 @@ export function ContactFormSection() {
                       {t(fieldConfig.labelKey)} {fieldConfig.required ? "*" : ""}
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder={t(fieldConfig.placeholderKey)} {...field} />
+                      <Input
+                        placeholder={t(fieldConfig.placeholderKey)}
+                        aria-required={fieldConfig.required || undefined}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -78,7 +147,12 @@ export function ContactFormSection() {
                       {t(fieldConfig.labelKey)} {fieldConfig.required ? "*" : ""}
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder={t(fieldConfig.placeholderKey)} {...field} />
+                      <Input
+                        placeholder={t(fieldConfig.placeholderKey)}
+                        type={fieldConfig.name === "email" ? "email" : "text"}
+                        aria-required={fieldConfig.required || undefined}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -100,9 +174,18 @@ export function ContactFormSection() {
                     </FormLabel>
                     <FormControl>
                       {fieldConfig.type === "textarea" ? (
-                        <Textarea placeholder={t(fieldConfig.placeholderKey)} className="min-h-32" {...field} />
+                        <Textarea
+                          placeholder={t(fieldConfig.placeholderKey)}
+                          className="min-h-32"
+                          aria-required={fieldConfig.required || undefined}
+                          {...field}
+                        />
                       ) : (
-                        <Input placeholder={t(fieldConfig.placeholderKey)} {...field} />
+                        <Input
+                          placeholder={t(fieldConfig.placeholderKey)}
+                          aria-required={fieldConfig.required || undefined}
+                          {...field}
+                        />
                       )}
                     </FormControl>
                     <FormMessage />
@@ -114,7 +197,9 @@ export function ContactFormSection() {
 
           <div className="mt-6 flex flex-col-reverse items-start justify-between gap-3 sm:flex-row sm:items-center">
             <p className="text-sm text-muted-foreground">{t("required")}</p>
-            <Button type="submit">{t("send")}</Button>
+            <Button type="submit" disabled={submitting}>
+              {t("send")}
+            </Button>
           </div>
         </form>
       </Form>

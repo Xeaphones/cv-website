@@ -1,0 +1,36 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+/* 6 cards: two rows of three */
+.span-backend,
+.span-frontend,
+.span-app,
+.span-cloud,
+.span-iot,
+.span-gamedev {
+  grid-column: span 2;
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .span-backend,
+  .span-frontend,
+  .span-app,
+  .span-cloud,
+  .span-iot,
+  .span-gamedev {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,97 @@
+:global(#aboutme),
+:global(#wicd),
+:global(#skills) {
+  scroll-margin-top: 5.5rem;
+}
+
+.homeWork {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 100dvh;
+  height: 100dvh;
+  padding-top: 6rem;
+  padding-inline: 0.5rem;
+  /* Keep tarot cards / altar shelf from painting over the divider */
+  gap: 1.75rem;
+
+  :global {
+    #wicd,
+    #skills {
+      display: flex;
+      min-height: 0;
+      flex-direction: column;
+      /* Kill PageSection my-8 / sm:m-8 inside this packed viewport */
+      margin: 0 !important;
+      padding-inline: 0.75rem;
+
+      > h2 {
+        flex-shrink: 0;
+      }
+
+      > *:last-child {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+    }
+
+    #wicd {
+      flex: 1.45 1 0;
+      padding-bottom: 1.5rem;
+    }
+
+    #skills {
+      flex: 1.15 1 0;
+      padding-top: 1.5rem;
+    }
+  }
+}
+
+.divider {
+  flex-shrink: 0;
+  z-index: 6;
+  isolation: isolate;
+  margin-block: 0.5rem;
+}
+
+@media (max-width: 800px) {
+  :global(#aboutme) {
+    scroll-margin-top: 0;
+  }
+
+  :global(#wicd),
+  :global(#skills) {
+    scroll-margin-top: 6rem;
+  }
+
+  .homeWork {
+    display: block;
+    height: auto;
+    min-height: 0;
+    padding-top: 0;
+    overflow: visible;
+    gap: 0;
+
+    :global {
+      #wicd,
+      #skills {
+        display: block;
+        flex: none;
+        height: auto;
+        min-height: 0;
+        margin-block: 1.5rem !important;
+        padding-block: 1rem;
+        padding-inline: 0.75rem;
+
+        > *:last-child {
+          flex: none;
+          min-height: auto;
+        }
+      }
+    }
+  }
+
+  .divider {
+    margin-block: 1rem;
+  }
+}

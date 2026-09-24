@@ -2,45 +2,44 @@ import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { BlogFooterLinks } from "@/components/blog/BlogFooterLinks";
-import { BlogBackLink } from "@/components/blog/BlogBackLink";
-import { BlogEntry } from "@/components/blog/BlogEntry";
-import { BlogPanel } from "@/components/blog/BlogPanel";
-import { BlogSearchBar } from "@/components/blog/BlogSearchBar";
-import { TagCloud } from "@/components/blog/TagCloud";
-import { PageMeta } from "@/components/PageMeta";
-import { PageShell } from "@/components/PageShell";
-import {
-  filterBlogBySearch,
-  filterBlogByTag,
-  getBlogTags,
-  useBlogPosts,
-  useBlogWriteups,
-} from "@/lib/content";
+import { BlogBackLink } from "@/pages/blog/components/BlogBackLink";
+import { BlogEntry } from "@/pages/blog/components/BlogEntry";
+import { BlogPanel } from "@/pages/blog/components/BlogPanel";
+import { BlogSearchBar } from "@/pages/blog/components/BlogSearchBar";
+import { TagCloud } from "@/pages/blog/components/TagCloud";
+import { PageMeta } from "@/shared/components/PageMeta";
+import { PageShell } from "@/shared/components/PageShell";
+import { filterBlogBySearch, filterBlogByTag, getBlogTags, useBlogPosts } from "@/lib/blog";
+import { useLocalePath } from "@/lib/hooks";
+
+/** How many posts the default “Latest” panel shows before “All posts”. */
+const LATEST_POSTS_LIMIT = 5;
 
 export const BlogList = () => {
   const { t, i18n } = useTranslation();
+  const localize = useLocalePath();
   const posts = useBlogPosts();
-  const writeups = useBlogWriteups();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTag = searchParams.get("tag");
-  const activeKind = searchParams.get("kind");
+  const activeProject = searchParams.get("project");
   const activeQuery = searchParams.get("q") ?? "";
+  const showAll = searchParams.get("all") === "1";
 
-  const filteredPosts = useMemo(
-    () => filterBlogBySearch(filterBlogByTag(posts, activeTag), activeQuery),
-    [posts, activeTag, activeQuery],
-  );
-  const filteredWriteups = useMemo(
-    () => filterBlogBySearch(filterBlogByTag(writeups, activeTag), activeQuery),
-    [writeups, activeTag, activeQuery],
-  );
-  const tags = useMemo(() => getBlogTags(posts, writeups), [posts, writeups]);
+  const filteredPosts = useMemo(() => {
+    const byProject = activeProject
+      ? posts.filter((post) => post.project === activeProject)
+      : posts;
+    return filterBlogBySearch(filterBlogByTag(byProject, activeTag), activeQuery);
+  }, [posts, activeTag, activeProject, activeQuery]);
 
-  const showPosts = !activeKind || activeKind === "post";
-  const showWriteups = !activeKind || activeKind === "writeup";
-  const isFiltered = Boolean(activeTag || activeKind || activeQuery.trim());
+  const isFiltered = Boolean(activeTag || activeProject || activeQuery.trim());
   const hasSearch = Boolean(activeQuery.trim());
+  /** Cap only the unfiltered landing list; filters / ?all=1 show everything. */
+  const capped = !isFiltered && !showAll;
+  const visiblePosts = capped ? filteredPosts.slice(0, LATEST_POSTS_LIMIT) : filteredPosts;
+  const hasMore = capped && filteredPosts.length > LATEST_POSTS_LIMIT;
+
+  const tags = useMemo(() => getBlogTags(posts), [posts]);
 
   const toggleTag = (tag: string) => {
     const next = new URLSearchParams(searchParams);
@@ -62,39 +61,26 @@ export const BlogList = () => {
     setSearchParams(next, { replace: true });
   };
 
+  const panelTitle = activeProject ?? (showAll && !isFiltered ? t("allPosts") : t("latestPosts"));
+
   return (
     <PageShell id="blog">
       <PageMeta page="blog" />
       <div className="mx-auto m-8 flex w-full max-w-4xl flex-col gap-6 px-4 font-sans">
-        {isFiltered && <BlogBackLink />}
+        {(isFiltered || showAll) && <BlogBackLink />}
 
         <BlogSearchBar value={activeQuery} onChange={onSearchChange} />
 
-        {showPosts && (
-          <BlogPanel
-            title={t("latestPosts")}
-            allLinkLabel={t("allPosts")}
-            allLinkTo={activeKind === "post" ? "/blog" : "/blog?kind=post"}
-            emptyLabel={hasSearch ? t("blogNoSearchResults") : t("blogEmpty")}
-          >
-            {filteredPosts.map((post) => (
-              <BlogEntry key={post.slug} article={post} section="posts" locale={i18n.language} />
-            ))}
-          </BlogPanel>
-        )}
-
-        {showWriteups && (
-          <BlogPanel
-            title={t("latestWriteups")}
-            allLinkLabel={t("allWriteups")}
-            allLinkTo={activeKind === "writeup" ? "/blog" : "/blog?kind=writeup"}
-            emptyLabel={hasSearch ? t("blogNoSearchResults") : t("writeupsEmpty")}
-          >
-            {filteredWriteups.map((writeup) => (
-              <BlogEntry key={writeup.slug} article={writeup} section="writeups" locale={i18n.language} />
-            ))}
-          </BlogPanel>
-        )}
+        <BlogPanel
+          title={panelTitle}
+          allLinkLabel={hasMore ? t("allPosts") : undefined}
+          allLinkTo={hasMore ? localize("/blog?all=1") : undefined}
+          emptyLabel={hasSearch ? t("blogNoSearchResults") : t("blogEmpty")}
+        >
+          {visiblePosts.map((post) => (
+            <BlogEntry key={post.slug} article={post} locale={i18n.language} />
+          ))}
+        </BlogPanel>
 
         {tags.length > 0 && (
           <section className="pt-2 text-center">
@@ -104,8 +90,6 @@ export const BlogList = () => {
             </div>
           </section>
         )}
-
-        <BlogFooterLinks className="border-t border-border/60 pt-8" />
       </div>
     </PageShell>
   );

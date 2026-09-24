@@ -2,10 +2,10 @@ import { useCallback, useEffect, useId, useRef, useState, type PointerEvent as R
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import Card, { CardSpread } from "@/components/card";
-import { PageSection } from "@/components/PageSection";
-import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/lib/hooks";
+import Card, { CardSpread } from "@/pages/home/components/ServiceCard";
+import { PageSection } from "@/shared/components/PageSection";
+import { Button } from "@/shared/ui/button";
+import { useIsMobile, usePrefersCoarsePointer } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 import apiBlackIMG from "@/assets/img/api_black_128.png";
@@ -20,38 +20,48 @@ import gameDevWhiteIMG from "@/assets/img/game-dev_white_128.png";
 type ServiceItem = {
   titleKey: string;
   contentKey: string;
+  imgAltKey: string;
   imgSRC: { light: string; dark: string };
-  imgALT: string;
 };
 
 const SERVICES: ServiceItem[] = [
   {
     titleKey: "webDevTitle",
     contentKey: "webDevContent",
+    imgAltKey: "webDevImgAlt",
     imgSRC: { light: codeBlackIMG, dark: codeWhiteIMG },
-    imgALT: "Web Development icon",
   },
   {
     titleKey: "apiDevTitle",
     contentKey: "apiDevContent",
+    imgAltKey: "apiDevImgAlt",
     imgSRC: { light: apiBlackIMG, dark: apiWhiteIMG },
-    imgALT: "API Icon",
   },
   {
     titleKey: "gameDevTitle",
     contentKey: "gameDevContent",
+    imgAltKey: "gameDevImgAlt",
     imgSRC: { light: gameDevBlackIMG, dark: gameDevWhiteIMG },
-    imgALT: "Game Development icon",
   },
   {
     titleKey: "appDevTitle",
     contentKey: "appDevContent",
+    imgAltKey: "appDevImgAlt",
     imgSRC: { light: appBlackIMG, dark: appWhiteIMG },
-    imgALT: "Application Development icon",
   },
 ];
 
-function ServiceCard({ item, index = 0, turned = false }: { item: ServiceItem; index?: number; turned?: boolean }) {
+function ServiceCard({
+  item,
+  index = 0,
+  turned = false,
+  focusable = true,
+}: {
+  item: ServiceItem;
+  index?: number;
+  turned?: boolean;
+  focusable?: boolean;
+}) {
   const { t } = useTranslation();
 
   return (
@@ -59,9 +69,10 @@ function ServiceCard({ item, index = 0, turned = false }: { item: ServiceItem; i
       title={t(item.titleKey)}
       content={t(item.contentKey)}
       imgSRC={item.imgSRC}
-      imgALT={item.imgALT}
+      imgALT={t(item.imgAltKey)}
       index={index}
       turned={turned}
+      tabIndex={focusable ? 0 : -1}
     />
   );
 }
@@ -102,14 +113,16 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
     placeTop(0, 0, 0, true);
   }, []);
 
-  const dismiss = useCallback((flyDir: -1 | 1) => {
+  const dismiss = useCallback((indexDelta: -1 | 1) => {
     if (drag.current.leaving) return;
-    const nextIndex = index + flyDir;
+    const nextIndex = index + indexDelta;
     if (nextIndex < 0 || nextIndex >= items.length) {
       snapBack();
       return;
     }
 
+    // Card follows the swipe: next flies left, previous flies right.
+    const flyDir = (-indexDelta) as -1 | 1;
     drag.current.leaving = true;
     drag.current.active = false;
     const distance = window.innerWidth + 96;
@@ -217,8 +230,8 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
     }
     if (!wasLocked || drag.current.leaving) return;
 
-    if (dx >= SWIPE_THRESHOLD) dismiss(1);
-    else if (dx <= -SWIPE_THRESHOLD) dismiss(-1);
+    if (dx >= SWIPE_THRESHOLD) dismiss(-1);
+    else if (dx <= -SWIPE_THRESHOLD) dismiss(1);
     else snapBack();
   };
 
@@ -227,7 +240,7 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
       <div
         ref={deckRef}
         role="region"
-        aria-roledescription="carousel"
+        aria-roledescription={t("servicesCarousel")}
         aria-labelledby={labelId}
         tabIndex={0}
         className="relative h-[calc(26rem+1rem)] w-full max-w-[17.5rem] touch-pan-y select-none [perspective:1100px]"
@@ -273,7 +286,7 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
                 onPointerCancel={isTop ? onPointerUp : undefined}
                 onDragStart={(event) => event.preventDefault()}
               >
-                <ServiceCard item={item} index={itemIndex} turned={seen[itemIndex]} />
+                <ServiceCard item={item} index={itemIndex} turned={seen[itemIndex]} focusable={isTop} />
               </div>
             );
           })}
@@ -290,20 +303,24 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
-        <div className="flex justify-center gap-2" role="tablist" aria-label={t("services")}>
+        <div className="flex justify-center gap-1" role="group" aria-label={t("services")}>
           {items.map((item, itemIndex) => (
             <button
               key={item.titleKey}
               type="button"
-              role="tab"
-              aria-selected={itemIndex === index}
               aria-label={t(item.titleKey)}
-              className={cn(
-                "h-2 rounded-full transition-all",
-                itemIndex === index ? "w-6 bg-primary" : "w-2 bg-muted-foreground/40",
-              )}
+              aria-current={itemIndex === index ? "true" : undefined}
+              className="flex h-11 w-11 items-center justify-center rounded-full"
               onClick={() => goTo(itemIndex)}
-            />
+            >
+              <span
+                className={cn(
+                  "rounded-full transition-all",
+                  itemIndex === index ? "h-2.5 w-6 bg-primary" : "h-2.5 w-2.5 bg-muted-foreground/40",
+                )}
+                aria-hidden
+              />
+            </button>
           ))}
         </div>
         <Button
@@ -328,11 +345,14 @@ function ServiceSlider({ items }: { items: ServiceItem[] }) {
 export function ServicesSection() {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const coarsePointer = usePrefersCoarsePointer();
+  // Narrow screens OR touch tablets (e.g. iPad landscape): swipe deck, not hover-flip spread.
+  const useSwipeDeck = isMobile || coarsePointer;
 
   return (
-    <PageSection id="wicd" title={t("services")} className="overflow-visible">
+    <PageSection id="wicd" title={t("services")} className="!m-0 overflow-visible">
       <div className="flex min-h-0 flex-1 flex-col justify-center">
-        {isMobile ? (
+        {useSwipeDeck ? (
           <ServiceSlider items={SERVICES} />
         ) : (
           <CardSpread>

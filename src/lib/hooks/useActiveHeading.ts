@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import type { MarkdownHeading } from "@/lib/markdown";
+import type { MarkdownHeading } from "@/lib/blog/markdown";
 
 export function useActiveHeading(headings: MarkdownHeading[]): string | undefined {
   const headingIds = headings.map((heading) => heading.id).join(",");

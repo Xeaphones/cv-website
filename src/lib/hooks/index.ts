@@ -1,8 +1,11 @@
 export { useIsMobile } from "./useIsMobile";
+export { usePrefersCoarsePointer } from "./usePrefersCoarsePointer";
+export { usePreferMachineReadable } from "./usePreferMachineReadable";
 export { useResolvedTheme } from "./useResolvedTheme";
 export { useLanguageAwareNavigation } from "./useLanguageAwareNavigation";
 export { useActiveHeading } from "./useActiveHeading";
 export { useHomeHeaderVisible } from "./useHomeHeaderVisible";
+export { useGoHomeTop, scrollToHomeTop } from "./useGoHomeTop";
+export { scrollToHomeSection, useScrollToHomeSection } from "./useHomeScroll";
+export { useLocale, useLocalePath } from "./useLocalePath";
 export type { ResolvedTheme } from "./useResolvedTheme";
-export { splitPipeList } from "./splitPipeList";
-export { PipeList } from "./PipeList";

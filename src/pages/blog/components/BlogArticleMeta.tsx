@@ -1,0 +1,46 @@
+import { useTranslation } from "react-i18next";
+
+import { estimateReadingTimeMinutes } from "@/lib/blog/markdown";
+
+type BlogArticleMetaProps = {
+  date: Date;
+  locale: string;
+  content: string;
+  theme?: string;
+};
+
+function MetaSeparator() {
+  return <span aria-hidden>|</span>;
+}
+
+export function BlogArticleMeta({ date, locale, content, theme }: BlogArticleMetaProps) {
+  const { t } = useTranslation();
+  const readingTime = estimateReadingTimeMinutes(content);
+
+  const formattedDate = date.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  return (
+    <p className="flex flex-wrap items-center gap-x-2 font-mono text-sm text-muted-foreground">
+      <span>{formattedDate}</span>
+      <MetaSeparator />
+      <span>{t("minRead", { count: readingTime })}</span>
+      {theme && (
+        <>
+          <MetaSeparator />
+          <a
+            href={theme}
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-muted-foreground/50 underline-offset-2 transition-colors hover:text-foreground"
+          >
+            {t("blogTheme")}
+          </a>
+        </>
+      )}
+    </p>
+  );
+}

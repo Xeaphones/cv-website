@@ -1,4 +1,4 @@
-import { useTheme } from "@/components/themeProvider";
+import { useTheme } from "@/shared/components/themeProvider";
 
 export type ResolvedTheme = "light" | "dark";
 

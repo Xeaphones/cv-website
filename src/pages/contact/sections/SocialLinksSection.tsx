@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
 
-import { ThemedIcon } from "@/components/ThemedIcon";
-import { PageSection } from "@/components/PageSection";
-import { useToast } from "@/components/ui/use-toast";
+import { ThemedIcon } from "@/shared/components/ThemedIcon";
+import { PageSection } from "@/shared/components/PageSection";
+import { useToast } from "@/shared/ui/use-toast";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "@/shared/ui/hover-card";
 import { Discord, Github, Linkedin } from "@/assets/svg";
 import { SITE_LINKS } from "@/lib/siteConfig";
 

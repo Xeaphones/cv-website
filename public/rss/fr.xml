@@ -2,15 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog — Yohan Velay</title>
-    <link>https://yohanvelay.nybtech.fr/blog</link>
-    <description>Articles et writeups techniques de Yohan Velay.</description>
+    <link>https://willowfox.dev/blog</link>
+    <description>Articles et notes techniques de Yohan Velay.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Fri, 18 Sep 2026 18:48:42 GMT</lastBuildDate>
-    <atom:link href="https://yohanvelay.nybtech.fr/rss/fr.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Sep 2026 15:03:22 GMT</lastBuildDate>
+    <atom:link href="https://willowfox.dev/rss/fr.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Self-hoster une stack analytics</title>
+      <link>https://willowfox.dev/blog/posts/stack-analytics-homelab</link>
+      <guid isPermaLink="true">https://willowfox.dev/blog/posts/stack-analytics-homelab</guid>
+      <pubDate>Thu, 24 Sep 2026 00:00:00 GMT</pubDate>
+      <description>Pourquoi Umami a quitté la boîte utils, comment Rybbit, Beszel, Speedtest et Dockhand partagent un LXC analytics, et ce qui reste interne versus public.</description>
+    </item>
+    <item>
+      <title>La stack *arr : demander, télécharger, importer</title>
+      <link>https://willowfox.dev/blog/posts/pipeline-arr-homelab</link>
+      <guid isPermaLink="true">https://willowfox.dev/blog/posts/pipeline-arr-homelab</guid>
+      <pubDate>Thu, 20 Aug 2026 00:00:00 GMT</pubDate>
+      <description>Comment Sonarr, Radarr, Prowlarr, qBittorrent et le reste partagent un volume bulk pour transformer une demande en bibliothèque, sans babysitter les torrents.</description>
+    </item>
+    <item>
+      <title>LXC utils : dashboard Glance et Vaultwarden</title>
+      <link>https://willowfox.dev/blog/posts/stack-utils-homelab</link>
+      <guid isPermaLink="true">https://willowfox.dev/blog/posts/stack-utils-homelab</guid>
+      <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+      <description>La petite boîte Docker qui reste après le départ des analytics : Glance comme page d&apos;accueil du lab, Vaultwarden pour les secrets, et pourquoi les URLs des widgets ne sont pas celles des favoris.</description>
+    </item>
+    <item>
+      <title>DNS et Caddy : *.internal vs *.external</title>
+      <link>https://willowfox.dev/blog/posts/dns-et-caddy</link>
+      <guid isPermaLink="true">https://willowfox.dev/blog/posts/dns-et-caddy</guid>
+      <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Séparer le bord du homelab en deux proxies Caddy, brancher le DNS public pour les zones interne et externe, et terminer le TLS au bon endroit.</description>
+    </item>
+    <item>
+      <title>Du Windows Server à Proxmox</title>
+      <link>https://willowfox.dev/blog/posts/installation-proxmox</link>
+      <guid isPermaLink="true">https://willowfox.dev/blog/posts/installation-proxmox</guid>
+      <pubDate>Thu, 02 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Sauvegarder un Windows Server, installer Proxmox VE proprement, et découper le stockage pour VMs, médias et données chiffrées.</description>
+    </item>
     <item>
       <title>Un blog façon Astro sur mon site CV</title>
-      <link>https://yohanvelay.nybtech.fr/blog/posts/building-this-blog</link>
-      <guid isPermaLink="true">https://yohanvelay.nybtech.fr/blog/posts/building-this-blog</guid>
+      <link>https://willowfox.dev/blog/posts/building-this-blog</link>
+      <guid isPermaLink="true">https://willowfox.dev/blog/posts/building-this-blog</guid>
       <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
       <description>Pourquoi j&apos;ai ajouté un blog markdown à mon portfolio, comment Content Collections et React le font tourner, et pourquoi ça reste le même site CV en dessous.</description>
     </item>

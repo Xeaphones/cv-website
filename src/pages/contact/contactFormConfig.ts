@@ -1,9 +1,18 @@
+import type { FieldErrors, Resolver } from "react-hook-form";
 import { z } from "zod";
 
 export type ContactFieldType = "input" | "textarea";
 
+export type ContactFieldName =
+  | "firstname"
+  | "lastname"
+  | "email"
+  | "phone"
+  | "object"
+  | "message";
+
 export type ContactFieldConfig = {
-  name: "firstname" | "lastname" | "email" | "phone" | "object" | "message";
+  name: ContactFieldName;
   type: ContactFieldType;
   required: boolean;
   labelKey: string;
@@ -64,13 +73,41 @@ export const CONTACT_FORM_DEFAULT_VALUES = {
   message: "",
 };
 
+export type ContactFormValues = typeof CONTACT_FORM_DEFAULT_VALUES;
+
 export function createContactFormSchema(t: (key: string) => string) {
   return z.object({
     firstname: z.string().min(1, { message: t("contactFirstNameRequired") }),
     lastname: z.string().min(1, { message: t("contactLastNameRequired") }),
-    email: z.string().email({ message: t("contactEmailInvalid") }),
+    email: z.email({ message: t("contactEmailInvalid") }),
     phone: z.string(),
     object: z.string().min(1, { message: t("contactObjectRequired") }),
     message: z.string().min(1, { message: t("contactMessageRequired") }),
   });
+}
+
+/** Zod 4–safe resolver (avoids throwing ZodError that older zodResolver mishandles). */
+export function createContactFormResolver(
+  t: (key: string) => string,
+): Resolver<ContactFormValues> {
+  const schema = createContactFormSchema(t);
+
+  return async (values) => {
+    const result = schema.safeParse(values);
+    if (result.success) {
+      return { values: result.data, errors: {} };
+    }
+
+    const errors: FieldErrors<ContactFormValues> = {};
+    for (const issue of result.error.issues) {
+      const key = issue.path[0];
+      if (typeof key !== "string" || key in errors) continue;
+      errors[key as ContactFieldName] = {
+        type: issue.code,
+        message: issue.message,
+      };
+    }
+
+    return { values: {}, errors };
+  };
 }

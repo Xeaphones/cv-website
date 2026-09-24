@@ -14,6 +14,7 @@ const blogSchema = markdownDoc.extend({
   draft: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
   theme: z.url().optional(),
+  /** Optional series name — groups posts into a project collection (nav + ?project=). */
   project: z.string().optional(),
 });
 
@@ -65,22 +66,6 @@ const blogPostsFr = defineCollection({
 const blogPostsEn = defineCollection({
   name: "blogPostsEn",
   directory: "content/blog/posts/en",
-  include: "**/*.md",
-  schema: blogSchema,
-  transform: withSlug,
-});
-
-const blogWriteupsFr = defineCollection({
-  name: "blogWriteupsFr",
-  directory: "content/blog/writeups/fr",
-  include: "**/*.md",
-  schema: blogSchema,
-  transform: withSlug,
-});
-
-const blogWriteupsEn = defineCollection({
-  name: "blogWriteupsEn",
-  directory: "content/blog/writeups/en",
   include: "**/*.md",
   schema: blogSchema,
   transform: withSlug,
@@ -138,8 +123,6 @@ export default defineConfig({
   content: [
     blogPostsFr,
     blogPostsEn,
-    blogWriteupsFr,
-    blogWriteupsEn,
     experiencesFr,
     experiencesEn,
     projectsFr,

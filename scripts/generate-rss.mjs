@@ -2,10 +2,10 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createBuilder } from "@content-collections/core";
+import { siteUrl } from "./site-url.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const configPath = path.join(root, "content-collections.ts");
-const siteUrl = (process.env.VITE_SITE_URL ?? "https://yohanvelay.nybtech.fr").replace(/\/$/, "");
 
 const builder = await createBuilder(configPath);
 await builder.build();
@@ -28,30 +28,30 @@ function toRfc822(date) {
 
 function collectArticles(locale) {
   const posts = locale === "fr" ? generated.allBlogPostsFrs : generated.allBlogPostsEns;
-  const writeups = locale === "fr" ? generated.allBlogWriteupsFrs : generated.allBlogWriteupsEns;
 
-  return [...posts.map((article) => ({ ...article, section: "posts" })), ...writeups.map((article) => ({ ...article, section: "writeups" }))]
+  return posts
     .filter((article) => !article.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-function articleUrl(locale, section, article) {
+function articleUrl(locale, article) {
   const slug = locale === "fr" ? article.fr : article.en;
-  return `${siteUrl}/blog/${section}/${slug}`;
+  if (locale === "fr") return `${siteUrl}/blog/posts/${slug}`;
+  return `${siteUrl}/en/blog/posts/${slug}`;
 }
 
 function buildFeed(locale, articles) {
   const feedPath = `/rss/${locale}.xml`;
-  const channelLink = `${siteUrl}/blog`;
+  const channelLink = locale === "fr" ? `${siteUrl}/blog` : `${siteUrl}/en/blog`;
   const title = locale === "fr" ? "Blog — Yohan Velay" : "Blog — Yohan Velay";
   const description =
     locale === "fr"
-      ? "Articles et writeups techniques de Yohan Velay."
-      : "Articles and technical writeups by Yohan Velay.";
+      ? "Articles et notes techniques de Yohan Velay."
+      : "Articles and technical notes by Yohan Velay.";
 
   const items = articles
     .map((article) => {
-      const link = articleUrl(locale, article.section, article);
+      const link = articleUrl(locale, article);
       return `    <item>
       <title>${escapeXml(article.title)}</title>
       <link>${escapeXml(link)}</link>

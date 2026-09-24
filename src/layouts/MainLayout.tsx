@@ -1,23 +1,34 @@
 import { Outlet } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import { BackToTop } from "@/components/BackToTop";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { SiteFooter } from "@/components/footer";
-import Header from "@/components/header";
-import { PageDivider } from "@/components/PageDivider";
-import { ParticleCanvas } from "@/components/ParticleCanvas";
-import { PersonJsonLd } from "@/components/PersonJsonLd";
-import { RouteErrorFallback } from "@/components/RouteErrorFallback";
-import { RybbitScript } from "@/components/RybbitScript";
-import { Toaster } from "@/components/ui/toaster";
+import { BackToTop } from "@/shared/components/BackToTop";
+import { ErrorBoundary } from "@/shared/components/ErrorBoundary";
+import { SiteFooter } from "@/shell/footer";
+import Header from "@/shell/header";
+import { PageDivider } from "@/shared/components/PageDivider";
+import { ParticleCanvas } from "@/shared/components/ParticleCanvas";
+import { PersonJsonLd } from "@/shared/seo/PersonJsonLd";
+import { RouteErrorFallback } from "@/shared/components/RouteErrorFallback";
+import { RybbitScript } from "@/shared/seo/RybbitScript";
+import { Toaster } from "@/shared/ui/toaster";
+import { usePreferMachineReadable } from "@/lib/hooks";
 
 export function MainLayout() {
+  const { t } = useTranslation();
+  const compact = usePreferMachineReadable();
+
   return (
     <>
-      <RybbitScript />
+      {!compact ? <RybbitScript /> : null}
       <PersonJsonLd />
-      <ParticleCanvas className="fixed inset-0 z-0" />
-      <Header />
+      <a
+        href="#main-content"
+        className="sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:inline-flex focus:h-auto focus:w-auto focus:items-center focus:overflow-visible focus:whitespace-nowrap focus:rounded-md focus:border focus:border-border focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        {t("skipToContent")}
+      </a>
+      {compact ? null : <ParticleCanvas className="fixed inset-0 z-0" aria-hidden />}
+      {compact ? null : <Header />}
       <ErrorBoundary
         fallback={({ error, reset }) => (
           <RouteErrorFallback error={error} onReset={reset} />
@@ -25,10 +36,14 @@ export function MainLayout() {
       >
         <Outlet />
       </ErrorBoundary>
-      <PageDivider />
-      <SiteFooter />
-      <BackToTop />
-      <Toaster />
+      {compact ? null : (
+        <>
+          <PageDivider />
+          <SiteFooter />
+          <BackToTop />
+        </>
+      )}
+      {compact ? null : <Toaster />}
     </>
   );
 }

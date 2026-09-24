@@ -1,8 +1,20 @@
+# SPA: serve real files/dirs (prerendered routes). Unknown paths → HTTP 404 + 404.html.
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^ index.html [L]
+
+  # Writeups merged into posts
+  RewriteRule ^blog/writeups/(.*)$ /blog/posts/$1 [R=301,L]
+  RewriteRule ^en/blog/writeups/(.*)$ /en/blog/posts/$1 [R=301,L]
+  RewriteRule ^fr/blog/writeups/(.*)$ /fr/blog/posts/$1 [R=301,L]
+
+  # Existing assets and prerendered route folders
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # No matching file/dir → trigger 404 (ErrorDocument keeps the original URL)
+  RewriteRule ^ - [R=404,L]
 </IfModule>
+
+ErrorDocument 404 /404.html

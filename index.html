@@ -5,8 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yohan Velay | Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio de Yohan Velay, développeur Fullstack / IoT / DevOps chez Andil. Développement web, API, plugins Moodle et projets personnels à Toulouse."
+    />
     <meta name="author" content="Yohan Velay" />
     <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Yohan Velay | Portfolio" />
+    <meta
+      property="og:description"
+      content="Portfolio de Yohan Velay, développeur Fullstack / IoT / DevOps chez Andil."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <script>
       (function () {
         try {
@@ -21,6 +32,17 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        try {
+          var path = location.pathname;
+          if (path !== "/" && path !== "") return;
+          // `/` is FR. Only soft-redirect an explicit EN preference to `/en`.
+          if (localStorage.getItem("lang-preference") !== "en") return;
+          location.replace("/en" + (location.search || "") + (location.hash || ""));
+        } catch (e) {}
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
