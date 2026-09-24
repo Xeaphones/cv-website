@@ -1,0 +1,9 @@
+{
+  "name": "willowfox",
+  "compatibility_date": "2026-09-21",
+  "assets": {
+    "directory": "./dist",
+    // Prerendered route folders are served as files; unknown paths → dist/404.html
+    "not_found_handling": "404-page"
+  }
+}
